@@ -1,0 +1,3 @@
+typestate Mixed {
+    State0 = (void send(): State0) + {void receive(): State0}
+}

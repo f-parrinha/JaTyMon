@@ -1,0 +1,342 @@
+{
+  "type" : "typestate",
+  "pos" : {
+    "line" : 1,
+    "column" : 0
+  },
+  "imports" : [ ],
+  "decl" : {
+    "type" : "declaration",
+    "pos" : {
+      "line" : 1,
+      "column" : 0
+    },
+    "name" : "FaultyFile",
+    "states" : [ {
+      "type" : "state",
+      "pos" : {
+        "line" : 3,
+        "column" : 2
+      },
+      "name" : "Init",
+      "actions" : [ {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 5,
+          "column" : 4
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 5,
+            "column" : 4
+          },
+          "name" : "FileStatus",
+          "string" : "FileStatus"
+        },
+        "name" : "open",
+        "args" : [ ],
+        "destination" : {
+          "type" : "decisionState",
+          "pos" : {
+            "line" : 5,
+            "column" : 23
+          },
+          "decisions" : [ {
+            "type" : "decision",
+            "pos" : {
+              "line" : 5,
+              "column" : 24
+            },
+            "label" : "OK",
+            "destination" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 5,
+                "column" : 28
+              },
+              "name" : "Open",
+              "string" : "Open"
+            }
+          }, {
+            "type" : "decision",
+            "pos" : {
+              "line" : 5,
+              "column" : 34
+            },
+            "label" : "FOO",
+            "destination" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 5,
+                "column" : 39
+              },
+              "name" : "end",
+              "string" : "end"
+            }
+          } ]
+        }
+      } ]
+    }, {
+      "type" : "state",
+      "pos" : {
+        "line" : 8,
+        "column" : 2
+      },
+      "name" : "Read",
+      "actions" : [ {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 10,
+          "column" : 4
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 10,
+            "column" : 4
+          },
+          "name" : "int",
+          "string" : "int"
+        },
+        "name" : "read",
+        "args" : [ ],
+        "destination" : {
+          "type" : "decisionState",
+          "pos" : {
+            "line" : 10,
+            "column" : 16
+          },
+          "decisions" : [ {
+            "type" : "decision",
+            "pos" : {
+              "line" : 10,
+              "column" : 17
+            },
+            "label" : "true",
+            "destination" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 10,
+                "column" : 23
+              },
+              "name" : "Read",
+              "string" : "Read"
+            }
+          }, {
+            "type" : "decision",
+            "pos" : {
+              "line" : 10,
+              "column" : 29
+            },
+            "label" : "false",
+            "destination" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 10,
+                "column" : 36
+              },
+              "name" : "Close",
+              "string" : "Close"
+            }
+          } ]
+        }
+      }, {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 12,
+          "column" : 4
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 12,
+            "column" : 4
+          },
+          "name" : "voidd",
+          "string" : "voidd"
+        },
+        "name" : "close",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 12,
+            "column" : 19
+          },
+          "name" : "end",
+          "string" : "end"
+        }
+      } ]
+    }, {
+      "type" : "state",
+      "pos" : {
+        "line" : 15,
+        "column" : 2
+      },
+      "name" : "Open",
+      "actions" : [ {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 16,
+          "column" : 4
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 16,
+            "column" : 4
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "close",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 16,
+            "column" : 18
+          },
+          "name" : "end",
+          "string" : "end"
+        }
+      }, {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 18,
+          "column" : 4
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 18,
+            "column" : 4
+          },
+          "name" : "boolean",
+          "string" : "boolean"
+        },
+        "name" : "hasNext2",
+        "args" : [ ],
+        "destination" : {
+          "type" : "state",
+          "pos" : {
+            "line" : 18,
+            "column" : 24
+          },
+          "name" : "anonymous::18:24",
+          "actions" : [ ]
+        }
+      }, {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 20,
+          "column" : 4
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 20,
+            "column" : 4
+          },
+          "name" : "boolean",
+          "string" : "boolean"
+        },
+        "name" : "hasNext",
+        "args" : [ ],
+        "destination" : {
+          "type" : "decisionState",
+          "pos" : {
+            "line" : 20,
+            "column" : 23
+          },
+          "decisions" : [ {
+            "type" : "decision",
+            "pos" : {
+              "line" : 20,
+              "column" : 24
+            },
+            "label" : "true",
+            "destination" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 20,
+                "column" : 30
+              },
+              "name" : "Read",
+              "string" : "Read"
+            }
+          } ]
+        }
+      } ]
+    }, {
+      "type" : "state",
+      "pos" : {
+        "line" : 24,
+        "column" : 2
+      },
+      "name" : "Close",
+      "actions" : [ {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 25,
+          "column" : 4
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 25,
+            "column" : 4
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "close",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 25,
+            "column" : 18
+          },
+          "name" : "end",
+          "string" : "end"
+        }
+      }, {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 27,
+          "column" : 4
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 27,
+            "column" : 4
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "close",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 27,
+            "column" : 18
+          },
+          "name" : "Close",
+          "string" : "Close"
+        }
+      } ]
+    } ]
+  }
+}

@@ -1,0 +1,14 @@
+import java.util.Map;
+import java.util.List;
+import java.util.Set;
+import java.util.Optional;
+import java.util.function.Function;
+
+typestate ValidGeneric5 {
+    State0 = {
+        Map<String, Map<List<Integer>, Set<Optional<String>>>> m(
+            Map<String, List<Set<Integer>>>,
+            Function<Map<String, Integer>, List<Set<Optional<String>>>>,
+            List<Map<String, Set<Optional<Integer>>>>): State0
+    }
+}

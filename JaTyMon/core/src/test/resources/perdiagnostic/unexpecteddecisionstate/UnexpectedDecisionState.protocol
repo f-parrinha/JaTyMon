@@ -1,0 +1,9 @@
+import perdiagnostic.common.TestClass;
+
+
+typestate UnexpectedDecisionState {
+    State0 = {
+        int m1(): <TEST_1: State0, RANDOM_LABEL: State0>,
+        TestClass m2(): <TEST_1: State0, RANDOM_LABEL: State0>
+    }
+}

@@ -1,0 +1,8 @@
+import perdiagnostic.common.TestClass;
+import perdiagnostic.common.TestClass;
+
+typestate DuplicateImport {
+    State0 = {
+        TestClass m(): State0
+    }
+}

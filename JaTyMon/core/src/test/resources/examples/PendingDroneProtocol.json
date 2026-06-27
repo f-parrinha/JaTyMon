@@ -1,0 +1,532 @@
+{
+  "type": "typestate",
+  "pos": {
+    "line": 1,
+    "column": 0
+  },
+  "imports": [
+    {
+      "type": "import",
+      "pos": {
+        "line": 1,
+        "column": 0
+      },
+      "ref": {
+        "type": "member",
+        "pos": {
+          "line": 1,
+          "column": 7
+        },
+        "ref": {
+          "type": "member",
+          "pos": {
+            "line": 1,
+            "column": 7
+          },
+          "ref": {
+            "type": "id",
+            "pos": {
+              "line": 1,
+              "column": 7
+            },
+            "name": "examples",
+            "string": "examples"
+          },
+          "id": {
+            "type": "id",
+            "pos": {
+              "line": 1,
+              "column": 16
+            },
+            "name": "PendingDroneProtocol",
+            "string": "PendingDroneProtocol"
+          },
+          "string": "examples.PendingDroneProtocol"
+        },
+        "id": {
+          "type": "id",
+          "pos": {
+            "line": 1,
+            "column": 37
+          },
+          "name": "Drone",
+          "string": "Drone"
+        },
+        "string": "examples.PendingDroneProtocol.Drone"
+      },
+      "staticc": false,
+      "star": false
+    },
+    {
+      "type": "import",
+      "pos": {
+        "line": 2,
+        "column": 0
+      },
+      "ref": {
+        "type": "member",
+        "pos": {
+          "line": 2,
+          "column": 7
+        },
+        "ref": {
+          "type": "member",
+          "pos": {
+            "line": 2,
+            "column": 7
+          },
+          "ref": {
+            "type": "id",
+            "pos": {
+              "line": 2,
+              "column": 7
+            },
+            "name": "examples",
+            "string": "examples"
+          },
+          "id": {
+            "type": "id",
+            "pos": {
+              "line": 2,
+              "column": 16
+            },
+            "name": "PendingDroneProtocol",
+            "string": "PendingDroneProtocol"
+          },
+          "string": "examples.PendingDroneProtocol"
+        },
+        "id": {
+          "type": "id",
+          "pos": {
+            "line": 2,
+            "column": 37
+          },
+          "name": "DroneTask",
+          "string": "DroneTask"
+        },
+        "string": "examples.PendingDroneProtocol.DroneTask"
+      },
+      "staticc": false,
+      "star": false
+    }
+  ],
+  "decl": {
+    "type": "declaration",
+    "pos": {
+      "line": 4,
+      "column": 0
+    },
+    "name": "PendingDroneProtocol",
+    "states": [
+      {
+        "type": "state",
+        "pos": {
+          "line": 6,
+          "column": 2
+        },
+        "name": "NO_TASK_HOVERING",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 7,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 7,
+                "column": 4
+              },
+              "name": "Drone",
+              "string": "Drone"
+            },
+            "name": "takeHoveringDrone",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 7,
+                "column": 31
+              },
+              "name": "NO_TASK",
+              "string": "NO_TASK"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 8,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 8,
+                "column": 4
+              },
+              "name": "boolean",
+              "string": "boolean"
+            },
+            "name": "completed",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 8,
+                "column": 25
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 8,
+                    "column": 26
+                  },
+                  "label": "true",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 8,
+                      "column": 32
+                    },
+                    "name": "NO_TASK_HOVERING",
+                    "string": "NO_TASK_HOVERING"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 8,
+                    "column": 50
+                  },
+                  "label": "false",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 8,
+                      "column": 57
+                    },
+                    "name": "WITH_TASK_FLYING",
+                    "string": "WITH_TASK_FLYING"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 11,
+          "column": 2
+        },
+        "name": "NO_TASK",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 12,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 12,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "setTask",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 12,
+                  "column": 17
+                },
+                "name": "Drone",
+                "string": "Drone"
+              },
+              {
+                "type": "id",
+                "pos": {
+                  "line": 12,
+                  "column": 24
+                },
+                "name": "DroneTask",
+                "string": "DroneTask"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 12,
+                "column": 36
+              },
+              "name": "WITH_TASK_FLYING",
+              "string": "WITH_TASK_FLYING"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 13,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 13,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "finishTask",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 13,
+                  "column": 20
+                },
+                "name": "Drone",
+                "string": "Drone"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 13,
+                "column": 28
+              },
+              "name": "NO_TASK_HOVERING",
+              "string": "NO_TASK_HOVERING"
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 16,
+          "column": 2
+        },
+        "name": "WITH_TASK_FLYING",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 17,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 17,
+                "column": 4
+              },
+              "name": "Drone",
+              "string": "Drone"
+            },
+            "name": "takeFlyingDrone",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 17,
+                "column": 29
+              },
+              "name": "WITH_TASK",
+              "string": "WITH_TASK"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 18,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 18,
+                "column": 4
+              },
+              "name": "boolean",
+              "string": "boolean"
+            },
+            "name": "completed",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 18,
+                "column": 25
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 18,
+                    "column": 26
+                  },
+                  "label": "true",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 18,
+                      "column": 32
+                    },
+                    "name": "NO_TASK_HOVERING",
+                    "string": "NO_TASK_HOVERING"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 18,
+                    "column": 50
+                  },
+                  "label": "false",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 18,
+                      "column": 57
+                    },
+                    "name": "WITH_TASK_FLYING",
+                    "string": "WITH_TASK_FLYING"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 21,
+          "column": 2
+        },
+        "name": "WITH_TASK",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 22,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 22,
+                "column": 4
+              },
+              "name": "DroneTask",
+              "string": "DroneTask"
+            },
+            "name": "getTask",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 22,
+                "column": 25
+              },
+              "name": "WITH_TASK",
+              "string": "WITH_TASK"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 23,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 23,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "continueTask",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 23,
+                  "column": 22
+                },
+                "name": "Drone",
+                "string": "Drone"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 23,
+                "column": 30
+              },
+              "name": "WITH_TASK_FLYING",
+              "string": "WITH_TASK_FLYING"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 24,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 24,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "finishTask",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 24,
+                  "column": 20
+                },
+                "name": "Drone",
+                "string": "Drone"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 24,
+                "column": 28
+              },
+              "name": "NO_TASK_HOVERING",
+              "string": "NO_TASK_HOVERING"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

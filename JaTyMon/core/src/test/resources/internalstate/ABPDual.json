@@ -1,0 +1,336 @@
+{
+  "type" : "typestate",
+  "pos" : {
+    "line" : 1,
+    "column" : 0
+  },
+  "imports" : [ ],
+  "decl" : {
+    "type" : "declaration",
+    "pos" : {
+      "line" : 1,
+      "column" : 0
+    },
+    "name" : "ABPDual",
+    "internalState" : [ {
+      "type" : "ext",
+      "pos" : {
+        "line" : 2,
+        "column" : 4
+      },
+      "name" : "n"
+    }, {
+      "type" : "val",
+      "pos" : {
+        "line" : 3,
+        "column" : 4
+      },
+      "name" : "conns",
+      "operand" : {
+        "type" : "numberOperand",
+        "pos" : {
+          "line" : 3,
+          "column" : 16
+        },
+        "value" : 0
+      }
+    }, {
+      "type" : "assign",
+      "pos" : {
+        "line" : 5,
+        "column" : 4
+      },
+      "name" : "A1",
+      "assignExpr" : {
+        "type" : "assignExpr",
+        "pos" : {
+          "line" : 5,
+          "column" : 15
+        },
+        "valName" : "conns",
+        "arithExpr" : {
+          "type" : "binaryArithExpr",
+          "pos" : {
+            "line" : 5,
+            "column" : 24
+          },
+          "arith1" : {
+            "type" : "idOperand",
+            "pos" : {
+              "line" : 5,
+              "column" : 24
+            },
+            "value" : "conns"
+          },
+          "operator" : "ADD",
+          "arith2" : {
+            "type" : "numberOperand",
+            "pos" : {
+              "line" : 5,
+              "column" : 32
+            },
+            "value" : 1
+          }
+        }
+      }
+    }, {
+      "type" : "assign",
+      "pos" : {
+        "line" : 6,
+        "column" : 4
+      },
+      "name" : "A2",
+      "assignExpr" : {
+        "type" : "assignExpr",
+        "pos" : {
+          "line" : 6,
+          "column" : 15
+        },
+        "valName" : "conns",
+        "arithExpr" : {
+          "type" : "binaryArithExpr",
+          "pos" : {
+            "line" : 6,
+            "column" : 24
+          },
+          "arith1" : {
+            "type" : "idOperand",
+            "pos" : {
+              "line" : 6,
+              "column" : 24
+            },
+            "value" : "conns"
+          },
+          "operator" : "SUB",
+          "arith2" : {
+            "type" : "numberOperand",
+            "pos" : {
+              "line" : 6,
+              "column" : 32
+            },
+            "value" : 1
+          }
+        }
+      }
+    }, {
+      "type" : "pred",
+      "pos" : {
+        "line" : 7,
+        "column" : 4
+      },
+      "name" : "P1",
+      "boolExpr" : {
+        "type" : "cmpExpr",
+        "pos" : {
+          "line" : 7,
+          "column" : 13
+        },
+        "arith1" : {
+          "type" : "idOperand",
+          "pos" : {
+            "line" : 7,
+            "column" : 13
+          },
+          "value" : "conns"
+        },
+        "arith2" : {
+          "type" : "idOperand",
+          "pos" : {
+            "line" : 7,
+            "column" : 21
+          },
+          "value" : "n"
+        }
+      }
+    } ],
+    "states" : [ {
+      "type" : "state",
+      "pos" : {
+        "line" : 9,
+        "column" : 4
+      },
+      "name" : "State1",
+      "actions" : [ {
+        "type" : "action",
+        "actionType" : "Input",
+        "pos" : {
+          "line" : 10,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 10,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "conn",
+        "args" : [ ],
+        "ratio" : 0.5,
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 10,
+            "column" : 26
+          },
+          "name" : "State1",
+          "string" : "State1"
+        }
+      }, {
+        "type" : "action",
+        "actionType" : "Input",
+        "pos" : {
+          "line" : 11,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 11,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "connUp",
+        "args" : [ ],
+        "ratio" : 0.5,
+        "preAssignmentNames" : [ "A1" ],
+        "predicateNames" : [ "P1" ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 11,
+            "column" : 36
+          },
+          "name" : "State2",
+          "string" : "State2"
+        }
+      }, {
+        "type" : "action",
+        "actionType" : "Input",
+        "pos" : {
+          "line" : 12,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 12,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "connFailed",
+        "args" : [ ],
+        "ratio" : 0.0,
+        "preAssignmentNames" : [ "A2" ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 12,
+            "column" : 37
+          },
+          "name" : "State1",
+          "string" : "State1"
+        }
+      } ]
+    }, {
+      "type" : "state",
+      "pos" : {
+        "line" : 15,
+        "column" : 4
+      },
+      "name" : "State2",
+      "actions" : [ {
+        "type" : "action",
+        "actionType" : "Input",
+        "pos" : {
+          "line" : 16,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 16,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "msg",
+        "args" : [ ],
+        "ratio" : 0.5,
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 16,
+            "column" : 25
+          },
+          "name" : "State2",
+          "string" : "State2"
+        }
+      }, {
+        "type" : "action",
+        "actionType" : "Input",
+        "pos" : {
+          "line" : 17,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 17,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "ack",
+        "args" : [ ],
+        "ratio" : 0.5,
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 17,
+            "column" : 25
+          },
+          "name" : "State2",
+          "string" : "State2"
+        }
+      }, {
+        "type" : "action",
+        "actionType" : "Input",
+        "pos" : {
+          "line" : 18,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 18,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "connFailed",
+        "args" : [ ],
+        "ratio" : 0.0,
+        "preAssignmentNames" : [ "A2" ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 18,
+            "column" : 37
+          },
+          "name" : "State1",
+          "string" : "State1"
+        }
+      } ]
+    } ]
+  }
+}

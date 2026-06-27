@@ -1,0 +1,106 @@
+{
+  "type": "typestate",
+  "pos": {
+    "line": 1,
+    "column": 0
+  },
+  "pkg": {
+    "type": "package",
+    "pos": {
+      "line": 1,
+      "column": 0
+    },
+    "ref": {
+      "type": "member",
+      "pos": {
+        "line": 1,
+        "column": 8
+      },
+      "ref": {
+        "type": "member",
+        "pos": {
+          "line": 1,
+          "column": 8
+        },
+        "ref": {
+          "type": "id",
+          "pos": {
+            "line": 1,
+            "column": 8
+          },
+          "name": "does",
+          "string": "does"
+        },
+        "id": {
+          "type": "id",
+          "pos": {
+            "line": 1,
+            "column": 13
+          },
+          "name": "not",
+          "string": "not"
+        },
+        "string": "does.not"
+      },
+      "id": {
+        "type": "id",
+        "pos": {
+          "line": 1,
+          "column": 17
+        },
+        "name": "exist",
+        "string": "exist"
+      },
+      "string": "does.not.exist"
+    }
+  },
+  "imports": [],
+  "decl": {
+    "type": "declaration",
+    "pos": {
+      "line": 3,
+      "column": 0
+    },
+    "name": "PackageCannotBeResolved",
+    "states": [
+      {
+        "type": "state",
+        "pos": {
+          "line": 4,
+          "column": 4
+        },
+        "name": "State0",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 5,
+              "column": 8
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 5,
+                "column": 8
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "m",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 5,
+                "column": 18
+              },
+              "name": "State0",
+              "string": "State0"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

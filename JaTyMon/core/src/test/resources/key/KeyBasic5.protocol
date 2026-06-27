@@ -1,0 +1,7 @@
+typestate KeyBasic5 keyed clientId {
+    Ext clientId;
+
+    State0 = {
+        void m(): State0
+    }
+}

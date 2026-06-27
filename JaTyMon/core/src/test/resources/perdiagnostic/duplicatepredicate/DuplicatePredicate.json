@@ -1,0 +1,113 @@
+{
+  "type" : "typestate",
+  "pos" : {
+    "line" : 1,
+    "column" : 0
+  },
+  "imports" : [ ],
+  "decl" : {
+    "type" : "declaration",
+    "pos" : {
+      "line" : 1,
+      "column" : 0
+    },
+    "name" : "DuplicatePredicate",
+    "internalState" : [ {
+      "type" : "pred",
+      "pos" : {
+        "line" : 3,
+        "column" : 4
+      },
+      "name" : "P",
+      "boolExpr" : {
+        "type" : "cmpExpr",
+        "pos" : {
+          "line" : 3,
+          "column" : 12
+        },
+        "arith1" : {
+          "type" : "numberOperand",
+          "pos" : {
+            "line" : 3,
+            "column" : 12
+          },
+          "value" : 0
+        },
+        "arith2" : {
+          "type" : "numberOperand",
+          "pos" : {
+            "line" : 3,
+            "column" : 16
+          },
+          "value" : 0
+        }
+      }
+    }, {
+      "type" : "pred",
+      "pos" : {
+        "line" : 4,
+        "column" : 4
+      },
+      "name" : "P",
+      "boolExpr" : {
+        "type" : "cmpExpr",
+        "pos" : {
+          "line" : 4,
+          "column" : 12
+        },
+        "arith1" : {
+          "type" : "numberOperand",
+          "pos" : {
+            "line" : 4,
+            "column" : 12
+          },
+          "value" : 0
+        },
+        "arith2" : {
+          "type" : "numberOperand",
+          "pos" : {
+            "line" : 4,
+            "column" : 16
+          },
+          "value" : 0
+        }
+      }
+    } ],
+    "states" : [ {
+      "type" : "state",
+      "pos" : {
+        "line" : 6,
+        "column" : 4
+      },
+      "name" : "State0",
+      "actions" : [ {
+        "type" : "action",
+        "actionType" : "Input",
+        "pos" : {
+          "line" : 7,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 7,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "m",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 7,
+            "column" : 18
+          },
+          "name" : "State0",
+          "string" : "State0"
+        }
+      } ]
+    } ]
+  }
+}

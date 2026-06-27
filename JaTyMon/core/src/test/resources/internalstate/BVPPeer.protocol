@@ -1,0 +1,10 @@
+typestate BVPPeer {
+    State1 = {
+        void vreq(): State2
+    }
+    State2 = {
+        void vreq()[0.5]: State2,
+        void vack()[0.5]: State2,
+        void vwb(): State2
+    }
+}

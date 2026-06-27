@@ -1,0 +1,143 @@
+{
+  "type" : "typestate",
+  "pos" : {
+    "line" : 1,
+    "column" : 0
+  },
+  "imports" : [ ],
+  "decl" : {
+    "type" : "declaration",
+    "pos" : {
+      "line" : 1,
+      "column" : 0
+    },
+    "name" : "BVPPeer",
+    "states" : [ {
+      "type" : "state",
+      "pos" : {
+        "line" : 2,
+        "column" : 4
+      },
+      "name" : "State1",
+      "actions" : [ {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 3,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 3,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "vreq",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 3,
+            "column" : 21
+          },
+          "name" : "State2",
+          "string" : "State2"
+        }
+      } ]
+    }, {
+      "type" : "state",
+      "pos" : {
+        "line" : 5,
+        "column" : 4
+      },
+      "name" : "State2",
+      "actions" : [ {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 6,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 6,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "vreq",
+        "args" : [ ],
+        "ratio" : 0.5,
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 6,
+            "column" : 26
+          },
+          "name" : "State2",
+          "string" : "State2"
+        }
+      }, {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 7,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 7,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "vack",
+        "args" : [ ],
+        "ratio" : 0.5,
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 7,
+            "column" : 26
+          },
+          "name" : "State2",
+          "string" : "State2"
+        }
+      }, {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 8,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 8,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "vwb",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 8,
+            "column" : 20
+          },
+          "name" : "State2",
+          "string" : "State2"
+        }
+      } ]
+    } ]
+  }
+}

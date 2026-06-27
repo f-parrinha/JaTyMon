@@ -1,0 +1,91 @@
+{
+  "type" : "typestate",
+  "pos" : {
+    "line" : 1,
+    "column" : 0
+  },
+  "imports" : [ ],
+  "decl" : {
+    "type" : "declaration",
+    "pos" : {
+      "line" : 1,
+      "column" : 0
+    },
+    "name" : "UndefinedField",
+    "internalState" : [ {
+      "type" : "val",
+      "pos" : {
+        "line" : 7,
+        "column" : 4
+      },
+      "name" : "x",
+      "operand" : {
+        "type" : "idOperand",
+        "pos" : {
+          "line" : 7,
+          "column" : 12
+        },
+        "value" : "y"
+      }
+    }, {
+      "type" : "assign",
+      "pos" : {
+        "line" : 4,
+        "column" : 4
+      },
+      "name" : "A",
+      "assignExpr" : {
+        "type" : "assignExpr",
+        "pos" : {
+          "line" : 4,
+          "column" : 14
+        },
+        "valName" : "x",
+        "arithExpr" : {
+          "type" : "numberOperand",
+          "pos" : {
+            "line" : 4,
+            "column" : 19
+          },
+          "value" : 1
+        }
+      }
+    } ],
+    "states" : [ {
+      "type" : "state",
+      "pos" : {
+        "line" : 9,
+        "column" : 4
+      },
+      "name" : "State0",
+      "actions" : [ {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 10,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 10,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "m",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 10,
+            "column" : 18
+          },
+          "name" : "State0",
+          "string" : "State0"
+        }
+      } ]
+    } ]
+  }
+}

@@ -1,0 +1,7 @@
+typestate AnonymousNotEnd {
+    State0 = {
+        void m(): {
+            void m(): State0
+        }
+    }
+}

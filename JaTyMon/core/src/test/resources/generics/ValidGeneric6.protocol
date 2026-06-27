@@ -1,0 +1,10 @@
+import java.util.List;
+
+typestate ValidGeneric6 {
+    State0 = {
+        // Testing raw types
+        void m1(List): State0,
+        void m2(List): State0,
+        void m3(List): State0
+    }
+}

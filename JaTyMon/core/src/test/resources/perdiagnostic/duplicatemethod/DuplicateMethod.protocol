@@ -1,0 +1,8 @@
+typestate DuplicateMethod {
+    State0 = {
+        void m(): State1,
+        void m(): end
+    }
+
+    State1 = {void m1(): State1} + (void m1():State0)
+}

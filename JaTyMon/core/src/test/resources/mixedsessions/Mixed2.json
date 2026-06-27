@@ -1,0 +1,211 @@
+{
+  "type" : "typestate",
+  "pos" : {
+    "line" : 1,
+    "column" : 0
+  },
+  "imports" : [ ],
+  "decl" : {
+    "type" : "declaration",
+    "pos" : {
+      "line" : 1,
+      "column" : 0
+    },
+    "name" : "Mixed2",
+    "states" : [ {
+      "type" : "state",
+      "pos" : {
+        "line" : 2,
+        "column" : 4
+      },
+      "name" : "State0",
+      "actions" : [ {
+        "type" : "action",
+        "pos" : {
+          "line" : 2,
+          "column" : 14
+        },
+        "actionType" : "Output",
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 2,
+            "column" : 14
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "send",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 2,
+            "column" : 27
+          },
+          "name" : "State2",
+          "string" : "State2"
+        }
+      } ]
+    }, {
+      "type" : "state",
+      "pos" : {
+        "line" : 3,
+        "column" : 4
+      },
+      "name" : "State1",
+      "actions" : [ {
+        "type" : "action",
+        "pos" : {
+          "line" : 3,
+          "column" : 14
+        },
+        "actionType" : "Input",
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 3,
+            "column" : 14
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "receive",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 3,
+            "column" : 30
+          },
+          "name" : "State2",
+          "string" : "State2"
+        }
+      } ]
+    }, {
+      "type" : "state",
+      "pos" : {
+        "line" : 4,
+        "column" : 4
+      },
+      "name" : "State2",
+      "actions" : [ {
+        "type" : "action",
+        "pos" : {
+          "line" : 4,
+          "column" : 61
+        },
+        "actionType" : "Input",
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 4,
+            "column" : 61
+          },
+          "name" : "boolean",
+          "string" : "boolean"
+        },
+        "name" : "b",
+        "args" : [ ],
+        "destination" : {
+          "type" : "decisionState",
+          "pos" : {
+            "line" : 4,
+            "column" : 74
+          },
+          "decisions" : [ {
+            "type" : "decision",
+            "pos" : {
+              "line" : 4,
+              "column" : 75
+            },
+            "label" : "true",
+            "destination" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 4,
+                "column" : 81
+              },
+              "name" : "State2",
+              "string" : "State2"
+            }
+          }, {
+            "type" : "decision",
+            "pos" : {
+              "line" : 4,
+              "column" : 89
+            },
+            "label" : "false",
+            "destination" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 4,
+                "column" : 96
+              },
+              "name" : "State1",
+              "string" : "State1"
+            }
+          } ]
+        }
+      }, {
+        "type" : "action",
+        "pos" : {
+          "line" : 4,
+          "column" : 14
+        },
+        "actionType" : "Output",
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 4,
+            "column" : 14
+          },
+          "name" : "boolean",
+          "string" : "boolean"
+        },
+        "name" : "a",
+        "args" : [ ],
+        "destination" : {
+          "type" : "decisionState",
+          "pos" : {
+            "line" : 4,
+            "column" : 27
+          },
+          "decisions" : [ {
+            "type" : "decision",
+            "pos" : {
+              "line" : 4,
+              "column" : 28
+            },
+            "label" : "true",
+            "destination" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 4,
+                "column" : 34
+              },
+              "name" : "State0",
+              "string" : "State0"
+            }
+          }, {
+            "type" : "decision",
+            "pos" : {
+              "line" : 4,
+              "column" : 42
+            },
+            "label" : "false",
+            "destination" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 4,
+                "column" : 49
+              },
+              "name" : "State1",
+              "string" : "State1"
+            }
+          } ]
+        }
+      } ]
+    } ]
+  }
+}

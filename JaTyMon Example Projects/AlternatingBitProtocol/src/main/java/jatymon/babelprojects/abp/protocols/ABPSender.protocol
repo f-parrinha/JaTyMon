@@ -1,0 +1,28 @@
+import jatymon.babelprojects.abp.timers.SendBitTimer;
+import jatymon.babelprojects.abp.notifications.messages.ReceivedAckMessageNotification;
+import jatymon.babelprojects.abp.notifications.connection.ConnectionDownNotification;
+import jatymon.babelprojects.abp.notifications.connection.ConnectionUpNotification;
+
+typestate ABPSender {
+
+    // Start connecting
+    Start = {
+        void uponConnectionUp(ConnectionUpNotification, short)[1]: S0,
+        void uponConnectionDown(ConnectionDownNotification, short)[0]: Start
+    }
+
+    // Start sending bit messages
+    S0 = {
+        void uponConnectionDown(ConnectionDownNotification, short)[0]: Start
+    } + (
+        void uponSendBitTimer(SendBitTimer, long)[1]: S1
+    )
+
+    // Keep sending while acknowledging
+    S1 = {
+        void uponConnectionDown(ConnectionDownNotification, short): Start,
+        void receiveAckMessage(ReceivedAckMessageNotification, short)[0.5]: S1
+    } + (
+        void uponSendBitTimer(SendBitTimer, long)[0.5]: S1
+    )
+}

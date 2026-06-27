@@ -1,0 +1,8 @@
+import java.util.Map;
+
+// ::Error UnknownTypeDiagnostic -> wrong arity
+typestate InvalidGeneric6 {
+    State0 = {
+        void m(Map<String>): State0
+    }
+}

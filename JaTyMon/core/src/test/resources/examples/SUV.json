@@ -1,0 +1,495 @@
+{
+  "type": "typestate",
+  "pos": {
+    "line": 1,
+    "column": 0
+  },
+  "imports": [
+    {
+      "type": "import",
+      "pos": {
+        "line": 1,
+        "column": 0
+      },
+      "ref": {
+        "type": "member",
+        "pos": {
+          "line": 1,
+          "column": 7
+        },
+        "ref": {
+          "type": "member",
+          "pos": {
+            "line": 1,
+            "column": 7
+          },
+          "ref": {
+            "type": "id",
+            "pos": {
+              "line": 1,
+              "column": 7
+            },
+            "name": "examples",
+            "string": "examples"
+          },
+          "id": {
+            "type": "id",
+            "pos": {
+              "line": 1,
+              "column": 16
+            },
+            "name": "SUV",
+            "string": "SUV"
+          },
+          "string": "examples.SUV"
+        },
+        "id": {
+          "type": "id",
+          "pos": {
+            "line": 1,
+            "column": 20
+          },
+          "name": "Mode",
+          "string": "Mode"
+        },
+        "string": "examples.SUV.Mode"
+      },
+      "staticc": false,
+      "star": false
+    }
+  ],
+  "decl": {
+    "type": "declaration",
+    "pos": {
+      "line": 3,
+      "column": 0
+    },
+    "name": "SUV",
+    "states": [
+      {
+        "type": "state",
+        "pos": {
+          "line": 4,
+          "column": 2
+        },
+        "name": "OFF",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 5,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 5,
+                "column": 4
+              },
+              "name": "boolean",
+              "string": "boolean"
+            },
+            "name": "turnOn",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 5,
+                "column": 22
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 5,
+                    "column": 23
+                  },
+                  "label": "true",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 5,
+                      "column": 29
+                    },
+                    "name": "COMFORT_ON",
+                    "string": "COMFORT_ON"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 5,
+                    "column": 41
+                  },
+                  "label": "false",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 5,
+                      "column": 48
+                    },
+                    "name": "OFF",
+                    "string": "OFF"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 8,
+          "column": 2
+        },
+        "name": "COMFORT_ON",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 9,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 9,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "turnOff",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 9,
+                "column": 20
+              },
+              "name": "OFF",
+              "string": "OFF"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 10,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 10,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "setSpeed",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 10,
+                  "column": 18
+                },
+                "name": "int",
+                "string": "int"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 10,
+                "column": 24
+              },
+              "name": "COMFORT_ON",
+              "string": "COMFORT_ON"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 11,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 11,
+                "column": 4
+              },
+              "name": "Mode",
+              "string": "Mode"
+            },
+            "name": "switchMode",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 11,
+                "column": 23
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 11,
+                    "column": 24
+                  },
+                  "label": "SPORT",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 11,
+                      "column": 31
+                    },
+                    "name": "SPORT_ON",
+                    "string": "SPORT_ON"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 11,
+                    "column": 41
+                  },
+                  "label": "COMFORT",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 11,
+                      "column": 50
+                    },
+                    "name": "COMFORT_ON",
+                    "string": "COMFORT_ON"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 12,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 12,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "setEcoDrive",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 12,
+                  "column": 21
+                },
+                "name": "boolean",
+                "string": "boolean"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 12,
+                "column": 31
+              },
+              "name": "COMFORT_ON",
+              "string": "COMFORT_ON"
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 15,
+          "column": 2
+        },
+        "name": "SPORT_ON",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 16,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 16,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "turnOff",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 16,
+                "column": 20
+              },
+              "name": "OFF",
+              "string": "OFF"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 17,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 17,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "setSpeed",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 17,
+                  "column": 18
+                },
+                "name": "int",
+                "string": "int"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 17,
+                "column": 24
+              },
+              "name": "SPORT_ON",
+              "string": "SPORT_ON"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 18,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 18,
+                "column": 4
+              },
+              "name": "Mode",
+              "string": "Mode"
+            },
+            "name": "switchMode",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 18,
+                "column": 23
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 18,
+                    "column": 24
+                  },
+                  "label": "SPORT",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 18,
+                      "column": 31
+                    },
+                    "name": "SPORT_ON",
+                    "string": "SPORT_ON"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 18,
+                    "column": 41
+                  },
+                  "label": "COMFORT",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 18,
+                      "column": 50
+                    },
+                    "name": "COMFORT_ON",
+                    "string": "COMFORT_ON"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 19,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 19,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "setFourWheels",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 19,
+                  "column": 23
+                },
+                "name": "boolean",
+                "string": "boolean"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 19,
+                "column": 33
+              },
+              "name": "SPORT_ON",
+              "string": "SPORT_ON"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+typestate RatioSimple {
+    State0 = {
+        void m1()[0.5]: State0,
+        void m2()[0.5]: end
+    }
+}

@@ -1,0 +1,12 @@
+typestate UndefinedField {
+
+    // :: error: x is not declared yet
+    Assign A: x := 1;
+
+    // :: error: y is not declared
+    Val x = y;
+
+    State0 = {
+        void m(): State0
+    }
+}

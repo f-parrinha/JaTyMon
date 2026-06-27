@@ -1,0 +1,20 @@
+import java.net.*;
+
+// ::NOTE must natively support java.lang.*
+typestate ValidImportTest4 {
+    State0 = {
+        Socket m(Class,
+            Void,
+            Object,
+            String,
+            Character,
+            Boolean,
+            Number,
+            Integer,
+            Float,
+            Long,
+            Double,
+            Short,
+            Byte): State0
+    }
+}

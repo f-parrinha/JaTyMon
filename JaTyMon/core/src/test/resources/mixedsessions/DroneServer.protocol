@@ -1,0 +1,12 @@
+typestate DroneServer {
+    State0 = {
+        void connect(): State1,
+        void turnoff(): end
+    }
+    State1 = (void cameraRefresh(): State1) + {
+        void disconnect(): State0,
+        void manualInput(): State1,
+        void target(): State1,
+        void turnoff(): end
+    }
+}

@@ -1,0 +1,6 @@
+astValidationContext RatioSumLessThan1Auto {
+    State0 = {
+        void m1()[-0.1]: State0 ,
+        void m2()[*]: end
+    }
+}

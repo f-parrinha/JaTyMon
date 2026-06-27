@@ -1,0 +1,7 @@
+typestate InvalidRatioValue {
+    State0 = {
+        // Reports two InvalidRatioValue diagnostics. Keep it like this to make sure the sum is 1.
+        void m1()[-1]: State0,
+        void m2()[2]: State0
+    }
+}

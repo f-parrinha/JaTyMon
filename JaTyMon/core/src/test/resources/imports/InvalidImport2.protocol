@@ -1,0 +1,7 @@
+// ::Error cannot find EmptyClass (it is in "imports.test") due to no import statement
+
+typestate InvalidImportTest2 {
+    State0 = {
+        EmptyClass m(): State0
+    }
+}

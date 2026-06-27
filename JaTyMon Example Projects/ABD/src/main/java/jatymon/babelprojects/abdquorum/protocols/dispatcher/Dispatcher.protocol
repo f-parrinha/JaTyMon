@@ -1,0 +1,51 @@
+import java.util.Properties;
+import jatymon.babelprojects.abdquorum.messages.replica.readop.*;
+import jatymon.babelprojects.abdquorum.messages.replica.writeop.*;
+import jatymon.babelprojects.abdquorum.messages.client.*;
+import pt.unl.fct.di.novasys.channel.tcp.events.*;
+import pt.unl.fct.di.novasys.network.data.Host;
+import pt.unl.fct.di.novasys.babel.generic.ProtoMessage;
+
+typestate Dispatcher {
+    Ext conns;
+    Pred hasConns: conns > 0;
+    Pred noConns: conns = 0;
+
+    Init = {
+        void init(Properties): CreateTCPChannel
+    }
+
+    CreateTCPChannel = {
+        int createTcpChannel(String, String): Connect
+    }
+
+    Connect = {
+        void uponOutConnectionFailed(OutConnectionFailed<ProtoMessage>, int): Connect,
+        void uponOutConnectionUp(OutConnectionUp, int)[_; hasConns]: Main,
+        void uponInConnectionUp(InConnectionUp, int)[_; hasConns]: Main
+    } + (void connectAll(): Connect)
+
+    Main = {
+        void uponClientReadMessage(ClientReadMessage, Host, short, int): Main,
+        void uponClientReadAck(ClientReadAck, Host, short, int): Main,
+        void uponClientWriteMessage(ClientWriteMessage, Host, short, int): Main,
+        void uponClientWriteAck(ClientWriteAck, Host, short, int): Main,
+        void uponReadTagMessage(ReadTagMessage, Host, short, int): Main,
+        void uponReadTagAck(ReadTagAck, Host, short, int): Main,
+        void uponReadMessage(ReadMessage, Host, short, int): Main,
+        void uponReadAck(ReadAck, Host, short, int): Main,
+        void uponWriteMessage(WriteMessage, Host, short, int): Main,
+        void uponWriteAck(WriteAck, Host, short, int): Main,
+        void uponWriteBackMessage(WriteBackMessage, Host, short, int): Main,
+        void uponWriteBackAck(WriteBackAck, Host, short, int): Main,
+
+        // Connection
+        void uponOutConnectionFailed(OutConnectionFailed<ProtoMessage>, int): Main,
+        void uponOutConnectionUp(OutConnectionUp, int): Main,
+        void uponInConnectionUp(InConnectionUp, int): Main,
+        void uponInConnectionDown(InConnectionDown, int)[_; noConns]: Connect,
+        void uponOutConnectionDown(OutConnectionDown, int)[_; noConns]: Connect
+    }
+
+
+}

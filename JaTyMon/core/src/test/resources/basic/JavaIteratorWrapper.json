@@ -1,0 +1,238 @@
+{
+  "type": "typestate",
+  "pos": {
+    "line": 1,
+    "column": 0
+  },
+  "imports": [],
+  "decl": {
+    "type": "declaration",
+    "pos": {
+      "line": 1,
+      "column": 0
+    },
+    "name": "JavaIteratorWrapper",
+    "states": [
+      {
+        "type": "state",
+        "pos": {
+          "line": 2,
+          "column": 4
+        },
+        "name": "Start",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 3,
+              "column": 8
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 3,
+                "column": 8
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "init",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 3,
+                  "column": 18
+                },
+                "name": "JavaIterator",
+                "string": "JavaIterator"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 3,
+                "column": 33
+              },
+              "name": "HasNext",
+              "string": "HasNext"
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 5,
+          "column": 4
+        },
+        "name": "HasNext",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 6,
+              "column": 8
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 6,
+                "column": 8
+              },
+              "name": "boolean",
+              "string": "boolean"
+            },
+            "name": "hasNext",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 6,
+                "column": 27
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 6,
+                    "column": 28
+                  },
+                  "label": "true",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 6,
+                      "column": 34
+                    },
+                    "name": "Next",
+                    "string": "Next"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 6,
+                    "column": 40
+                  },
+                  "label": "false",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 6,
+                      "column": 47
+                    },
+                    "name": "end",
+                    "string": "end"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 8,
+          "column": 4
+        },
+        "name": "Next",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 9,
+              "column": 8
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 9,
+                "column": 8
+              },
+              "name": "boolean",
+              "string": "boolean"
+            },
+            "name": "hasNext",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 9,
+                "column": 27
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 9,
+                    "column": 28
+                  },
+                  "label": "true",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 9,
+                      "column": 34
+                    },
+                    "name": "Next",
+                    "string": "Next"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 9,
+                    "column": 40
+                  },
+                  "label": "false",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 9,
+                      "column": 47
+                    },
+                    "name": "end",
+                    "string": "end"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 10,
+              "column": 8
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 10,
+                "column": 8
+              },
+              "name": "String",
+              "string": "String"
+            },
+            "name": "next",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 10,
+                "column": 23
+              },
+              "name": "HasNext",
+              "string": "HasNext"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

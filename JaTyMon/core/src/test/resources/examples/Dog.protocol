@@ -1,0 +1,10 @@
+typestate Dog {
+  Init = {
+    void move(): Moved
+  }
+
+  Moved = {
+    void wag(): end,
+    void eat(): Init
+  }
+}

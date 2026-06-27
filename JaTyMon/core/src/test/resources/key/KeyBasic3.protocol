@@ -1,0 +1,5 @@
+typestate KeyBasic3 keyed clientId {
+    State0 = {
+        void m(): State0
+    }
+}

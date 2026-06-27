@@ -1,0 +1,5 @@
+typestate DuplicateTypestate {
+    State0 = {
+        void m(): State0
+    }
+}

@@ -1,0 +1,386 @@
+{
+  "type" : "typestate",
+  "pos" : {
+    "line" : 1,
+    "column" : 0
+  },
+  "imports" : [ ],
+  "decl" : {
+    "type" : "declaration",
+    "pos" : {
+      "line" : 1,
+      "column" : 0
+    },
+    "name" : "BVPLeader",
+    "internalState" : [ {
+      "type" : "ext",
+      "pos" : {
+        "line" : 2,
+        "column" : 4
+      },
+      "name" : "n"
+    }, {
+      "type" : "ext",
+      "pos" : {
+        "line" : 3,
+        "column" : 4
+      },
+      "name" : "k"
+    }, {
+      "type" : "val",
+      "pos" : {
+        "line" : 4,
+        "column" : 4
+      },
+      "name" : "acks",
+      "operand" : {
+        "type" : "numberOperand",
+        "pos" : {
+          "line" : 4,
+          "column" : 13
+        },
+        "value" : 0
+      }
+    }, {
+      "type" : "val",
+      "pos" : {
+        "line" : 5,
+        "column" : 4
+      },
+      "name" : "retries",
+      "operand" : {
+        "type" : "idOperand",
+        "pos" : {
+          "line" : 5,
+          "column" : 16
+        },
+        "value" : "k"
+      }
+    }, {
+      "type" : "assign",
+      "pos" : {
+        "line" : 10,
+        "column" : 4
+      },
+      "name" : "A1",
+      "assignExpr" : {
+        "type" : "assignExpr",
+        "pos" : {
+          "line" : 10,
+          "column" : 15
+        },
+        "valName" : "acks",
+        "arithExpr" : {
+          "type" : "binaryArithExpr",
+          "pos" : {
+            "line" : 10,
+            "column" : 23
+          },
+          "arith1" : {
+            "type" : "idOperand",
+            "pos" : {
+              "line" : 10,
+              "column" : 23
+            },
+            "value" : "acks"
+          },
+          "operator" : "ADD",
+          "arith2" : {
+            "type" : "numberOperand",
+            "pos" : {
+              "line" : 10,
+              "column" : 30
+            },
+            "value" : 1
+          }
+        }
+      }
+    }, {
+      "type" : "assign",
+      "pos" : {
+        "line" : 11,
+        "column" : 4
+      },
+      "name" : "A2",
+      "assignExpr" : {
+        "type" : "assignExpr",
+        "pos" : {
+          "line" : 11,
+          "column" : 15
+        },
+        "valName" : "retries",
+        "arithExpr" : {
+          "type" : "binaryArithExpr",
+          "pos" : {
+            "line" : 11,
+            "column" : 26
+          },
+          "arith1" : {
+            "type" : "idOperand",
+            "pos" : {
+              "line" : 11,
+              "column" : 26
+            },
+            "value" : "retries"
+          },
+          "operator" : "SUB",
+          "arith2" : {
+            "type" : "numberOperand",
+            "pos" : {
+              "line" : 11,
+              "column" : 36
+            },
+            "value" : 1
+          }
+        }
+      }
+    }, {
+      "type" : "assign",
+      "pos" : {
+        "line" : 12,
+        "column" : 4
+      },
+      "name" : "A3",
+      "assignExpr" : {
+        "type" : "assignExpr",
+        "pos" : {
+          "line" : 12,
+          "column" : 15
+        },
+        "valName" : "acks",
+        "arithExpr" : {
+          "type" : "numberOperand",
+          "pos" : {
+            "line" : 12,
+            "column" : 23
+          },
+          "value" : 0
+        }
+      }
+    }, {
+      "type" : "assign",
+      "pos" : {
+        "line" : 13,
+        "column" : 4
+      },
+      "name" : "A4",
+      "assignExpr" : {
+        "type" : "assignExpr",
+        "pos" : {
+          "line" : 13,
+          "column" : 15
+        },
+        "valName" : "retries",
+        "arithExpr" : {
+          "type" : "idOperand",
+          "pos" : {
+            "line" : 13,
+            "column" : 26
+          },
+          "value" : "k"
+        }
+      }
+    }, {
+      "type" : "pred",
+      "pos" : {
+        "line" : 7,
+        "column" : 4
+      },
+      "name" : "P1",
+      "boolExpr" : {
+        "type" : "cmpExpr",
+        "pos" : {
+          "line" : 7,
+          "column" : 13
+        },
+        "arith1" : {
+          "type" : "idOperand",
+          "pos" : {
+            "line" : 7,
+            "column" : 13
+          },
+          "value" : "acks"
+        },
+        "arith2" : {
+          "type" : "idOperand",
+          "pos" : {
+            "line" : 7,
+            "column" : 20
+          },
+          "value" : "n"
+        }
+      }
+    }, {
+      "type" : "pred",
+      "pos" : {
+        "line" : 8,
+        "column" : 4
+      },
+      "name" : "P2",
+      "boolExpr" : {
+        "type" : "cmpExpr",
+        "pos" : {
+          "line" : 8,
+          "column" : 13
+        },
+        "arith1" : {
+          "type" : "idOperand",
+          "pos" : {
+            "line" : 8,
+            "column" : 13
+          },
+          "value" : "retries"
+        },
+        "arith2" : {
+          "type" : "numberOperand",
+          "pos" : {
+            "line" : 8,
+            "column" : 23
+          },
+          "value" : 0
+        }
+      }
+    } ],
+    "states" : [ {
+      "type" : "state",
+      "pos" : {
+        "line" : 15,
+        "column" : 4
+      },
+      "name" : "State1",
+      "actions" : [ {
+        "type" : "action",
+  "actionType" : "Input",
+        "pos" : {
+          "line" : 16,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 16,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "vreq",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 16,
+            "column" : 21
+          },
+          "name" : "State2",
+          "string" : "State2"
+        }
+      } ]
+    }, {
+      "type" : "state",
+      "pos" : {
+        "line" : 18,
+        "column" : 4
+      },
+      "name" : "State2",
+      "actions" : [ {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 19,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 19,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "vreq",
+        "args" : [ ],
+        "ratio" : 0.5,
+        "preAssignmentNames" : [ "A2" ],
+        "predicateNames" : [ "P2" ],
+        "postAssignmentNames" : [ "A3", "A4" ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 19,
+            "column" : 34
+          },
+          "name" : "State2",
+          "string" : "State2"
+        }
+      }, {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 20,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 20,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "vack",
+        "args" : [ ],
+        "ratio" : 0.5,
+        "preAssignmentNames" : [ "A1" ],
+        "predicateNames" : [ "P1" ],
+        "postAssignmentNames" : [ "A3", "A4" ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 20,
+            "column" : 34
+          },
+          "name" : "State3",
+          "string" : "State3"
+        }
+      } ]
+    }, {
+      "type" : "state",
+      "pos" : {
+        "line" : 22,
+        "column" : 4
+      },
+      "name" : "State3",
+      "actions" : [ {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 23,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 23,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "vwb",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 23,
+            "column" : 20
+          },
+          "name" : "State2",
+          "string" : "State2"
+        }
+      } ]
+    } ]
+  }
+}

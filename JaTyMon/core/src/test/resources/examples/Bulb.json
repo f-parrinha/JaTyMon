@@ -1,0 +1,166 @@
+{
+  "type": "typestate",
+  "pos": {
+    "line": 1,
+    "column": 0
+  },
+  "imports": [],
+  "decl": {
+    "type": "declaration",
+    "pos": {
+      "line": 1,
+      "column": 0
+    },
+    "name": "Bulb",
+    "states": [
+      {
+        "type": "state",
+        "pos": {
+          "line": 2,
+          "column": 2
+        },
+        "name": "DISCONN",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 3,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 3,
+                "column": 4
+              },
+              "name": "boolean",
+              "string": "boolean"
+            },
+            "name": "connect",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 3,
+                "column": 23
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 3,
+                    "column": 24
+                  },
+                  "label": "true",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 3,
+                      "column": 30
+                    },
+                    "name": "CONN",
+                    "string": "CONN"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 3,
+                    "column": 36
+                  },
+                  "label": "false",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 3,
+                      "column": 43
+                    },
+                    "name": "DISCONN",
+                    "string": "DISCONN"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 6,
+          "column": 2
+        },
+        "name": "CONN",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 7,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 7,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "disconnect",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 7,
+                "column": 23
+              },
+              "name": "DISCONN",
+              "string": "DISCONN"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 8,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 8,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "setBrightness",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 8,
+                  "column": 23
+                },
+                "name": "int",
+                "string": "int"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 8,
+                "column": 29
+              },
+              "name": "CONN",
+              "string": "CONN"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

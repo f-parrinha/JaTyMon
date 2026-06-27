@@ -1,0 +1,16 @@
+import jatymon.babelprojects.multipaxos.notifications.messages.client.*;
+import jatymon.babelprojects.multipaxos.session.Operation;
+
+typestate ProbabilisticClient {
+    Init = {
+        void startClient(Operation.Type): Main
+    }
+
+    Main = {
+        void sendWriteMessage(boolean)[0.25]: Main,
+        void sendReadMessage(boolean)[0.25]: Main,
+        void uponClientWriteAck(ClientWriteAckNotification, short)[0.25]: Main,
+        void uponClientReadAck(ClientReadAckNotification, short)[0.25]: Main,
+        void stopClient(): end
+    }
+}

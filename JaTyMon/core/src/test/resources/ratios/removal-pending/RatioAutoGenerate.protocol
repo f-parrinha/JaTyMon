@@ -1,0 +1,12 @@
+astValidationContext RatioAutoGenerate {
+    // Should be successful! Because m1() will not be considered for ratio calculation
+    State0 = {
+        void m1(): State0,
+        void m2()[0.4]: State0,
+        void m3() [0.6]: State1
+    }
+
+    State1 = {
+        void m3() [*]: end
+    }
+}

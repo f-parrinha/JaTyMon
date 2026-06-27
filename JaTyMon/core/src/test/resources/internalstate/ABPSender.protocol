@@ -1,0 +1,24 @@
+typestate ABPSender {
+    Ext n;
+    Val conns = 0;
+
+    Assign A1: conns := conns + 1;
+    Assign A2: conns := conns - 1;
+    Pred P1: conns = n;
+
+    State1 = {
+        void conn()[0.5]: State1,
+        void connUp()[0.5; A1; P1]: State2,
+        void connFailed()[0; A2; _]: State1
+    }
+
+    State2 = {
+        void msg(): State3
+    }
+
+    State3 = {
+        void msg(): State3,
+        void ack(): State3,
+        void connFailed()[A2; _]: State1
+    }
+}

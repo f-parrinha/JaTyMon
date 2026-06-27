@@ -1,0 +1,14 @@
+import examples.RobotNodeProtocol.RobotNode;
+
+typestate RobotNodeProtocol {
+  INIT =  {
+    Robot take(): TAKEN,
+    RobotNode getNext(): INIT,
+    void setLast(RobotNode): INIT
+  }
+
+  TAKEN = {
+    void putBack(Robot): INIT,
+    RobotNode getNext(): end
+  }
+}

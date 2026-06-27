@@ -1,0 +1,280 @@
+{
+  "type": "typestate",
+  "pos": {
+    "line": 1,
+    "column": 0
+  },
+  "imports": [],
+  "decl": {
+    "type": "declaration",
+    "pos": {
+      "line": 1,
+      "column": 0
+    },
+    "name": "AlarmDeviceProtocol",
+    "states": [
+      {
+        "type": "state",
+        "pos": {
+          "line": 3,
+          "column": 2
+        },
+        "name": "DISC",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 4,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 4,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "connect",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 4,
+                "column": 20
+              },
+              "name": "CONN",
+              "string": "CONN"
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 7,
+          "column": 2
+        },
+        "name": "CONN",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 8,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 8,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "notify",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 8,
+                  "column": 16
+                },
+                "name": "double",
+                "string": "double"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 8,
+                "column": 25
+              },
+              "name": "NOTIFIED",
+              "string": "NOTIFIED"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 9,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 9,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "setThreshold",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 9,
+                  "column": 22
+                },
+                "name": "double",
+                "string": "double"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 9,
+                "column": 31
+              },
+              "name": "CONN",
+              "string": "CONN"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 10,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 10,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "disconnect",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 10,
+                "column": 23
+              },
+              "name": "DISC",
+              "string": "DISC"
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 13,
+          "column": 2
+        },
+        "name": "NOTIFIED",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 14,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 14,
+                "column": 4
+              },
+              "name": "boolean",
+              "string": "boolean"
+            },
+            "name": "thresholdCheck",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 14,
+                "column": 30
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 14,
+                    "column": 31
+                  },
+                  "label": "true",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 14,
+                      "column": 37
+                    },
+                    "name": "ALERT",
+                    "string": "ALERT"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 14,
+                    "column": 44
+                  },
+                  "label": "false",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 14,
+                      "column": 51
+                    },
+                    "name": "CONN",
+                    "string": "CONN"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 17,
+          "column": 2
+        },
+        "name": "ALERT",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 18,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 18,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "alert",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 18,
+                "column": 18
+              },
+              "name": "CONN",
+              "string": "CONN"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

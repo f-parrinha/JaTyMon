@@ -1,0 +1,79 @@
+{
+  "type" : "typestate",
+  "pos" : {
+    "line" : 1,
+    "column" : 0
+  },
+  "imports" : [ ],
+  "decl" : {
+    "type" : "declaration",
+    "pos" : {
+      "line" : 1,
+      "column" : 0
+    },
+    "name" : "AnonymousNotEnd",
+    "states" : [ {
+      "type" : "state",
+      "pos" : {
+        "line" : 2,
+        "column" : 4
+      },
+      "name" : "State0",
+      "actions" : [ {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 3,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 3,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "m",
+        "args" : [ ],
+        "destination" : {
+          "type" : "state",
+          "pos" : {
+            "line" : 3,
+            "column" : 18
+          },
+          "name" : "anonymous::3:18",
+          "actions" : [ {
+            "type" : "action",
+"actionType" : "Input",
+            "pos" : {
+              "line" : 4,
+              "column" : 12
+            },
+            "returnType" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 4,
+                "column" : 12
+              },
+              "name" : "void",
+              "string" : "void"
+            },
+            "name" : "m",
+            "args" : [ ],
+            "destination" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 4,
+                "column" : 22
+              },
+              "name" : "State0",
+              "string" : "State0"
+            }
+          } ]
+        }
+      } ]
+    } ]
+  }
+}

@@ -1,0 +1,8 @@
+import java.util.List;
+
+// :: UnknownTypeDiagnostic -> cannot resolve type List<int>
+typestate InvalidGeneric2 {
+    State0 = {
+        void m(List<int>): State0
+    }
+}

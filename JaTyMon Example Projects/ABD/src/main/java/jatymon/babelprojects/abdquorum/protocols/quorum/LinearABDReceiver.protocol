@@ -1,0 +1,56 @@
+import jatymon.babelprojects.abdquorum.notifications.messages.writeop.*;
+import jatymon.babelprojects.abdquorum.notifications.messages.readop.*;
+import jatymon.babelprojects.abdquorum.notifications.connection.*;
+
+
+/*
+ *  THIS IS AN EXPERIMENTAL PROTOCOL
+ */
+
+typestate LinearABDReceiver {
+    Ext peersSize;
+    Val conns = 0;
+
+    Assign connUp: conns := conns + 1;
+    Assign connDown: conns := conns - 1;
+
+    Assign ackRead: readAck := readAck + 1;
+    Assign ackWriteBack: writeBackAck := writeBackAck + 1;
+    Assign ackReadTag: readTagAck := readTagAck + 1;
+    Assign ackWrite: writeAck := writeAck + 1;
+    Assign resetReadAck: readAck := 0;
+    Assign resetWriteBackAck: writeBackAck := 0;
+    Assign resetReadTagAck: readTagAck := 0;
+    Assign resetWriteAck: writeAck := 0;
+
+    Pred hasAllConns: conns = peersSize;
+    Pred hasReadQuorum: readAck > peersSize / 2;
+    Pred hasWriteBackQuorum: writeBackAck > peersSize / 2;
+    Pred hasReadTagQuorum: readTagAck > peersSize / 2;
+    Pred hasWriteQuorum: writeAck > peersSize / 2;
+
+    // From n = 2f - 1, it can tolerate (n - 1) / 2 = f faults
+    Pred lostQuorum: conns <= (peersSize - 1) / 2;
+
+    Connect = {
+        void uponConnectionUp(ConnectionUpNotification, short)[1; connUp; hasAllConns]: Main,
+        void uponConnectionDown(ConnectionDownNotification, short)[connDown; _]: Connect
+    }
+
+    Main = {
+        void uponConnectionDown(ConnectionDownNotification, short)[connDown; lostQuorum]: Connect,
+
+        void uponReadMessage(ReadMessageNotification, short): Read,
+        void uponReadTagMessage(ReadTagMessageNotification, short): Write
+    }
+
+    Read = {
+        void uponConnectionDown(ConnectionDownNotification, short)[connDown; lostQuorum]: Connect,
+        void uponWriteBackMessage(WriteBackMessageNotification, short): Main
+    }
+
+    Write = {
+        void uponConnectionDown(ConnectionDownNotification, short)[connDown; lostQuorum]: Connect,
+        void uponWriteMessage(WriteMessageNotification, short): Main
+    }
+}

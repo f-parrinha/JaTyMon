@@ -1,0 +1,65 @@
+{
+    "type": "typestate",
+    "pos": {
+        "line": 1,
+        "column": 0
+    },
+    "imports": [],
+    "decl": {
+        "type": "declaration",
+        "pos": {
+            "line": 1,
+            "column": 0
+        },
+        "name": "KeyBasic5",
+        "key": "clientId",
+        "internalState" : [ {
+            "type" : "ext",
+            "pos" : {
+                "line" : 2,
+                "column" : 4
+            },
+            "name" : "clientId"
+        } ],
+        "states": [
+            {
+                "type": "state",
+                "pos": {
+                    "line": 4,
+                    "column": 4
+                },
+                "name": "State0",
+                "actions": [
+                    {
+                        "type" : "action",
+                        "actionType" : "Input",
+                        "pos": {
+                            "line": 5,
+                            "column": 8
+                        },
+                        "returnType": {
+                            "type": "id",
+                            "pos": {
+                                "line": 5,
+                                "column": 8
+                            },
+                            "name": "void",
+                            "string": "void"
+                        },
+                        "name": "m",
+                        "args": [],
+                        "destination": {
+                            "type": "id",
+                            "pos": {
+                                "line": 5,
+                                "column": 18
+                            },
+                            "name": "State0",
+                            "string": "State0"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

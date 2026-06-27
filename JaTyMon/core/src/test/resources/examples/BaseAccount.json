@@ -1,0 +1,224 @@
+{
+  "type": "typestate",
+  "pos": {
+    "line": 1,
+    "column": 0
+  },
+  "imports": [],
+  "decl": {
+    "type": "declaration",
+    "pos": {
+      "line": 1,
+      "column": 0
+    },
+    "name": "BaseAccount",
+    "states": [
+      {
+        "type": "state",
+        "pos": {
+          "line": 2,
+          "column": 2
+        },
+        "name": "Init",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 3,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 3,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "deposit",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 3,
+                  "column": 17
+                },
+                "name": "int",
+                "string": "int"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 3,
+                "column": 23
+              },
+              "name": "Attempt",
+              "string": "Attempt"
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 6,
+          "column": 2
+        },
+        "name": "Attempt",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 7,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 7,
+                "column": 4
+              },
+              "name": "boolean",
+              "string": "boolean"
+            },
+            "name": "canWithdraw",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 7,
+                  "column": 24
+                },
+                "name": "int",
+                "string": "int"
+              }
+            ],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 8,
+                "column": 6
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 8,
+                    "column": 7
+                  },
+                  "label": "true",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 8,
+                      "column": 13
+                    },
+                    "name": "Withdraw",
+                    "string": "Withdraw"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 8,
+                    "column": 23
+                  },
+                  "label": "false",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 8,
+                      "column": 30
+                    },
+                    "name": "Init",
+                    "string": "Init"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 9,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 9,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "deposit",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 9,
+                  "column": 17
+                },
+                "name": "int",
+                "string": "int"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 9,
+                "column": 23
+              },
+              "name": "Attempt",
+              "string": "Attempt"
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 12,
+          "column": 2
+        },
+        "name": "Withdraw",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 13,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 13,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "withdraw",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 13,
+                "column": 21
+              },
+              "name": "Attempt",
+              "string": "Attempt"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

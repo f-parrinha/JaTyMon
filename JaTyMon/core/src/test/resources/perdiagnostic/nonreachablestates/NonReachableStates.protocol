@@ -1,0 +1,9 @@
+typestate NonReachableStates {
+    State0 = {
+        void m(): State0
+    }
+
+    State1 = {
+        void m(): State1
+    }
+}

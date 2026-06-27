@@ -1,0 +1,6 @@
+typestate RatioZeroSum {
+    State0 = {
+        void m1()[0.0]: State0,
+        void m2()[0.0]: end
+    }
+}

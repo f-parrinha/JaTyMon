@@ -1,0 +1,10 @@
+typestate RobotProtocol {
+  OFF = {
+    void turnOn(): IDLE
+  }
+
+  IDLE = {
+    void turnOff(): OFF,
+    void executeTask(String): IDLE
+  }
+}

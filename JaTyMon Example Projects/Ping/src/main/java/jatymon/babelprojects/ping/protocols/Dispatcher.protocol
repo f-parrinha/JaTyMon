@@ -1,0 +1,37 @@
+import java.util.Properties;
+import jatymon.babelprojects.ping.messages.EchoRequestMessage;
+import jatymon.babelprojects.ping.messages.EchoReplyMessage;
+import pt.unl.fct.di.novasys.channel.tcp.events.*;
+import pt.unl.fct.di.novasys.network.data.Host;
+import pt.unl.fct.di.novasys.babel.generic.ProtoMessage;
+
+typestate Dispatcher {
+    Ext conns;
+    Pred hasConns: conns > 0;
+    Pred noConns: conns = 0;
+
+    Init = {
+        void init(Properties): CreateTCPChannel
+    }
+
+    CreateTCPChannel = {
+        int createTcpChannel(String, String): Connect
+    }
+
+    Connect = {
+        void uponOutConnectionFailed(OutConnectionFailed<ProtoMessage>, int): Connect,
+        void uponOutConnectionUp(OutConnectionUp, int)[_; hasConns]: Main,
+        void uponInConnectionUp(InConnectionUp, int)[_; hasConns]: Main
+    } + (void connectAll(): Connect)
+
+    Main = {
+        void uponEchoRequestMessage(EchoRequestMessage, Host, short, int): Main,
+        void uponEchoReplyMessage(EchoReplyMessage, Host, short, int): Main,
+
+        void uponOutConnectionFailed(OutConnectionFailed<ProtoMessage>, int): Main,
+        void uponOutConnectionUp(OutConnectionUp, int): Main,
+        void uponInConnectionUp(InConnectionUp, int): Main,
+        void uponInConnectionDown(InConnectionDown, int)[_; noConns]: Connect,
+        void uponOutConnectionDown(OutConnectionDown, int)[_; noConns]: Connect
+    }
+}

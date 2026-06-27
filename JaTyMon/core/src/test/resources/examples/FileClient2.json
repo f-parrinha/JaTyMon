@@ -1,0 +1,304 @@
+{
+  "type": "typestate",
+  "pos": {
+    "line": 1,
+    "column": 0
+  },
+  "imports": [],
+  "decl": {
+    "type": "declaration",
+    "pos": {
+      "line": 1,
+      "column": 0
+    },
+    "name": "FileClient2",
+    "states": [
+      {
+        "type": "state",
+        "pos": {
+          "line": 2,
+          "column": 2
+        },
+        "name": "Init",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 3,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 3,
+                "column": 4
+              },
+              "name": "boolean",
+              "string": "boolean"
+            },
+            "name": "start",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 3,
+                "column": 21
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 3,
+                    "column": 22
+                  },
+                  "label": "true",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 3,
+                      "column": 28
+                    },
+                    "name": "Ask",
+                    "string": "Ask"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 3,
+                    "column": 33
+                  },
+                  "label": "false",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 3,
+                      "column": 40
+                    },
+                    "name": "end",
+                    "string": "end"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 5,
+          "column": 2
+        },
+        "name": "Ask",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 6,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 6,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "request",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 6,
+                  "column": 17
+                },
+                "name": "String",
+                "string": "String"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 6,
+                "column": 26
+              },
+              "name": "Open",
+              "string": "Open"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 7,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 7,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "close",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 7,
+                "column": 18
+              },
+              "name": "end",
+              "string": "end"
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 9,
+          "column": 2
+        },
+        "name": "Open",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 10,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 10,
+                "column": 4
+              },
+              "name": "boolean",
+              "string": "boolean"
+            },
+            "name": "hasNextByte",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 10,
+                "column": 27
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 10,
+                    "column": 28
+                  },
+                  "label": "true",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 10,
+                      "column": 34
+                    },
+                    "name": "Read",
+                    "string": "Read"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 10,
+                    "column": 40
+                  },
+                  "label": "false",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 10,
+                      "column": 47
+                    },
+                    "name": "Ask",
+                    "string": "Ask"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 12,
+          "column": 2
+        },
+        "name": "Read",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 13,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 13,
+                "column": 4
+              },
+              "name": "int",
+              "string": "int"
+            },
+            "name": "nextByte",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 13,
+                "column": 20
+              },
+              "name": "Open",
+              "string": "Open"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 14,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 14,
+                "column": 4
+              },
+              "name": "String",
+              "string": "String"
+            },
+            "name": "nextLine",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 14,
+                "column": 23
+              },
+              "name": "Open",
+              "string": "Open"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

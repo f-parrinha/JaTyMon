@@ -1,0 +1,10 @@
+typestate ExtFieldNotFoundInClass {
+    Ext n;
+    Ext y;
+    Ext z;
+
+    State0 = {
+        void m(): State0
+    }
+
+}

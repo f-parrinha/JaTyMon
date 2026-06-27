@@ -1,0 +1,8 @@
+import java.util.List;
+
+// ::Error UnknownTypeDiagnostic -> InvalidGeneric4.NonExistent is not imported
+typestate InvalidGeneric4 {
+    State0 = {
+        void m(List<NonExistent>): State0
+    }
+}

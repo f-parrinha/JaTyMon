@@ -1,0 +1,9 @@
+typestate Animal {
+  Init = {
+    void move(): Moved
+  }
+
+  Moved = {
+    void eat(): Init
+  }
+}

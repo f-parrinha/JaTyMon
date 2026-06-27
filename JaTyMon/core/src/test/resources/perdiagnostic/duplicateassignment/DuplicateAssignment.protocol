@@ -1,0 +1,11 @@
+typestate DuplicateAssignment {
+    Val x = 0;
+
+    // :: error: duplicate assignment
+    Assign A: x := 1;
+    Assign A: x := 1;
+
+    State0 = {
+        void m(): State0
+    }
+}

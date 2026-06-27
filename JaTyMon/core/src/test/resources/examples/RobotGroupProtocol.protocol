@@ -1,0 +1,18 @@
+typestate RobotGroupProtocol {
+
+  EMPTY = {
+    void add(Robot): NON_EMPTY
+  }
+
+  NON_EMPTY = {
+    void add(Robot): NON_EMPTY,
+    Robot take(): PUT_BACK,
+    void next(): NON_EMPTY,
+    void turnAllOff(): EMPTY
+  }
+
+  PUT_BACK = {
+    void putBack(Robot): NON_EMPTY
+  }
+
+}

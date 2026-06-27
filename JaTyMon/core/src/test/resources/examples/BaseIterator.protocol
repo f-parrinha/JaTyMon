@@ -1,0 +1,10 @@
+package examples; // Testing packages
+
+typestate BaseIterator {
+  HasNext = {
+    boolean hasNext(): <true: Next, false: end>
+  }
+  Next = {
+    java.lang.Object next(): HasNext      // NOTE: Must natively support fully qualified names (not requiring imports)
+  }
+}

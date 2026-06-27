@@ -1,0 +1,11 @@
+typestate BadExtFieldType {
+    Ext x;
+    Ext y;
+    Ext w;
+    Ext z;
+
+    State0 = {
+        void m(): State0
+    }
+
+}

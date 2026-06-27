@@ -1,0 +1,5 @@
+typestate RatioPositive2 {
+    State0 = {
+        void m()[+1.2]: end        // Semantic error here!
+    }
+}

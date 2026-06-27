@@ -1,0 +1,33 @@
+import jatymon.babelprojects.abdquorum.notifications.messages.writeop.*;
+import jatymon.babelprojects.abdquorum.notifications.messages.readop.*;
+import jatymon.babelprojects.abdquorum.notifications.messages.client.*;
+import jatymon.babelprojects.abdquorum.notifications.connection.*;
+
+typestate ABDSender {
+    Ext peersSize;
+    Val conns = 0;
+
+    Assign connUp: conns := conns + 1;
+    Assign connDown: conns := conns - 1;
+
+    Pred hasAllConns: conns = peersSize;
+
+    // From n = 2f - 1, it can tolerate (n - 1) / 2 = f faults
+    Pred lostQuorum: conns <= (peersSize - 1) / 2;
+
+    Connect = {
+        void uponConnectionUp(ConnectionUpNotification, short)[1; connUp; hasAllConns]: Main,
+        void uponConnectionDown(ConnectionDownNotification, short)[0; connDown; _]: Connect
+    }
+
+    Main = {
+        void uponConnectionDown(ConnectionDownNotification, short)[connDown; lostQuorum]: Connect,
+        void uponClientReadMessage(ClientReadMessageNotification, short): Main,
+        void uponClientWriteMessage(ClientWriteMessageNotification, short): Main,
+
+        void uponReadAck(ReadAckNotification, short): Main,
+        void uponWriteBackAck(WriteBackAckNotification, short): Main,
+        void uponReadTagAck(ReadTagAckNotification, short): Main,
+        void uponWriteAck(WriteAckNotification, short): Main
+    }
+}

@@ -1,0 +1,10 @@
+// :: note: (This graph can reach end)
+typestate ReachEnd2 {
+    State0 = {
+        void m1(): State1
+    }
+
+    State1 = {
+        void m1(): end
+    }
+}

@@ -1,0 +1,126 @@
+{
+    "type": "typestate",
+    "pos": {
+        "line": 1,
+        "column": 0
+    },
+    "imports": [
+        {
+            "type": "import",
+            "pos": {
+                "line": 1,
+                "column": 0
+            },
+            "ref": {
+                "type": "member",
+                "pos": {
+                    "line": 1,
+                    "column": 7
+                },
+                "ref": {
+                    "type": "member",
+                    "pos": {
+                        "line": 1,
+                        "column": 7
+                    },
+                    "ref": {
+                        "type": "member",
+                        "pos": {
+                            "line": 1,
+                            "column": 7
+                        },
+                        "ref": {
+                            "type": "id",
+                            "pos": {
+                                "line": 1,
+                                "column": 7
+                            },
+                            "name": "imports",
+                            "string": "imports"
+                        },
+                        "id": {
+                            "type": "id",
+                            "pos": {
+                                "line": 1,
+                                "column": 15
+                            },
+                            "name": "folder",
+                            "string": "folder"
+                        },
+                        "string": "imports.folder"
+                    },
+                    "id": {
+                        "type": "id",
+                        "pos": {
+                            "line": 1,
+                            "column": 22
+                        },
+                        "name": "subfolder",
+                        "string": "subfolder"
+                    },
+                    "string": "imports.folder.subfolder"
+                },
+                "id": {
+                    "type": "id",
+                    "pos": {
+                        "line": 1,
+                        "column": 32
+                    },
+                    "name": "SubEmptyClass",
+                    "string": "SubEmptyClass"
+                },
+                "string": "imports.folder.subfolder.SubEmptyClass"
+            },
+            "staticc": false,
+            "star": false
+        }
+    ],
+    "decl": {
+        "type": "declaration",
+        "pos": {
+            "line": 3,
+            "column": 0
+        },
+        "name": "ValidImport2",
+        "states": [
+            {
+                "type": "state",
+                "pos": {
+                    "line": 4,
+                    "column": 4
+                },
+                "name": "State0",
+                "actions": [
+                    {
+                        "type" : "action",
+"actionType" : "Input",
+                        "pos": {
+                            "line": 5,
+                            "column": 8
+                        },
+                        "returnType": {
+                            "type": "id",
+                            "pos": {
+                                "line": 5,
+                                "column": 8
+                            },
+                            "name": "SubEmptyClass",
+                            "string": "SubEmptyClass"
+                        },
+                        "name": "m",
+                        "args": [],
+                        "destination": {
+                            "type": "id",
+                            "pos": {
+                                "line": 5,
+                                "column": 27
+                            },
+                            "name": "State0",
+                            "string": "State0"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

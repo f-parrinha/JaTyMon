@@ -1,0 +1,3 @@
+typestate Sender {
+    State0 = (void send(): State0)
+}

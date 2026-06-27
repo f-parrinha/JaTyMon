@@ -1,0 +1,202 @@
+{
+  "type": "typestate",
+  "pos": {
+    "line": 1,
+    "column": 0
+  },
+  "imports": [
+    {
+      "type": "import",
+      "pos": {
+        "line": 1,
+        "column": 0
+      },
+      "ref": {
+        "type": "member",
+        "pos": {
+          "line": 1,
+          "column": 7
+        },
+        "ref": {
+          "type": "id",
+          "pos": {
+            "line": 1,
+            "column": 7
+          },
+          "name": "examples",
+          "string": "examples"
+        },
+        "id": {
+          "type": "id",
+          "pos": {
+            "line": 1,
+            "column": 16
+          },
+          "name": "enums",
+          "string": "enums"
+        },
+        "string": "examples.enums"
+      },
+      "staticc": false,
+      "star": true
+    }
+  ],
+  "decl": {
+    "type": "declaration",
+    "pos": {
+      "line": 3,
+      "column": 0
+    },
+    "name": "FileProtocol",
+    "states": [
+      {
+        "type": "state",
+        "pos": {
+          "line": 5,
+          "column": 2
+        },
+        "name": "Init",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 6,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 6,
+                "column": 4
+              },
+              "name": "FileStatus",
+              "string": "FileStatus"
+            },
+            "name": "open",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 6,
+                "column": 23
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 6,
+                    "column": 24
+                  },
+                  "label": "OK",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 6,
+                      "column": 28
+                    },
+                    "name": "Read",
+                    "string": "Read"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 6,
+                    "column": 34
+                  },
+                  "label": "ERROR",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 6,
+                      "column": 41
+                    },
+                    "name": "end",
+                    "string": "end"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 9,
+          "column": 2
+        },
+        "name": "Read",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 10,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 10,
+                "column": 4
+              },
+              "name": "String",
+              "string": "String"
+            },
+            "name": "read",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 10,
+                "column": 19
+              },
+              "name": "Close",
+              "string": "Close"
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 13,
+          "column": 2
+        },
+        "name": "Close",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 14,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 14,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "close",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 14,
+                "column": 18
+              },
+              "name": "end",
+              "string": "end"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

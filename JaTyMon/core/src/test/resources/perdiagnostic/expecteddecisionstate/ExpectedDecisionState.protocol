@@ -1,0 +1,7 @@
+import perdiagnostic.common.TestEnum;
+
+typestate ExpectedDecisionState {
+    State0 = {
+        TestEnum m(): State0
+    }
+}

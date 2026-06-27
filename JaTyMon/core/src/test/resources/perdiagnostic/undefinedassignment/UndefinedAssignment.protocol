@@ -1,0 +1,5 @@
+typestate UndefinedAssignment {
+    State0 = {
+        void m()[A;_]: State0
+    }
+}

@@ -1,0 +1,7 @@
+// Testing AST failure here
+
+typestate KeyBasic2 key client {
+    State0 = {
+        void m(): State0
+    }
+}

@@ -1,0 +1,5 @@
+typestate RatioExactBoundary {
+    State0 = {
+        void m()[1.0]: end
+    }
+}

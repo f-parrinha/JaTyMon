@@ -1,0 +1,6 @@
+// Testing failure due to inexistent Key annotation in the corresponding class
+typestate KeyBasic4 keyed clientId {
+    State0 = {
+        void m(): State0
+    }
+}

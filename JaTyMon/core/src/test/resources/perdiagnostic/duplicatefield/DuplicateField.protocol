@@ -1,0 +1,17 @@
+typestate DuplicateField {
+    // Duplicate here
+    Val x = 1;
+    Val x = 2;
+
+    // Duplicate here
+    Val t = 0;
+    Ext t;
+
+    // Duplicate here
+    Ext y;
+    Ext y;
+
+    State0 = {
+        void m(): State0
+    }
+}

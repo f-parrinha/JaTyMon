@@ -1,0 +1,19 @@
+// :: error: (Cannot reach end)
+typestate ReachEnd1 {
+    State0 = {
+        void m1(): State1,
+        void m2(): State2
+    }
+
+    State1 = {
+        void m1(): end
+    }
+
+    State2 = {
+        void m1(): State3
+    }
+
+    State3 = {
+        void m1(): State2
+    }
+}

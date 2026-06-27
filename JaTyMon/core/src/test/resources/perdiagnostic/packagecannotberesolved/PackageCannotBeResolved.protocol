@@ -1,0 +1,7 @@
+package does.not.exist;
+
+typestate PackageCannotBeResolved {
+    State0 = {
+        void m(): State0
+    }
+}

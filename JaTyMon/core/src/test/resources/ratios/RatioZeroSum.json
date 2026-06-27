@@ -1,0 +1,81 @@
+{
+  "type" : "typestate",
+  "pos" : {
+    "line" : 1,
+    "column" : 0
+  },
+  "imports" : [ ],
+  "decl" : {
+    "type" : "declaration",
+    "pos" : {
+      "line" : 1,
+      "column" : 0
+    },
+    "name" : "RatioZeroSum",
+    "states" : [ {
+      "type" : "state",
+      "pos" : {
+        "line" : 2,
+        "column" : 4
+      },
+      "name" : "State0",
+      "actions" : [ {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 3,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 3,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "m1",
+        "args" : [ ],
+        "ratio" : 0.0,
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 3,
+            "column" : 24
+          },
+          "name" : "State0",
+          "string" : "State0"
+        }
+      }, {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 4,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 4,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "m2",
+        "args" : [ ],
+        "ratio" : 0.0,
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 4,
+            "column" : 24
+          },
+          "name" : "end",
+          "string" : "end"
+        }
+      } ]
+    } ]
+  }
+}

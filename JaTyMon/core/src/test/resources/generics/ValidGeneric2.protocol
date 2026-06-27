@@ -1,0 +1,7 @@
+import java.util.Map;
+
+typestate ValidGeneric1 {
+    State0 = {
+        Map<String, Integer> m(): State0
+    }
+}

@@ -1,0 +1,178 @@
+{
+  "type": "typestate",
+  "pos": {
+    "line": 1,
+    "column": 0
+  },
+  "pkg": {
+    "type": "package",
+    "pos": {
+      "line": 1,
+      "column": 0
+    },
+    "ref": {
+      "type": "id",
+      "pos": {
+        "line": 1,
+        "column": 8
+      },
+      "name": "examples",
+      "string": "examples"
+    }
+  },
+  "imports": [],
+  "decl": {
+    "type": "declaration",
+    "pos": {
+      "line": 3,
+      "column": 0
+    },
+    "name": "BaseIterator",
+    "states": [
+      {
+        "type": "state",
+        "pos": {
+          "line": 4,
+          "column": 2
+        },
+        "name": "HasNext",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 5,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 5,
+                "column": 4
+              },
+              "name": "boolean",
+              "string": "boolean"
+            },
+            "name": "hasNext",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 5,
+                "column": 23
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 5,
+                    "column": 24
+                  },
+                  "label": "true",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 5,
+                      "column": 30
+                    },
+                    "name": "Next",
+                    "string": "Next"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 5,
+                    "column": 36
+                  },
+                  "label": "false",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 5,
+                      "column": 43
+                    },
+                    "name": "end",
+                    "string": "end"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 7,
+          "column": 2
+        },
+        "name": "Next",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 8,
+              "column": 4
+            },
+            "returnType": {
+              "type": "member",
+              "pos": {
+                "line": 8,
+                "column": 4
+              },
+              "ref": {
+                "type": "member",
+                "pos": {
+                  "line": 8,
+                  "column": 4
+                },
+                "ref": {
+                  "type": "id",
+                  "pos": {
+                    "line": 8,
+                    "column": 4
+                  },
+                  "name": "java",
+                  "string": "java"
+                },
+                "id": {
+                  "type": "id",
+                  "pos": {
+                    "line": 8,
+                    "column": 9
+                  },
+                  "name": "lang",
+                  "string": "lang"
+                },
+                "string": "java.lang"
+              },
+              "id": {
+                "type": "id",
+                "pos": {
+                  "line": 8,
+                  "column": 14
+                },
+                "name": "Object",
+                "string": "Object"
+              },
+              "string": "java.lang.Object"
+            },
+            "name": "next",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 8,
+                "column": 29
+              },
+              "name": "HasNext",
+              "string": "HasNext"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

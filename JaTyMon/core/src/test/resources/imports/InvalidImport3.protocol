@@ -1,0 +1,8 @@
+// ::Error cannot resolve import
+import random.importt;
+
+typestate InvalidImport3 {
+    State0 = {
+        void m(): State0
+    }
+}

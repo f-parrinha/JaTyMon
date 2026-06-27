@@ -1,0 +1,13 @@
+typestate ExpectedMethod {
+    State0 = {
+        // This method is private in the class. It should not be found
+        void m1(): State0,
+
+        // This method does not exist in the class. It should not be found
+        void m2(): State0,
+
+        void m3(): State0,
+
+        void m4(): State0
+    }
+}

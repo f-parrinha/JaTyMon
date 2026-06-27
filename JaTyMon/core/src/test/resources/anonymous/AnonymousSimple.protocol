@@ -1,0 +1,17 @@
+typestate AnonymousSimple {
+    State0 = {
+        void m2(): State2,
+        void m1(): {
+            void m1(): State1,
+            void m2(): State2
+        }
+    }
+
+    State1 = {
+        void m1(): State0
+    }
+
+    State2 = {
+        void m2(): end
+    }
+}

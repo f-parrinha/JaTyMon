@@ -1,0 +1,122 @@
+{
+  "type": "typestate",
+  "pos": {
+    "line": 1,
+    "column": 0
+  },
+  "imports": [],
+  "decl": {
+    "type": "declaration",
+    "pos": {
+      "line": 1,
+      "column": 0
+    },
+    "name": "Dog",
+    "states": [
+      {
+        "type": "state",
+        "pos": {
+          "line": 2,
+          "column": 2
+        },
+        "name": "Init",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 3,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 3,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "move",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 3,
+                "column": 17
+              },
+              "name": "Moved",
+              "string": "Moved"
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 6,
+          "column": 2
+        },
+        "name": "Moved",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 7,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 7,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "wag",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 7,
+                "column": 16
+              },
+              "name": "end",
+              "string": "end"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 8,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 8,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "eat",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 8,
+                "column": 16
+              },
+              "name": "Init",
+              "string": "Init"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

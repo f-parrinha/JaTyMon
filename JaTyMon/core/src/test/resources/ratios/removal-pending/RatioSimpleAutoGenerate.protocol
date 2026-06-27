@@ -1,0 +1,5 @@
+astValidationContext RatioSimpleAutoGenerate {
+    State0 = {
+        void m()[*]: end
+    }
+}

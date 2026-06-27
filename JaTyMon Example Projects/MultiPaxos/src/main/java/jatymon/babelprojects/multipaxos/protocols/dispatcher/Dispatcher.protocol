@@ -1,0 +1,46 @@
+import java.util.Properties;
+import jatymon.babelprojects.multipaxos.messages.replica.*;
+import jatymon.babelprojects.multipaxos.messages.client.*;
+import pt.unl.fct.di.novasys.channel.tcp.events.*;
+import pt.unl.fct.di.novasys.network.data.Host;
+import pt.unl.fct.di.novasys.babel.generic.ProtoMessage;
+
+typestate Dispatcher {
+    Ext conns;
+
+    Pred hasConns: conns > 0;
+    Pred noConns: conns = 0;
+
+    Init = {
+        void init(Properties): CreateTCPChannel
+    }
+
+    CreateTCPChannel = {
+        int createTcpChannel(String, String): Connect
+    }
+
+    Connect = {
+        void uponOutConnectionFailed(OutConnectionFailed<ProtoMessage>, int): Connect,
+        void uponOutConnectionUp(OutConnectionUp, int)[_; hasConns]: Main,
+        void uponInConnectionUp(InConnectionUp, int)[_; hasConns]: Main
+    } + (void connectAll(): Connect)
+
+    Main = {
+        void uponClientReadMessage(ClientReadMessage, Host, short, int): Main,
+        void uponClientReadAck(ClientReadAck, Host, short, int): Main,
+        void uponClientWriteMessage(ClientWriteMessage, Host, short, int): Main,
+        void uponClientWriteAck(ClientWriteAck, Host, short, int): Main,
+
+        void uponPrepareMessage(PrepareMessage, Host, short, int): Main,
+        void uponAcceptMessage(AcceptMessage, Host, short, int): Main,
+        void uponPrepareOkMessage(PrepareOkMessage, Host, short, int): Main,
+        void uponAcceptOkMessage(AcceptOkMessage, Host, short, int): Main,
+
+        // Connection
+        void uponOutConnectionFailed(OutConnectionFailed<ProtoMessage>, int): Main,
+        void uponOutConnectionUp(OutConnectionUp, int): Main,
+        void uponInConnectionUp(InConnectionUp, int): Main,
+        void uponInConnectionDown(InConnectionDown, int)[_; noConns]: Connect,
+        void uponOutConnectionDown(OutConnectionDown, int)[_; noConns]: Connect
+    }
+}

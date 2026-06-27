@@ -1,0 +1,8 @@
+typestate RatioValueAndNone {
+    // Should be successful! Because m1() will not be considered for ratio calculation
+    State0 = {
+        void m1()[0.2]: State0,
+        void m2(): end,
+        void m3() [0.8]: State0
+    }
+}

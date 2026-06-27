@@ -1,0 +1,59 @@
+import java.util.Properties;
+import jatymon.babelprojects.multipaxos.notifications.messages.replica.*;
+import jatymon.babelprojects.multipaxos.notifications.messages.client.*;
+import jatymon.babelprojects.multipaxos.notifications.connection.*;
+import jatymon.babelprojects.multipaxos.timers.MultiPaxosRetryTimer;
+
+
+typestate MultiPaxos {
+    Ext peersSize;
+
+    Val prepareOkCount = 0;
+    Val conns = 0;
+
+    Assign incConns: conns := conns + 1;
+    Assign decConns: conns := conns - 1;
+    Assign incPrepareOkCount: prepareOkCount := prepareOkCount + 1;
+    Assign resetPrepareOkCount: prepareOkCount := 0;
+
+    Pred hasConns: conns = peersSize;
+    Pred lostQuorum: conns <= (peersSize - 1) / 2;
+    Pred hasPrepareOkQuorum: prepareOkCount > peersSize / 2;
+
+    Init = {
+        void init(Properties): Connect
+    }
+
+    Connect = {
+        void uponConnectionUp(ConnectionUpNotification, short)[incConns; hasConns]: NonLeader,
+        void uponConnectionDown(ConnectionDownNotification, short)[decConns; _]: Connect
+    }
+
+    NonLeader = {
+        void uponConnectionDown(ConnectionDownNotification, short)[decConns; lostQuorum]: Connect,
+
+        // Client actions
+        void uponClientReadMessage(ClientReadMessageNotification, short): NonLeader,
+        void uponClientWriteMessage(ClientWriteMessageNotification, short): NonLeader,
+
+        // Main multi-paxos actions
+        void uponPrepareMessage(PrepareMessageNotification, short): NonLeader,
+        boolean uponAcceptMessage(AcceptMessageNotification, short): <true: Leader, false: NonLeader>,
+        void uponPrepareOkMessage(PrepareOkMessageNotification, short)[incPrepareOkCount; hasPrepareOkQuorum]: Leader [resetPrepareOkCount],
+        void uponPaxosRetryTimer(MultiPaxosRetryTimer, long): NonLeader
+    }
+
+    Leader = {
+        void uponConnectionDown(ConnectionDownNotification, short)[decConns; lostQuorum]: Connect,
+
+        // Client actions
+        void uponClientReadMessage(ClientReadMessageNotification, short): Leader,
+        void uponClientWriteMessage(ClientWriteMessageNotification, short): Leader,
+
+        // Main multi-paxos actions
+        void uponPrepareMessage(PrepareMessageNotification, short): NonLeader,      // If someone is trying to become the new leader
+        boolean uponAcceptMessage(AcceptMessageNotification, short): <true: Leader, false: NonLeader>,
+        void uponAcceptOkMessage(AcceptOkMessageNotification, short): Leader,
+        void uponPaxosRetryTimer(MultiPaxosRetryTimer, long): NonLeader
+    }
+}

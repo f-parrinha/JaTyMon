@@ -1,0 +1,11 @@
+import java.util.List;
+
+typestate ValidGeneric1 {
+    State0 = {
+        void m(List<String>): State1
+    }
+
+    State1 = {
+        void m(List<String>): State0
+    }
+}

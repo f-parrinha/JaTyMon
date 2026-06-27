@@ -1,0 +1,25 @@
+{
+  "name": "jatyc-typestate",
+  "displayName": "JaTyC Typestate",
+  "description": "Syntax highlighting for JaTyC Typestate Protocol files",
+  "version": "0.1.0",
+  "engines": { "vscode": "^1.75.0" },
+  "categories": ["Programming Languages"],
+  "contributes": {
+    "languages": [
+      {
+        "id": "typestate",
+        "aliases": ["Typestate", "typestate"],
+        "extensions": [".protocol"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "typestate",
+        "scopeName": "source.typestate",
+        "path": "./syntaxes/typestate.tmLanguage.json"
+      }
+    ]
+  }
+}

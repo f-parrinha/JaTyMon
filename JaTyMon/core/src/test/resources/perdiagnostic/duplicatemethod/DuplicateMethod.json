@@ -1,0 +1,147 @@
+{
+    "type": "typestate",
+    "pos": {
+        "line": 1,
+        "column": 0
+    },
+    "imports": [],
+    "decl": {
+        "type": "declaration",
+        "pos": {
+            "line": 1,
+            "column": 0
+        },
+        "name": "DuplicateMethod",
+        "states": [
+            {
+                "type": "state",
+                "pos": {
+                    "line": 2,
+                    "column": 4
+                },
+                "name": "State0",
+                "actions": [
+                    {
+                        "type" : "action",
+"actionType" : "Input",
+                        "pos": {
+                            "line": 3,
+                            "column": 8
+                        },
+                        "returnType": {
+                            "type": "id",
+                            "pos": {
+                                "line": 3,
+                                "column": 8
+                            },
+                            "name": "void",
+                            "string": "void"
+                        },
+                        "name": "m",
+                        "args": [],
+                        "destination": {
+                            "type": "id",
+                            "pos": {
+                                "line": 3,
+                                "column": 18
+                            },
+                            "name": "State1",
+                            "string": "State1"
+                        }
+                    },
+                    {
+                        "type" : "action",
+"actionType" : "Input",
+                        "pos": {
+                            "line": 4,
+                            "column": 8
+                        },
+                        "returnType": {
+                            "type": "id",
+                            "pos": {
+                                "line": 4,
+                                "column": 8
+                            },
+                            "name": "void",
+                            "string": "void"
+                        },
+                        "name": "m",
+                        "args": [],
+                        "destination": {
+                            "type": "id",
+                            "pos": {
+                                "line": 4,
+                                "column": 18
+                            },
+                            "name": "end",
+                            "string": "end"
+                        }
+                    }
+                ]
+            },
+            {
+                "type" : "state",
+                "pos" : {
+                    "line" : 7,
+                    "column" : 4
+                },
+                "name" : "State1",
+                "actions" : [ {
+                    "type" : "action",
+"actionType" : "Input",
+                    "pos" : {
+                        "line" : 7,
+                        "column" : 14
+                    },
+                    "returnType" : {
+                        "type" : "id",
+                        "pos" : {
+                            "line" : 7,
+                            "column" : 14
+                        },
+                        "name" : "void",
+                        "string" : "void"
+                    },
+                    "name" : "m1",
+                    "args" : [ ],
+                    "destination" : {
+                        "type" : "id",
+                        "pos" : {
+                            "line" : 7,
+                            "column" : 25
+                        },
+                        "name" : "State1",
+                        "string" : "State1"
+                    }
+                }, {
+                    "type" : "action",
+"actionType" : "Output",
+                    "pos" : {
+                        "line" : 7,
+                        "column" : 36
+                    },
+                    "returnType" : {
+                        "type" : "id",
+                        "pos" : {
+                            "line" : 7,
+                            "column" : 36
+                        },
+                        "name" : "void",
+                        "string" : "void"
+                    },
+                    "name" : "m1",
+                    "args" : [ ],
+                    "destination" : {
+                        "type" : "id",
+                        "pos" : {
+                            "line" : 7,
+                            "column" : 46
+                        },
+                        "name" : "State0",
+                        "string" : "State0"
+                    }
+                } ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,205 @@
+{
+    "type": "typestate",
+    "pos": {
+        "line": 1,
+        "column": 0
+    },
+    "imports": [
+        {
+            "type": "import",
+            "pos": {
+                "line": 1,
+                "column": 0
+            },
+            "ref": {
+                "type": "member",
+                "pos": {
+                    "line": 1,
+                    "column": 7
+                },
+                "ref": {
+                    "type": "member",
+                    "pos": {
+                        "line": 1,
+                        "column": 7
+                    },
+                    "ref": {
+                        "type": "id",
+                        "pos": {
+                            "line": 1,
+                            "column": 7
+                        },
+                        "name": "perdiagnostic",
+                        "string": "perdiagnostic"
+                    },
+                    "id": {
+                        "type": "id",
+                        "pos": {
+                            "line": 1,
+                            "column": 21
+                        },
+                        "name": "common",
+                        "string": "common"
+                    },
+                    "string": "perdiagnostic.common"
+                },
+                "id": {
+                    "type": "id",
+                    "pos": {
+                        "line": 1,
+                        "column": 28
+                    },
+                    "name": "TestClass",
+                    "string": "TestClass"
+                },
+                "string": "perdiagnostic.common.TestClass"
+            },
+            "staticc": false,
+            "star": false
+        }
+    ],
+    "decl": {
+        "type": "declaration",
+        "pos": {
+            "line": 4,
+            "column": 0
+        },
+        "name": "UnexpectedDecisionState",
+        "states": [
+            {
+                "type": "state",
+                "pos": {
+                    "line": 5,
+                    "column": 4
+                },
+                "name": "State0",
+                "actions": [
+                    {
+                        "type" : "action",
+"actionType" : "Input",
+                        "pos": {
+                            "line": 6,
+                            "column": 8
+                        },
+                        "returnType": {
+                            "type": "id",
+                            "pos": {
+                                "line": 6,
+                                "column": 8
+                            },
+                            "name": "int",
+                            "string": "int"
+                        },
+                        "name": "m1",
+                        "args": [],
+                        "destination": {
+                            "type": "decisionState",
+                            "pos": {
+                                "line": 6,
+                                "column": 18
+                            },
+                            "decisions": [
+                                {
+                                    "type": "decision",
+                                    "pos": {
+                                        "line": 6,
+                                        "column": 19
+                                    },
+                                    "label": "TEST_1",
+                                    "destination": {
+                                        "type": "id",
+                                        "pos": {
+                                            "line": 6,
+                                            "column": 27
+                                        },
+                                        "name": "State0",
+                                        "string": "State0"
+                                    }
+                                },
+                                {
+                                    "type": "decision",
+                                    "pos": {
+                                        "line": 6,
+                                        "column": 35
+                                    },
+                                    "label": "RANDOM_LABEL",
+                                    "destination": {
+                                        "type": "id",
+                                        "pos": {
+                                            "line": 6,
+                                            "column": 49
+                                        },
+                                        "name": "State0",
+                                        "string": "State0"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "type" : "action",
+"actionType" : "Input",
+                        "pos": {
+                            "line": 7,
+                            "column": 8
+                        },
+                        "returnType": {
+                            "type": "id",
+                            "pos": {
+                                "line": 7,
+                                "column": 8
+                            },
+                            "name": "TestClass",
+                            "string": "TestClass"
+                        },
+                        "name": "m2",
+                        "args": [],
+                        "destination": {
+                            "type": "decisionState",
+                            "pos": {
+                                "line": 7,
+                                "column": 24
+                            },
+                            "decisions": [
+                                {
+                                    "type": "decision",
+                                    "pos": {
+                                        "line": 7,
+                                        "column": 25
+                                    },
+                                    "label": "TEST_1",
+                                    "destination": {
+                                        "type": "id",
+                                        "pos": {
+                                            "line": 7,
+                                            "column": 33
+                                        },
+                                        "name": "State0",
+                                        "string": "State0"
+                                    }
+                                },
+                                {
+                                    "type": "decision",
+                                    "pos": {
+                                        "line": 7,
+                                        "column": 41
+                                    },
+                                    "label": "RANDOM_LABEL",
+                                    "destination": {
+                                        "type": "id",
+                                        "pos": {
+                                            "line": 7,
+                                            "column": 55
+                                        },
+                                        "name": "State0",
+                                        "string": "State0"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

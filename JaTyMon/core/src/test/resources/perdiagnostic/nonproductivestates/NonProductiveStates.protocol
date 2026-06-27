@@ -1,0 +1,15 @@
+typestate NonProductiveStates {
+    State0 = {
+        void m(): State1
+    }
+
+    State1 = {
+        void m(): end,
+        void m2(): State2
+    }
+
+    // This state is non-productive
+    State2 = {
+        void m(): State2
+    }
+}

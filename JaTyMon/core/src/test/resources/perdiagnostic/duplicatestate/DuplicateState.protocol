@@ -1,0 +1,9 @@
+typestate DuplicateState {
+    State0 = {
+        void m(): State0
+    }
+
+    State0 = {
+        void m(): State0
+    }
+}

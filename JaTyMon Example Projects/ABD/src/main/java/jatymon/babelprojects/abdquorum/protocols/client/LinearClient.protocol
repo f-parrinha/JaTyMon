@@ -1,0 +1,26 @@
+import jatymon.babelprojects.abdquorum.notifications.messages.client.*;
+
+typestate LinearClient {
+    Init = {
+        ClientProtocol.Op getFirstOp(): <READ: SendRead, WRITE: SendWrite>
+    }
+
+    SendWrite = (
+        void collectReadStatistics(): SendWrite,
+        void sendWriteMessage(boolean): ReceiveWrite,
+        void stopClient(): end
+    )
+
+    ReceiveWrite = {
+        void uponClientWriteAck(ClientWriteAckNotification, short) : SendRead
+    }
+
+    SendRead = (
+        void collectWriteStatistics(): SendRead,
+        void sendReadMessage(boolean): ReceiveRead
+    )
+
+    ReceiveRead = {
+        void uponClientReadAck(ClientReadAckNotification, short): SendWrite
+    }
+}

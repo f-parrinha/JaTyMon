@@ -1,0 +1,6 @@
+typestate RatioPositive3 {
+    State0 = {
+        void m1()[+0.887654]: State0 ,
+        void m2()[+0.112346]: end
+    }
+}

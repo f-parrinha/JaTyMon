@@ -1,0 +1,7 @@
+typestate InvalidRatioSum {
+    State0 = {
+        void m1()[0.5]: State0,
+        void m2()[0.4]: State0,
+        void m3(): State0
+    }
+}

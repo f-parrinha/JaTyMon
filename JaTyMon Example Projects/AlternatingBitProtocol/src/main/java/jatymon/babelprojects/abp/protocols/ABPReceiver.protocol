@@ -1,0 +1,23 @@
+import jatymon.babelprojects.abp.notifications.messages.ReceivedBitMessageNotification;
+import jatymon.babelprojects.abp.notifications.connection.ConnectionDownNotification;
+import jatymon.babelprojects.abp.notifications.connection.ConnectionUpNotification;
+import pt.unl.fct.di.novasys.network.data.Host;
+
+typestate ABPReceiver {
+    Start = {
+        void uponConnectionUp(ConnectionUpNotification, short)[1]: R0,
+        void uponConnectionDown(ConnectionDownNotification, short)[0]: Start
+    }
+
+    R0 = {
+        void uponConnectionDown(ConnectionDownNotification, short)[0]: Start,
+        void receiveBitMessage(ReceivedBitMessageNotification, short)[1]: R1
+    }
+
+    R1 = {
+        void uponConnectionDown(ConnectionDownNotification, short)[0]: Start,
+        void receiveBitMessage(ReceivedBitMessageNotification, short)[0.5]: R1
+    } + (
+        void sendAckMessage(Host, byte)[0.5]: R1
+    )
+}

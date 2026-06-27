@@ -1,0 +1,510 @@
+{
+  "type": "typestate",
+  "pos": {
+    "line": 1,
+    "column": 0
+  },
+  "imports": [],
+  "decl": {
+    "type": "declaration",
+    "pos": {
+      "line": 1,
+      "column": 0
+    },
+    "name": "SmartDeviceProtocol",
+    "states": [
+      {
+        "type": "state",
+        "pos": {
+          "line": 3,
+          "column": 2
+        },
+        "name": "IDLE",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 4,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 4,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "notify",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 4,
+                  "column": 16
+                },
+                "name": "double",
+                "string": "double"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 4,
+                "column": 25
+              },
+              "name": "NOTIFIED",
+              "string": "NOTIFIED"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 5,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 5,
+                "column": 4
+              },
+              "name": "double",
+              "string": "double"
+            },
+            "name": "forecast",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 5,
+                  "column": 20
+                },
+                "name": "String",
+                "string": "String"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 5,
+                "column": 29
+              },
+              "name": "IDLE",
+              "string": "IDLE"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 6,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 6,
+                "column": 4
+              },
+              "name": "boolean",
+              "string": "boolean"
+            },
+            "name": "isTrainingNeeded",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 6,
+                "column": 32
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 6,
+                    "column": 33
+                  },
+                  "label": "true",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 6,
+                      "column": 39
+                    },
+                    "name": "DATA_VALIDATION",
+                    "string": "DATA_VALIDATION"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 6,
+                    "column": 56
+                  },
+                  "label": "false",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 6,
+                      "column": 63
+                    },
+                    "name": "IDLE",
+                    "string": "IDLE"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 9,
+          "column": 2
+        },
+        "name": "NOTIFIED",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 10,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 10,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "ack",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 10,
+                "column": 16
+              },
+              "name": "IDLE",
+              "string": "IDLE"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 11,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 11,
+                "column": 4
+              },
+              "name": "double",
+              "string": "double"
+            },
+            "name": "forecast",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 11,
+                  "column": 20
+                },
+                "name": "String",
+                "string": "String"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 11,
+                "column": 29
+              },
+              "name": "NOTIFIED",
+              "string": "NOTIFIED"
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 14,
+          "column": 2
+        },
+        "name": "DATA_VALIDATION",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 15,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 15,
+                "column": 4
+              },
+              "name": "boolean",
+              "string": "boolean"
+            },
+            "name": "dataValidation",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 15,
+                "column": 30
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 15,
+                    "column": 31
+                  },
+                  "label": "true",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 15,
+                      "column": 37
+                    },
+                    "name": "TRAIN",
+                    "string": "TRAIN"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 15,
+                    "column": 44
+                  },
+                  "label": "false",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 15,
+                      "column": 51
+                    },
+                    "name": "DATA_PRUNING",
+                    "string": "DATA_PRUNING"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 18,
+          "column": 2
+        },
+        "name": "DATA_PRUNING",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 19,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 19,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "pruneData",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 19,
+                "column": 22
+              },
+              "name": "IDLE",
+              "string": "IDLE"
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 22,
+          "column": 2
+        },
+        "name": "TRAIN",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 23,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 23,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "train",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 23,
+                "column": 18
+              },
+              "name": "MODEL_EVALUATION",
+              "string": "MODEL_EVALUATION"
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 26,
+          "column": 2
+        },
+        "name": "MODEL_EVALUATION",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 27,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 27,
+                "column": 4
+              },
+              "name": "boolean",
+              "string": "boolean"
+            },
+            "name": "modelEvaluation",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 27,
+                "column": 31
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 27,
+                    "column": 32
+                  },
+                  "label": "true",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 27,
+                      "column": 38
+                    },
+                    "name": "IDLE",
+                    "string": "IDLE"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 27,
+                    "column": 44
+                  },
+                  "label": "false",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 27,
+                      "column": 51
+                    },
+                    "name": "UPDATE_HYPERPARAMS",
+                    "string": "UPDATE_HYPERPARAMS"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 30,
+          "column": 2
+        },
+        "name": "UPDATE_HYPERPARAMS",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 31,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 31,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "modelTuning",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 31,
+                  "column": 21
+                },
+                "name": "String",
+                "string": "String"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 31,
+                "column": 30
+              },
+              "name": "TRAIN",
+              "string": "TRAIN"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

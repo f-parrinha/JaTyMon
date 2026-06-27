@@ -1,0 +1,348 @@
+{
+  "type": "typestate",
+  "pos": {
+    "line": 1,
+    "column": 0
+  },
+  "imports": [],
+  "decl": {
+    "type": "declaration",
+    "pos": {
+      "line": 1,
+      "column": 0
+    },
+    "name": "SocketProtocol",
+    "states": [
+      {
+        "type": "state",
+        "pos": {
+          "line": 2,
+          "column": 2
+        },
+        "name": "DISC",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 3,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 3,
+                "column": 4
+              },
+              "name": "boolean",
+              "string": "boolean"
+            },
+            "name": "connect",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 3,
+                "column": 23
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 3,
+                    "column": 24
+                  },
+                  "label": "true",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 3,
+                      "column": 30
+                    },
+                    "name": "CONN",
+                    "string": "CONN"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 3,
+                    "column": 36
+                  },
+                  "label": "false",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 3,
+                      "column": 43
+                    },
+                    "name": "DISC",
+                    "string": "DISC"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 6,
+          "column": 2
+        },
+        "name": "CONN",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 7,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 7,
+                "column": 4
+              },
+              "name": "boolean",
+              "string": "boolean"
+            },
+            "name": "canSend",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 7,
+                  "column": 20
+                },
+                "name": "String",
+                "string": "String"
+              }
+            ],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 7,
+                "column": 29
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 7,
+                    "column": 30
+                  },
+                  "label": "true",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 7,
+                      "column": 36
+                    },
+                    "name": "SEND",
+                    "string": "SEND"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 7,
+                    "column": 42
+                  },
+                  "label": "false",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 7,
+                      "column": 49
+                    },
+                    "name": "CONN",
+                    "string": "CONN"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 8,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 8,
+                "column": 4
+              },
+              "name": "boolean",
+              "string": "boolean"
+            },
+            "name": "canReceive",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 8,
+                "column": 26
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 8,
+                    "column": 27
+                  },
+                  "label": "true",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 8,
+                      "column": 33
+                    },
+                    "name": "REC",
+                    "string": "REC"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 8,
+                    "column": 38
+                  },
+                  "label": "false",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 8,
+                      "column": 45
+                    },
+                    "name": "CONN",
+                    "string": "CONN"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 9,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 9,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "close",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 9,
+                "column": 18
+              },
+              "name": "end",
+              "string": "end"
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 12,
+          "column": 2
+        },
+        "name": "SEND",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 13,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 13,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "send",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 13,
+                  "column": 14
+                },
+                "name": "String",
+                "string": "String"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 13,
+                "column": 23
+              },
+              "name": "CONN",
+              "string": "CONN"
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 16,
+          "column": 2
+        },
+        "name": "REC",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 17,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 17,
+                "column": 4
+              },
+              "name": "String",
+              "string": "String"
+            },
+            "name": "receive",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 17,
+                "column": 22
+              },
+              "name": "CONN",
+              "string": "CONN"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

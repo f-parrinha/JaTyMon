@@ -1,0 +1,5 @@
+typestate UnknownType {
+    State0 = {
+        TestClass m(): State0
+    }
+}

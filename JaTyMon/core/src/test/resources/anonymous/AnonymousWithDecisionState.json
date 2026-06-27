@@ -1,0 +1,414 @@
+{
+  "type" : "typestate",
+  "pos" : {
+    "line" : 1,
+    "column" : 0
+  },
+  "imports" : [ {
+    "type" : "import",
+    "pos" : {
+      "line" : 1,
+      "column" : 0
+    },
+    "ref" : {
+      "type" : "member",
+      "pos" : {
+        "line" : 1,
+        "column" : 7
+      },
+      "ref" : {
+        "type" : "member",
+        "pos" : {
+          "line" : 1,
+          "column" : 7
+        },
+        "ref" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 1,
+            "column" : 7
+          },
+          "name" : "anonymous",
+          "string" : "anonymous"
+        },
+        "id" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 1,
+            "column" : 17
+          },
+          "name" : "AnonymousWithDecisionState",
+          "string" : "AnonymousWithDecisionState"
+        },
+        "string" : "anonymous.AnonymousWithDecisionState"
+      },
+      "id" : {
+        "type" : "id",
+        "pos" : {
+          "line" : 1,
+          "column" : 44
+        },
+        "name" : "TestEnum",
+        "string" : "TestEnum"
+      },
+      "string" : "anonymous.AnonymousWithDecisionState.TestEnum"
+    },
+    "staticc" : false,
+    "star" : false
+  } ],
+  "decl" : {
+    "type" : "declaration",
+    "pos" : {
+      "line" : 4,
+      "column" : 0
+    },
+    "name" : "AnonymousWithDecisionState",
+    "states" : [ {
+      "type" : "state",
+      "pos" : {
+        "line" : 5,
+        "column" : 4
+      },
+      "name" : "State0",
+      "actions" : [ {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 6,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 6,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "m1",
+        "args" : [ ],
+        "destination" : {
+          "type" : "state",
+          "pos" : {
+            "line" : 6,
+            "column" : 19
+          },
+          "name" : "anonymous::6:19",
+          "actions" : [ {
+            "type" : "action",
+"actionType" : "Input",
+            "pos" : {
+              "line" : 7,
+              "column" : 11
+            },
+            "returnType" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 7,
+                "column" : 11
+              },
+              "name" : "void",
+              "string" : "void"
+            },
+            "name" : "m1",
+            "args" : [ ],
+            "destination" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 7,
+                "column" : 22
+              },
+              "name" : "State0",
+              "string" : "State0"
+            }
+          } ]
+        }
+      }, {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 9,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 9,
+            "column" : 8
+          },
+          "name" : "TestEnum",
+          "string" : "TestEnum"
+        },
+        "name" : "m2",
+        "args" : [ ],
+        "destination" : {
+          "type" : "decisionState",
+          "pos" : {
+            "line" : 9,
+            "column" : 23
+          },
+          "decisions" : [ {
+            "type" : "decision",
+            "pos" : {
+              "line" : 9,
+              "column" : 24
+            },
+            "label" : "TEST_1",
+            "destination" : {
+              "type" : "state",
+              "pos" : {
+                "line" : 9,
+                "column" : 32
+              },
+              "name" : "anonymous::9:32",
+              "actions" : [ {
+                "type" : "action",
+"actionType" : "Input",
+                "pos" : {
+                  "line" : 10,
+                  "column" : 16
+                },
+                "returnType" : {
+                  "type" : "id",
+                  "pos" : {
+                    "line" : 10,
+                    "column" : 16
+                  },
+                  "name" : "TestEnum",
+                  "string" : "TestEnum"
+                },
+                "name" : "m2",
+                "args" : [ ],
+                "destination" : {
+                  "type" : "decisionState",
+                  "pos" : {
+                    "line" : 10,
+                    "column" : 31
+                  },
+                  "decisions" : [ {
+                    "type" : "decision",
+                    "pos" : {
+                      "line" : 10,
+                      "column" : 32
+                    },
+                    "label" : "TEST_1",
+                    "destination" : {
+                      "type" : "id",
+                      "pos" : {
+                        "line" : 10,
+                        "column" : 40
+                      },
+                      "name" : "State0",
+                      "string" : "State0"
+                    }
+                  }, {
+                    "type" : "decision",
+                    "pos" : {
+                      "line" : 10,
+                      "column" : 48
+                    },
+                    "label" : "TEST_2",
+                    "destination" : {
+                      "type" : "id",
+                      "pos" : {
+                        "line" : 10,
+                        "column" : 56
+                      },
+                      "name" : "end",
+                      "string" : "end"
+                    }
+                  }, {
+                    "type" : "decision",
+                    "pos" : {
+                      "line" : 10,
+                      "column" : 61
+                    },
+                    "label" : "TEST_3",
+                    "destination" : {
+                      "type" : "state",
+                      "pos" : {
+                        "line" : 10,
+                        "column" : 69
+                      },
+                      "name" : "anonymous::10:69",
+                      "actions" : [ {
+                        "type" : "action",
+"actionType" : "Input",
+                        "pos" : {
+                          "line" : 11,
+                          "column" : 24
+                        },
+                        "returnType" : {
+                          "type" : "id",
+                          "pos" : {
+                            "line" : 11,
+                            "column" : 24
+                          },
+                          "name" : "TestEnum",
+                          "string" : "TestEnum"
+                        },
+                        "name" : "m2",
+                        "args" : [ ],
+                        "destination" : {
+                          "type" : "decisionState",
+                          "pos" : {
+                            "line" : 11,
+                            "column" : 39
+                          },
+                          "decisions" : [ {
+                            "type" : "decision",
+                            "pos" : {
+                              "line" : 11,
+                              "column" : 40
+                            },
+                            "label" : "TEST_1",
+                            "destination" : {
+                              "type" : "id",
+                              "pos" : {
+                                "line" : 11,
+                                "column" : 48
+                              },
+                              "name" : "State1",
+                              "string" : "State1"
+                            }
+                          }, {
+                            "type" : "decision",
+                            "pos" : {
+                              "line" : 11,
+                              "column" : 56
+                            },
+                            "label" : "TEST_2",
+                            "destination" : {
+                              "type" : "id",
+                              "pos" : {
+                                "line" : 11,
+                                "column" : 64
+                              },
+                              "name" : "State1",
+                              "string" : "State1"
+                            }
+                          }, {
+                            "type" : "decision",
+                            "pos" : {
+                              "line" : 11,
+                              "column" : 72
+                            },
+                            "label" : "TEST_3",
+                            "destination" : {
+                              "type" : "state",
+                              "pos" : {
+                                "line" : 11,
+                                "column" : 80
+                              },
+                              "name" : "anonymous::11:80",
+                              "actions" : [ {
+                                "type" : "action",
+"actionType" : "Input",
+                                "pos" : {
+                                  "line" : 12,
+                                  "column" : 32
+                                },
+                                "returnType" : {
+                                  "type" : "id",
+                                  "pos" : {
+                                    "line" : 12,
+                                    "column" : 32
+                                  },
+                                  "name" : "void",
+                                  "string" : "void"
+                                },
+                                "name" : "m1",
+                                "args" : [ ],
+                                "destination" : {
+                                  "type" : "id",
+                                  "pos" : {
+                                    "line" : 12,
+                                    "column" : 43
+                                  },
+                                  "name" : "State1",
+                                  "string" : "State1"
+                                }
+                              } ]
+                            }
+                          } ]
+                        }
+                      } ]
+                    }
+                  } ]
+                }
+              } ]
+            }
+          }, {
+            "type" : "decision",
+            "pos" : {
+              "line" : 15,
+              "column" : 15
+            },
+            "label" : "TEST_2",
+            "destination" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 15,
+                "column" : 23
+              },
+              "name" : "State0",
+              "string" : "State0"
+            }
+          }, {
+            "type" : "decision",
+            "pos" : {
+              "line" : 15,
+              "column" : 31
+            },
+            "label" : "TEST_3",
+            "destination" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 15,
+                "column" : 39
+              },
+              "name" : "end",
+              "string" : "end"
+            }
+          } ]
+        }
+      } ]
+    }, {
+      "type" : "state",
+      "pos" : {
+        "line" : 18,
+        "column" : 4
+      },
+      "name" : "State1",
+      "actions" : [ {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 19,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 19,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "m1",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 19,
+            "column" : 19
+          },
+          "name" : "State1",
+          "string" : "State1"
+        }
+      } ]
+    } ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "typestate",
+  "pos": {
+    "line": 2,
+    "column": 0
+  },
+  "imports": [],
+  "decl": {
+    "type": "declaration",
+    "pos": {
+      "line": 2,
+      "column": 0
+    },
+    "name": "UnexpectedEmptyProtocol",
+    "states": []
+  }
+}

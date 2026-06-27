@@ -1,0 +1,222 @@
+{
+  "type" : "typestate",
+  "pos" : {
+    "line" : 1,
+    "column" : 0
+  },
+  "imports" : [ ],
+  "decl" : {
+    "type" : "declaration",
+    "pos" : {
+      "line" : 1,
+      "column" : 0
+    },
+    "name" : "DroneServer",
+    "states" : [ {
+      "type" : "state",
+      "pos" : {
+        "line" : 2,
+        "column" : 4
+      },
+      "name" : "State0",
+      "actions" : [ {
+        "type" : "action",
+        "pos" : {
+          "line" : 3,
+          "column" : 8
+        },
+        "actionType" : "Input",
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 3,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "connect",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 3,
+            "column" : 24
+          },
+          "name" : "State1",
+          "string" : "State1"
+        }
+      }, {
+        "type" : "action",
+        "pos" : {
+          "line" : 4,
+          "column" : 8
+        },
+        "actionType" : "Input",
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 4,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "turnoff",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 4,
+            "column" : 24
+          },
+          "name" : "end",
+          "string" : "end"
+        }
+      } ]
+    }, {
+      "type" : "state",
+      "pos" : {
+        "line" : 6,
+        "column" : 4
+      },
+      "name" : "State1",
+      "actions" : [ {
+        "type" : "action",
+        "pos" : {
+          "line" : 7,
+          "column" : 8
+        },
+        "actionType" : "Input",
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 7,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "disconnect",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 7,
+            "column" : 27
+          },
+          "name" : "State0",
+          "string" : "State0"
+        }
+      }, {
+        "type" : "action",
+        "pos" : {
+          "line" : 8,
+          "column" : 8
+        },
+        "actionType" : "Input",
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 8,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "manualInput",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 8,
+            "column" : 28
+          },
+          "name" : "State1",
+          "string" : "State1"
+        }
+      }, {
+        "type" : "action",
+        "pos" : {
+          "line" : 9,
+          "column" : 8
+        },
+        "actionType" : "Input",
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 9,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "target",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 9,
+            "column" : 23
+          },
+          "name" : "State1",
+          "string" : "State1"
+        }
+      }, {
+        "type" : "action",
+        "pos" : {
+          "line" : 10,
+          "column" : 8
+        },
+        "actionType" : "Input",
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 10,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "turnoff",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 10,
+            "column" : 24
+          },
+          "name" : "end",
+          "string" : "end"
+        }
+      }, {
+        "type" : "action",
+        "pos" : {
+          "line" : 6,
+          "column" : 14
+        },
+        "actionType" : "Output",
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 6,
+            "column" : 14
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "cameraRefresh",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 6,
+            "column" : 36
+          },
+          "name" : "State1",
+          "string" : "State1"
+        }
+      } ]
+    } ]
+  }
+}

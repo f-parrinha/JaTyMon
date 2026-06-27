@@ -1,0 +1,5 @@
+typestate RatioBadValue1 {
+    State0 = {
+        void method()[]: end
+    }
+}

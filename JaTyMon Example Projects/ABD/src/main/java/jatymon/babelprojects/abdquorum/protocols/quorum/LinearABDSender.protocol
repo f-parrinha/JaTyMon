@@ -1,0 +1,56 @@
+import jatymon.babelprojects.abdquorum.notifications.messages.writeop.*;
+import jatymon.babelprojects.abdquorum.notifications.messages.readop.*;
+import jatymon.babelprojects.abdquorum.notifications.messages.client.*;
+import jatymon.babelprojects.abdquorum.notifications.connection.*;
+
+
+/*
+ *  THIS IS AN EXPERIMENTAL PROTOCOL
+ */
+
+typestate LinearABDSender keyed clientId {
+    Ext peersSize;
+
+    Val conns = 0;
+    Val readAck = 0;
+    Val writeBackAck = 0;
+    Val readTagAck = 0;
+    Val writeAck = 0;
+
+    Assign ackRead: readAck := readAck + 1;
+    Assign ackWriteBack: writeBackAck := writeBackAck + 1;
+    Assign ackReadTag: readTagAck := readTagAck + 1;
+    Assign ackWrite: writeAck := writeAck + 1;
+    Assign resetReadAck: readAck := 0;
+    Assign resetWriteBackAck: writeBackAck := 0;
+    Assign resetReadTagAck: readTagAck := 0;
+    Assign resetWriteAck: writeAck := 0;
+
+    Pred hasReadQuorum: readAck > peersSize / 2;
+    Pred hasWriteBackQuorum: writeBackAck > peersSize / 2;
+    Pred hasReadTagQuorum: readTagAck > peersSize / 2;
+    Pred hasWriteQuorum: writeAck > peersSize / 2;
+
+    Main = {
+        void uponConnectionUp(ConnectionUpNotification, short): Main,
+        void uponConnectionDown(ConnectionDownNotification, short): Main,
+        void uponClientReadMessage(ClientReadMessageNotification, short): ReadQuorum,
+        void uponClientWriteMessage(ClientWriteMessageNotification, short): ReadTagQuorum
+    }
+
+    ReadQuorum = {
+        void uponReadAck(ReadAckNotification, short)[ackRead; hasReadQuorum]: WriteBackQuorum[resetReadAck]
+    }
+
+    WriteBackQuorum = {
+        void uponWriteBackAck(WriteBackAckNotification, short)[ackWriteBack; hasWriteBackQuorum]: Main[resetWriteBackAck]
+    }
+
+    ReadTagQuorum = {
+        void uponReadTagAck(ReadTagAckNotification, short)[ackReadTag; hasReadTagQuorum]: WriteQuorum[resetReadTagAck]
+    }
+
+    WriteQuorum = {
+        void uponWriteAck(WriteAckNotification, short)[ackWrite; hasWriteQuorum]: Main[resetWriteAck]
+    }
+}

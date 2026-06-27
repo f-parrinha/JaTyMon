@@ -1,0 +1,83 @@
+{
+  "type" : "typestate",
+  "pos" : {
+    "line" : 1,
+    "column" : 0
+  },
+  "imports" : [ ],
+  "decl" : {
+    "type" : "declaration",
+    "pos" : {
+      "line" : 1,
+      "column" : 0
+    },
+    "name" : "ExtFieldsAreImmutable",
+    "internalState" : [ {
+      "type" : "ext",
+      "pos" : {
+        "line" : 2,
+        "column" : 4
+      },
+      "name" : "n"
+    }, {
+      "type" : "assign",
+      "pos" : {
+        "line" : 5,
+        "column" : 4
+      },
+      "name" : "A",
+      "assignExpr" : {
+        "type" : "assignExpr",
+        "pos" : {
+          "line" : 5,
+          "column" : 14
+        },
+        "valName" : "n",
+        "arithExpr" : {
+          "type" : "numberOperand",
+          "pos" : {
+            "line" : 5,
+            "column" : 19
+          },
+          "value" : 0
+        }
+      }
+    } ],
+    "states" : [ {
+      "type" : "state",
+      "pos" : {
+        "line" : 7,
+        "column" : 4
+      },
+      "name" : "State0",
+      "actions" : [ {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 8,
+          "column" : 8
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 8,
+            "column" : 8
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "m",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 8,
+            "column" : 18
+          },
+          "name" : "State0",
+          "string" : "State0"
+        }
+      } ]
+    } ]
+  }
+}

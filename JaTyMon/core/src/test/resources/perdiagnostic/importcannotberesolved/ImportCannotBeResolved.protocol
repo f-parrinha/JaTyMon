@@ -1,0 +1,7 @@
+import wrong.imp.statement;
+
+typestate ImportCannotBeResolved {
+    State0 = {
+        void m(): State0
+    }
+}

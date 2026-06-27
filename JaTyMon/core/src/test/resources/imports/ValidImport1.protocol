@@ -1,0 +1,7 @@
+import imports.folder.*;
+
+typestate ValidImport1 {
+    State0 = {
+        EmptyClass m(): State0
+    }
+}

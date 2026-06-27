@@ -1,0 +1,6 @@
+// ::Error UnknownTypeDiagnostic -> String is not generic
+typestate InvalidGeneric5 {
+    State0 = {
+        void m(String<Integer>): State0
+    }
+}

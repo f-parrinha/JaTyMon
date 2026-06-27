@@ -1,0 +1,11 @@
+typestate ObserverProtocol {
+
+  IDLE = {
+    void notify(double): ACK
+  }
+
+  ACK =  {
+    void ack(): IDLE
+  }
+
+}

@@ -1,0 +1,25 @@
+typestate BVPLeader {
+    Ext n;
+    Ext k;
+    Val acks=0;
+    Val retries=k;
+
+    Pred P1: acks = n;
+    Pred P2: retries = 0;
+
+    Assign A1: acks := acks + 1;
+    Assign A2: retries := retries - 1;
+    Assign A3: acks := 0;
+    Assign A4: retries := k;
+
+    State1 = {
+        void vreq(): State2
+    }
+    State2 = {
+        void vreq()[0.5; A2; P2]: State2[A3, A4],
+        void vack()[0.5; A1; P1]: State3[A3, A4]
+    }
+    State3 = {
+        void vwb(): State2
+    }
+}

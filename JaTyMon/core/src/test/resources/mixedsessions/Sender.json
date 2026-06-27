@@ -1,0 +1,52 @@
+{
+  "type" : "typestate",
+  "pos" : {
+    "line" : 1,
+    "column" : 0
+  },
+  "imports" : [ ],
+  "decl" : {
+    "pos" : {
+      "line" : 1,
+      "column" : 0
+    },
+    "name" : "Sender",
+    "type" : "declaration",
+    "states" : [ {
+      "type" : "state",
+      "pos" : {
+        "line" : 2,
+        "column" : 4
+      },
+      "name" : "State0",
+      "actions" : [ {
+        "type" : "action",
+        "pos" : {
+          "line" : 2,
+          "column" : 14
+        },
+        "actionType" : "Output",
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 2,
+            "column" : 14
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "send",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 2,
+            "column" : 27
+          },
+          "name" : "State0",
+          "string" : "State0"
+        }
+      } ]
+    } ]
+  }
+}

@@ -1,0 +1,8 @@
+import imports.folder.subfolder.*;
+import imports.folder.*;
+
+typestate ValidImport4 {
+    State0 = {
+        SubEmptyClass m(EmptyClass): State0
+    }
+}

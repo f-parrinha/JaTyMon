@@ -1,0 +1,329 @@
+{
+  "type" : "typestate",
+  "pos" : {
+    "line" : 1,
+    "column" : 0
+  },
+  "pkg" : {
+    "type" : "package",
+    "pos" : {
+      "line" : 1,
+      "column" : 0
+    },
+    "ref" : {
+      "type" : "id",
+      "pos" : {
+        "line" : 1,
+        "column" : 8
+      },
+      "name" : "examples",
+      "string" : "examples"
+    }
+  },
+  "imports" : [ ],
+  "decl" : {
+    "type" : "declaration",
+    "pos" : {
+      "line" : 3,
+      "column" : 0
+    },
+    "name" : "ProAccount",
+    "states" : [ {
+      "type" : "state",
+      "pos" : {
+        "line" : 4,
+        "column" : 2
+      },
+      "name" : "Init",
+      "actions" : [ {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 5,
+          "column" : 4
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 5,
+            "column" : 4
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "deposit",
+        "args" : [ {
+          "type" : "id",
+          "pos" : {
+            "line" : 5,
+            "column" : 17
+          },
+          "name" : "int",
+          "string" : "int"
+        } ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 5,
+            "column" : 23
+          },
+          "name" : "Attempt",
+          "string" : "Attempt"
+        }
+      } ]
+    }, {
+      "type" : "state",
+      "pos" : {
+        "line" : 8,
+        "column" : 2
+      },
+      "name" : "Attempt",
+      "actions" : [ {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 9,
+          "column" : 4
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 9,
+            "column" : 4
+          },
+          "name" : "boolean",
+          "string" : "boolean"
+        },
+        "name" : "canWithdraw",
+        "args" : [ {
+          "type" : "id",
+          "pos" : {
+            "line" : 9,
+            "column" : 24
+          },
+          "name" : "int",
+          "string" : "int"
+        } ],
+        "destination" : {
+          "type" : "decisionState",
+          "pos" : {
+            "line" : 10,
+            "column" : 6
+          },
+          "decisions" : [ {
+            "type" : "decision",
+            "pos" : {
+              "line" : 10,
+              "column" : 7
+            },
+            "label" : "true",
+            "destination" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 10,
+                "column" : 13
+              },
+              "name" : "Withdraw",
+              "string" : "Withdraw"
+            }
+          }, {
+            "type" : "decision",
+            "pos" : {
+              "line" : 10,
+              "column" : 23
+            },
+            "label" : "false",
+            "destination" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 10,
+                "column" : 30
+              },
+              "name" : "Init",
+              "string" : "Init"
+            }
+          } ]
+        }
+      }, {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 11,
+          "column" : 4
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 11,
+            "column" : 4
+          },
+          "name" : "boolean",
+          "string" : "boolean"
+        },
+        "name" : "canTransfer",
+        "args" : [ {
+          "type" : "id",
+          "pos" : {
+            "line" : 11,
+            "column" : 24
+          },
+          "name" : "int",
+          "string" : "int"
+        } ],
+        "destination" : {
+          "type" : "decisionState",
+          "pos" : {
+            "line" : 12,
+            "column" : 6
+          },
+          "decisions" : [ {
+            "type" : "decision",
+            "pos" : {
+              "line" : 12,
+              "column" : 7
+            },
+            "label" : "true",
+            "destination" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 12,
+                "column" : 13
+              },
+              "name" : "Transfer",
+              "string" : "Transfer"
+            }
+          }, {
+            "type" : "decision",
+            "pos" : {
+              "line" : 12,
+              "column" : 23
+            },
+            "label" : "false",
+            "destination" : {
+              "type" : "id",
+              "pos" : {
+                "line" : 12,
+                "column" : 30
+              },
+              "name" : "Init",
+              "string" : "Init"
+            }
+          } ]
+        }
+      }, {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 13,
+          "column" : 4
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 13,
+            "column" : 4
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "deposit",
+        "args" : [ {
+          "type" : "id",
+          "pos" : {
+            "line" : 13,
+            "column" : 17
+          },
+          "name" : "int",
+          "string" : "int"
+        } ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 13,
+            "column" : 23
+          },
+          "name" : "Attempt",
+          "string" : "Attempt"
+        }
+      } ]
+    }, {
+      "type" : "state",
+      "pos" : {
+        "line" : 16,
+        "column" : 2
+      },
+      "name" : "Withdraw",
+      "actions" : [ {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 17,
+          "column" : 4
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 17,
+            "column" : 4
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "withdraw",
+        "args" : [ ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 17,
+            "column" : 21
+          },
+          "name" : "Attempt",
+          "string" : "Attempt"
+        }
+      } ]
+    }, {
+      "type" : "state",
+      "pos" : {
+        "line" : 20,
+        "column" : 2
+      },
+      "name" : "Transfer",
+      "actions" : [ {
+        "type" : "action",
+"actionType" : "Input",
+        "pos" : {
+          "line" : 21,
+          "column" : 4
+        },
+        "returnType" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 21,
+            "column" : 4
+          },
+          "name" : "void",
+          "string" : "void"
+        },
+        "name" : "transfer",
+        "args" : [ {
+          "type" : "id",
+          "pos" : {
+            "line" : 21,
+            "column" : 18
+          },
+          "name" : "BaseAccount",
+          "string" : "BaseAccount"
+        } ],
+        "destination" : {
+          "type" : "id",
+          "pos" : {
+            "line" : 21,
+            "column" : 32
+          },
+          "name" : "Attempt",
+          "string" : "Attempt"
+        }
+      } ]
+    } ]
+  }
+}

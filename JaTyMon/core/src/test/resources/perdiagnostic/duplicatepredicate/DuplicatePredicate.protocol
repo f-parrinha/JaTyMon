@@ -1,0 +1,9 @@
+typestate DuplicatePredicate {
+    // :: error: duplicate predicate
+    Pred P: 0 = 0;
+    Pred P: 0 = 0;
+
+    State0 = {
+        void m(): State0
+    }
+}

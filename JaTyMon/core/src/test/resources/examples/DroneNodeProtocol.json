@@ -1,0 +1,303 @@
+{
+  "type": "typestate",
+  "pos": {
+    "line": 1,
+    "column": 0
+  },
+  "imports": [
+    {
+      "type": "import",
+      "pos": {
+        "line": 1,
+        "column": 0
+      },
+      "ref": {
+        "type": "member",
+        "pos": {
+          "line": 1,
+          "column": 7
+        },
+        "ref": {
+          "type": "member",
+          "pos": {
+            "line": 1,
+            "column": 7
+          },
+          "ref": {
+            "type": "id",
+            "pos": {
+              "line": 1,
+              "column": 7
+            },
+            "name": "examples",
+            "string": "examples"
+          },
+          "id": {
+            "type": "id",
+            "pos": {
+              "line": 1,
+              "column": 16
+            },
+            "name": "DroneNodeProtocol",
+            "string": "DroneNodeProtocol"
+          },
+          "string": "examples.DroneNodeProtocol"
+        },
+        "id": {
+          "type": "id",
+          "pos": {
+            "line": 1,
+            "column": 34
+          },
+          "name": "DroneNode",
+          "string": "DroneNode"
+        },
+        "string": "examples.DroneNodeProtocol.DroneNode"
+      },
+      "staticc": false,
+      "star": false
+    },
+    {
+      "type": "import",
+      "pos": {
+        "line": 2,
+        "column": 0
+      },
+      "ref": {
+        "type": "member",
+        "pos": {
+          "line": 2,
+          "column": 7
+        },
+        "ref": {
+          "type": "member",
+          "pos": {
+            "line": 2,
+            "column": 7
+          },
+          "ref": {
+            "type": "id",
+            "pos": {
+              "line": 2,
+              "column": 7
+            },
+            "name": "examples",
+            "string": "examples"
+          },
+          "id": {
+            "type": "id",
+            "pos": {
+              "line": 2,
+              "column": 16
+            },
+            "name": "DroneGroupProtocol",
+            "string": "DroneGroupProtocol"
+          },
+          "string": "examples.DroneGroupProtocol"
+        },
+        "id": {
+          "type": "id",
+          "pos": {
+            "line": 2,
+            "column": 35
+          },
+          "name": "Drone",
+          "string": "Drone"
+        },
+        "string": "examples.DroneGroupProtocol.Drone"
+      },
+      "staticc": false,
+      "star": false
+    }
+  ],
+  "decl": {
+    "type": "declaration",
+    "pos": {
+      "line": 4,
+      "column": 0
+    },
+    "name": "DroneNodeProtocol",
+    "states": [
+      {
+        "type": "state",
+        "pos": {
+          "line": 5,
+          "column": 2
+        },
+        "name": "INIT",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 6,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 6,
+                "column": 4
+              },
+              "name": "Drone",
+              "string": "Drone"
+            },
+            "name": "take",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 6,
+                "column": 18
+              },
+              "name": "TAKEN",
+              "string": "TAKEN"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 7,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 7,
+                "column": 4
+              },
+              "name": "DroneNode",
+              "string": "DroneNode"
+            },
+            "name": "getNext",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 7,
+                "column": 25
+              },
+              "name": "INIT",
+              "string": "INIT"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 8,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 8,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "setLast",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 8,
+                  "column": 17
+                },
+                "name": "DroneNode",
+                "string": "DroneNode"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 8,
+                "column": 29
+              },
+              "name": "INIT",
+              "string": "INIT"
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 11,
+          "column": 2
+        },
+        "name": "TAKEN",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 12,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 12,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "putBack",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 12,
+                  "column": 17
+                },
+                "name": "Drone",
+                "string": "Drone"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 12,
+                "column": 25
+              },
+              "name": "INIT",
+              "string": "INIT"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 13,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 13,
+                "column": 4
+              },
+              "name": "DroneNode",
+              "string": "DroneNode"
+            },
+            "name": "getNext",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 13,
+                "column": 25
+              },
+              "name": "end",
+              "string": "end"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

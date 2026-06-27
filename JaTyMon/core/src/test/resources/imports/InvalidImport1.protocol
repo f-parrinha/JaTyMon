@@ -1,0 +1,8 @@
+import imports.folder.subfolder.*;
+
+// ::Error cannot find EmptyClass (it is in "imports.folder")
+typestate InvalidImport1 {
+    State0 = {
+        EmptyClass m(): State0
+    }
+}

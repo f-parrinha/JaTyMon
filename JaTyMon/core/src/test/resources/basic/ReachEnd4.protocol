@@ -1,0 +1,56 @@
+// :: note: (This graph can reach end)
+typestate ReachEnd4 {
+    State0 = {
+        void m1(): State1,
+        void m2(): State2
+    }
+
+    State1 = {
+        void m1(): State9,
+        void m2(): State7
+    }
+
+    State2 = {
+        void m1(): State3
+    }
+
+    State3 = {
+        void m1(): State4
+    }
+
+    State4 = {
+        void m1(): State5
+    }
+
+    State5 = {
+        void m1(): State6,
+        void m2(): end
+    }
+
+    State6 = {
+        void m1(): State2
+    }
+
+    State7 = {
+        void m1(): State8,
+        void m2(): State11
+    }
+
+    State8 = {
+        void m1(): end
+    }
+
+    State9 = {
+        void m1(): State10,
+        void m2(): State1
+    }
+
+    State10 = {
+        void m1(): State8,
+        void m2(): State9
+    }
+
+    State11 = {
+        void m1(): State7
+    }
+}

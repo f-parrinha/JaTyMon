@@ -1,0 +1,5 @@
+typestate Mixed2 {
+    State0 = (void send(): State2)
+    State1 = {void receive(): State2}
+    State2 = (boolean a(): <true: State0, false: State1>) + {boolean b(): <true: State2, false: State1>}
+}

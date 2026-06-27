@@ -1,0 +1,10 @@
+typestate ExtFieldsAreImmutable {
+    Ext n;
+
+    // :: error: ext fields are immutable
+    Assign A: n := 0;
+
+    State0 = {
+        void m(): State0
+    }
+}

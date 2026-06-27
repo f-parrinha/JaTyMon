@@ -1,0 +1,3 @@
+typestate Receiver {
+    State0 = {void receive(): State0}
+}

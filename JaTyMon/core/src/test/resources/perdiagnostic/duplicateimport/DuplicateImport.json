@@ -1,0 +1,161 @@
+{
+    "type": "typestate",
+    "pos": {
+        "line": 1,
+        "column": 0
+    },
+    "imports": [
+        {
+            "type": "import",
+            "pos": {
+                "line": 1,
+                "column": 0
+            },
+            "ref": {
+                "type": "member",
+                "pos": {
+                    "line": 1,
+                    "column": 7
+                },
+                "ref": {
+                    "type": "member",
+                    "pos": {
+                        "line": 1,
+                        "column": 7
+                    },
+                    "ref": {
+                        "type": "id",
+                        "pos": {
+                            "line": 1,
+                            "column": 7
+                        },
+                        "name": "perdiagnostic",
+                        "string": "perdiagnostic"
+                    },
+                    "id": {
+                        "type": "id",
+                        "pos": {
+                            "line": 1,
+                            "column": 21
+                        },
+                        "name": "common",
+                        "string": "common"
+                    },
+                    "string": "perdiagnostic.common"
+                },
+                "id": {
+                    "type": "id",
+                    "pos": {
+                        "line": 1,
+                        "column": 28
+                    },
+                    "name": "TestClass",
+                    "string": "TestClass"
+                },
+                "string": "perdiagnostic.common.TestClass"
+            },
+            "staticc": false,
+            "star": false
+        },
+        {
+            "type": "import",
+            "pos": {
+                "line": 2,
+                "column": 0
+            },
+            "ref": {
+                "type": "member",
+                "pos": {
+                    "line": 2,
+                    "column": 7
+                },
+                "ref": {
+                    "type": "member",
+                    "pos": {
+                        "line": 2,
+                        "column": 7
+                    },
+                    "ref": {
+                        "type": "id",
+                        "pos": {
+                            "line": 2,
+                            "column": 7
+                        },
+                        "name": "perdiagnostic",
+                        "string": "perdiagnostic"
+                    },
+                    "id": {
+                        "type": "id",
+                        "pos": {
+                            "line": 2,
+                            "column": 21
+                        },
+                        "name": "common",
+                        "string": "common"
+                    },
+                    "string": "perdiagnostic.common"
+                },
+                "id": {
+                    "type": "id",
+                    "pos": {
+                        "line": 2,
+                        "column": 28
+                    },
+                    "name": "TestClass",
+                    "string": "TestClass"
+                },
+                "string": "perdiagnostic.common.TestClass"
+            },
+            "staticc": false,
+            "star": false
+        }
+    ],
+    "decl": {
+        "type": "declaration",
+        "pos": {
+            "line": 4,
+            "column": 0
+        },
+        "name": "DuplicateImport",
+        "states": [
+            {
+                "type": "state",
+                "pos": {
+                    "line": 5,
+                    "column": 4
+                },
+                "name": "State0",
+                "actions": [
+                    {
+                        "type" : "action",
+                        "actionType" : "Input",
+                        "pos": {
+                            "line": 6,
+                            "column": 8
+                        },
+                        "returnType": {
+                            "type": "id",
+                            "pos": {
+                                "line": 6,
+                                "column": 8
+                            },
+                            "name": "TestClass",
+                            "string": "TestClass"
+                        },
+                        "name": "m",
+                        "args": [],
+                        "destination": {
+                            "type": "id",
+                            "pos": {
+                                "line": 6,
+                                "column": 23
+                            },
+                            "name": "State0",
+                            "string": "State0"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

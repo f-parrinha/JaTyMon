@@ -1,0 +1,226 @@
+{
+  "type": "typestate",
+  "pos": {
+    "line": 1,
+    "column": 0
+  },
+  "imports": [],
+  "decl": {
+    "type": "declaration",
+    "pos": {
+      "line": 1,
+      "column": 0
+    },
+    "name": "Linearity",
+    "states": [
+      {
+        "type": "state",
+        "pos": {
+          "line": 3,
+          "column": 2
+        },
+        "name": "State0",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 4,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 4,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "a",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 4,
+                "column": 14
+              },
+              "name": "State1",
+              "string": "State1"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 5,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 5,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "useOther",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 5,
+                  "column": 18
+                },
+                "name": "Linearity",
+                "string": "Linearity"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 5,
+                "column": 30
+              },
+              "name": "State0",
+              "string": "State0"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 6,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 6,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "finish",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 6,
+                "column": 19
+              },
+              "name": "end",
+              "string": "end"
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 9,
+          "column": 2
+        },
+        "name": "State1",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 10,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 10,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "b",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 10,
+                "column": 14
+              },
+              "name": "end",
+              "string": "end"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 11,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 11,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "useOther",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 11,
+                  "column": 18
+                },
+                "name": "Linearity",
+                "string": "Linearity"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 11,
+                "column": 30
+              },
+              "name": "State1",
+              "string": "State1"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 12,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 12,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "finish",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 12,
+                "column": 19
+              },
+              "name": "end",
+              "string": "end"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+typestate RatioPositive {
+    State0 = {
+        void m()[+1]: end
+    }
+}

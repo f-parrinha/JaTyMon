@@ -1,0 +1,485 @@
+{
+  "type": "typestate",
+  "pos": {
+    "line": 1,
+    "column": 0
+  },
+  "imports": [
+    {
+      "type": "import",
+      "pos": {
+        "line": 1,
+        "column": 0
+      },
+      "ref": {
+        "type": "member",
+        "pos": {
+          "line": 1,
+          "column": 7
+        },
+        "ref": {
+          "type": "member",
+          "pos": {
+            "line": 1,
+            "column": 7
+          },
+          "ref": {
+            "type": "id",
+            "pos": {
+              "line": 1,
+              "column": 7
+            },
+            "name": "examples",
+            "string": "examples"
+          },
+          "id": {
+            "type": "id",
+            "pos": {
+              "line": 1,
+              "column": 16
+            },
+            "name": "FunnyBulb",
+            "string": "FunnyBulb"
+          },
+          "string": "examples.FunnyBulb"
+        },
+        "id": {
+          "type": "id",
+          "pos": {
+            "line": 1,
+            "column": 26
+          },
+          "name": "Mode",
+          "string": "Mode"
+        },
+        "string": "examples.FunnyBulb.Mode"
+      },
+      "staticc": false,
+      "star": false
+    }
+  ],
+  "decl": {
+    "type": "declaration",
+    "pos": {
+      "line": 3,
+      "column": 0
+    },
+    "name": "FunnyBulb",
+    "states": [
+      {
+        "type": "state",
+        "pos": {
+          "line": 4,
+          "column": 2
+        },
+        "name": "DISCONN",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 5,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 5,
+                "column": 4
+              },
+              "name": "boolean",
+              "string": "boolean"
+            },
+            "name": "connect",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 5,
+                "column": 23
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 5,
+                    "column": 24
+                  },
+                  "label": "true",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 5,
+                      "column": 30
+                    },
+                    "name": "STD_CONN",
+                    "string": "STD_CONN"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 5,
+                    "column": 40
+                  },
+                  "label": "false",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 5,
+                      "column": 47
+                    },
+                    "name": "DISCONN",
+                    "string": "DISCONN"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 8,
+          "column": 2
+        },
+        "name": "STD_CONN",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 9,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 9,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "disconnect",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 9,
+                "column": 23
+              },
+              "name": "DISCONN",
+              "string": "DISCONN"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 10,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 10,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "setBrightness",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 10,
+                  "column": 23
+                },
+                "name": "int",
+                "string": "int"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 10,
+                "column": 29
+              },
+              "name": "STD_CONN",
+              "string": "STD_CONN"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 11,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 11,
+                "column": 4
+              },
+              "name": "Mode",
+              "string": "Mode"
+            },
+            "name": "switchMode",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 11,
+                "column": 23
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 11,
+                    "column": 24
+                  },
+                  "label": "RND",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 11,
+                      "column": 29
+                    },
+                    "name": "RND_CONN",
+                    "string": "RND_CONN"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 11,
+                    "column": 39
+                  },
+                  "label": "STD",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 11,
+                      "column": 44
+                    },
+                    "name": "STD_CONN",
+                    "string": "STD_CONN"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 12,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 12,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "setColor",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 12,
+                  "column": 18
+                },
+                "name": "String",
+                "string": "String"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 12,
+                "column": 27
+              },
+              "name": "STD_CONN",
+              "string": "STD_CONN"
+            }
+          }
+        ]
+      },
+      {
+        "type": "state",
+        "pos": {
+          "line": 15,
+          "column": 2
+        },
+        "name": "RND_CONN",
+        "actions": [
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 16,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 16,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "disconnect",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 16,
+                "column": 23
+              },
+              "name": "DISCONN",
+              "string": "DISCONN"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 17,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 17,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "setBrightness",
+            "args": [
+              {
+                "type": "id",
+                "pos": {
+                  "line": 17,
+                  "column": 23
+                },
+                "name": "int",
+                "string": "int"
+              }
+            ],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 17,
+                "column": 29
+              },
+              "name": "RND_CONN",
+              "string": "RND_CONN"
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 18,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 18,
+                "column": 4
+              },
+              "name": "Mode",
+              "string": "Mode"
+            },
+            "name": "switchMode",
+            "args": [],
+            "destination": {
+              "type": "decisionState",
+              "pos": {
+                "line": 18,
+                "column": 23
+              },
+              "decisions": [
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 18,
+                    "column": 24
+                  },
+                  "label": "RND",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 18,
+                      "column": 29
+                    },
+                    "name": "RND_CONN",
+                    "string": "RND_CONN"
+                  }
+                },
+                {
+                  "type": "decision",
+                  "pos": {
+                    "line": 18,
+                    "column": 39
+                  },
+                  "label": "STD",
+                  "destination": {
+                    "type": "id",
+                    "pos": {
+                      "line": 18,
+                      "column": 44
+                    },
+                    "name": "STD_CONN",
+                    "string": "STD_CONN"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type" : "action",
+"actionType" : "Input",
+            "pos": {
+              "line": 19,
+              "column": 4
+            },
+            "returnType": {
+              "type": "id",
+              "pos": {
+                "line": 19,
+                "column": 4
+              },
+              "name": "void",
+              "string": "void"
+            },
+            "name": "randomColor",
+            "args": [],
+            "destination": {
+              "type": "id",
+              "pos": {
+                "line": 19,
+                "column": 24
+              },
+              "name": "RND_CONN",
+              "string": "RND_CONN"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

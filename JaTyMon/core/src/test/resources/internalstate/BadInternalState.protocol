@@ -1,0 +1,28 @@
+typestate BadInternalState {
+    // ::Error Duplicate Ext name
+    Ext n;
+    Ext n;
+
+    // ::Error Duplicate Val name
+    Val x = 0;
+    Val x = 1;
+
+    // ::Error Duplicate assignment name
+    Assign A: x := 1;
+    Assign A: x := x + 1;
+
+    // ::Error Duplicate predicate name
+    Pred P: x = 1;
+    Pred P: x = 2;
+
+    // ::Error Cannot change Ext values
+    Assign A2: n := n + 1;
+
+    // ::Error Unknown field
+    Assign A3: x := y + 1;
+
+    State0 = {
+        // ::Error Unknown assignment and unknown predicate
+        void m()[A5;P1]: State0[A6]
+    }
+}

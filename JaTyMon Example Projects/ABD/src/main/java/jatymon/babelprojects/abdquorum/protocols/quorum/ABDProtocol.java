@@ -1,0 +1,317 @@
+package jatymon.babelprojects.abdquorum.protocols.quorum;
+
+import jatymon.annotations.Discardable;
+import jatymon.annotations.Ext;
+import jatymon.annotations.Typestate;
+import jatymon.babelprojects.abdquorum.ConfigKeys;
+import jatymon.babelprojects.abdquorum.data.Database;
+import jatymon.babelprojects.abdquorum.exceptions.IllegalMessageException;
+import jatymon.babelprojects.abdquorum.data.Tag;
+import jatymon.babelprojects.abdquorum.messages.client.ClientReadAck;
+import jatymon.babelprojects.abdquorum.messages.client.ClientWriteAck;
+import jatymon.babelprojects.abdquorum.messages.client.ClientWriteMessage;
+import jatymon.babelprojects.abdquorum.messages.replica.ReplicaMessage;
+import jatymon.babelprojects.abdquorum.messages.replica.readop.ReadAck;
+import jatymon.babelprojects.abdquorum.messages.replica.readop.ReadMessage;
+import jatymon.babelprojects.abdquorum.messages.replica.readop.WriteBackAck;
+import jatymon.babelprojects.abdquorum.messages.replica.writeop.ReadTagAck;
+import jatymon.babelprojects.abdquorum.messages.tags.EntryMessage;
+import jatymon.babelprojects.abdquorum.messages.tags.TagMessage;
+import jatymon.babelprojects.abdquorum.messages.replica.writeop.ReadTagMessage;
+import jatymon.babelprojects.abdquorum.messages.replica.writeop.WriteAck;
+import jatymon.babelprojects.abdquorum.messages.replica.readop.WriteBackMessage;
+import jatymon.babelprojects.abdquorum.messages.replica.writeop.WriteMessage;
+import jatymon.babelprojects.abdquorum.notifications.connection.ConnectionDownNotification;
+import jatymon.babelprojects.abdquorum.notifications.connection.ConnectionUpNotification;
+import jatymon.babelprojects.abdquorum.notifications.messages.client.ClientReadMessageNotification;
+import jatymon.babelprojects.abdquorum.notifications.messages.client.ClientWriteMessageNotification;
+import jatymon.babelprojects.abdquorum.notifications.messages.readop.ReadAckNotification;
+import jatymon.babelprojects.abdquorum.notifications.messages.readop.ReadMessageNotification;
+import jatymon.babelprojects.abdquorum.notifications.messages.readop.WriteBackAckNotification;
+import jatymon.babelprojects.abdquorum.notifications.messages.writeop.ReadTagAckNotification;
+import jatymon.babelprojects.abdquorum.notifications.messages.writeop.ReadTagMessageNotification;
+import jatymon.babelprojects.abdquorum.notifications.messages.writeop.WriteAckNotification;
+import jatymon.babelprojects.abdquorum.notifications.messages.readop.WriteBackMessageNotification;
+import jatymon.babelprojects.abdquorum.notifications.messages.writeop.WriteMessageNotification;
+import jatymon.babelprojects.abdquorum.operations.Operation;
+import jatymon.babelprojects.abdquorum.operations.ReadOperation;
+import jatymon.babelprojects.abdquorum.operations.Session;
+import jatymon.babelprojects.abdquorum.operations.WriteOperation;
+import jatymon.babelprojects.abdquorum.protocols.dispatcher.DispatcherProtocol;
+import jatymon.babelprojects.abdquorum.requests.BroadcastMessageRequest;
+import jatymon.babelprojects.abdquorum.requests.SendMessageRequest;
+import jatymon.babelprojects.abdquorum.utils.NetworkUtils;
+import jatymon.exceptions.discarding.DiscardIllegalAction;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import pt.unl.fct.di.novasys.babel.core.GenericProtocol;
+import pt.unl.fct.di.novasys.babel.exceptions.HandlerRegistrationException;
+import pt.unl.fct.di.novasys.network.data.Host;
+
+import java.io.IOException;
+import java.util.*;
+
+/**
+ * This is an implementation of the Attya bar-Noy Dolev quorum protocol. It does not separate into two distinct roles: sender and receiver.
+ * The class contains then, the logic for both participants. This version of the protocol can be executed with multiple participants.
+ */
+@Typestate("ABDQuorum")
+public class ABDProtocol extends GenericProtocol {
+    public static final short PROTO_ID = 101;
+    public static final String PROTO_NAME = "ABDQuorum";
+    public static final String DUPLICATED_MESSAGE_WARN = "Discarding duplicated message '{}'";
+
+    private static final Logger logger = LogManager.getLogger(ABDProtocol.class);
+
+    private final Session session;
+    private final Database db;
+
+    @Ext
+    protected int peersSize;
+
+    private int version;
+
+    public ABDProtocol() {
+        super(PROTO_NAME, PROTO_ID);
+
+        this.session = new Session();
+        this.db = new Database();
+    }
+
+    @Override
+    public void init(final Properties props) throws HandlerRegistrationException, IOException {
+        this.version = Integer.parseInt(props.getProperty(ConfigKeys.PORT_CONFIG));
+        this.peersSize = NetworkUtils.setupPeers(props.getProperty(ConfigKeys.PEERS_CONFIG)).size();
+
+        subscribeNotification(ConnectionUpNotification.ID, this::uponConnectionUp);
+        subscribeNotification(ConnectionDownNotification.ID, this::uponConnectionDown);
+
+        subscribeNotification(ClientWriteMessageNotification.ID, this::uponClientWriteMessage);
+        subscribeNotification(ClientReadMessageNotification.ID, this::uponClientReadMessage);
+
+        subscribeNotification(ReadTagMessageNotification.ID, this::uponReadTagMessage);
+        subscribeNotification(ReadTagAckNotification.ID, this::uponReadTagAck);
+        subscribeNotification(ReadMessageNotification.ID, this::uponReadMessage);
+        subscribeNotification(ReadAckNotification.ID, this::uponReadAck);
+        subscribeNotification(WriteMessageNotification.ID, this::uponWriteMessage);
+        subscribeNotification(WriteAckNotification.ID, this::uponWriteAck);
+        subscribeNotification(WriteBackMessageNotification.ID, this::uponWriteBackMessage);
+        subscribeNotification(WriteBackAckNotification.ID, this::uponWriteBackAck);
+    }
+
+
+    /* --------------- CONNECTION METHODS --------------- */
+
+
+    protected void uponConnectionUp(final ConnectionUpNotification notification, final short protoId) {
+        logger.info("Connection up with {}", notification.getHost());
+    }
+
+    protected void uponConnectionDown(final ConnectionDownNotification notification, final short protoId) {
+        final Host host = notification.getHost();
+        logger.info("Connection down with {}", host);
+    }
+
+
+    /* --------------- CLIENT OP METHODS --------------- */
+
+
+    protected void uponClientReadMessage(final ClientReadMessageNotification notification, final short protoId) {
+        final String clientId = notification.getMessage().getClientId();
+        final String opId = session.startRead(clientId, notification.getSender());
+
+        final ReadMessage read = new ReadMessage(opId, clientId);
+        sendRequest(new BroadcastMessageRequest(read), DispatcherProtocol.PROTO_ID);
+        logger.debug("Broadcasting {}", read);
+    }
+
+    protected void uponClientWriteMessage(final ClientWriteMessageNotification notification, final short protoId) {
+        final ClientWriteMessage message = notification.getMessage();
+        final String clientId = message.getClientId();
+        final byte[] value = message.getValue();
+        final String opId = session.startWrite(clientId, notification.getSender(), value);
+
+        final ReadTagMessage readTag = new ReadTagMessage(opId, clientId);
+        sendRequest(new BroadcastMessageRequest(readTag), DispatcherProtocol.PROTO_ID);
+        logger.debug("Broadcasting {}", readTag);
+    }
+
+
+    /* --------------- READ OP METHODS --------------- */
+
+
+    protected void uponReadMessage(final ReadMessageNotification notification, final short protoId) {
+        final ReadMessage message = notification.getMessage();
+        final Database.Entry dbEntry = db.getEntry(message.getClientId());
+
+        final Host targetHost = notification.getSender();
+        final ReadAck ack = new ReadAck(message.getOpId(), dbEntry);
+        sendRequest(new SendMessageRequest(ack, targetHost), DispatcherProtocol.PROTO_ID);
+        logger.debug("Sending {} to {}", ack, targetHost);
+    }
+
+    @Discardable
+    protected void uponReadAck(final ReadAckNotification notification, final short protoId) {
+        final ReadAck message = notification.getMessage();
+        final String opId = message.getOpId();
+        if (!session.hasOp(opId)) {
+            throw new DiscardIllegalAction();
+        } else if (!session.receiveMessage(opId, message)) {
+            logger.warn(DUPLICATED_MESSAGE_WARN, message);
+            return;
+        } else if (!session.hasQuorum(opId, peersSize)) {
+            return;
+        }
+        
+        // Get max tag
+        final ReadOperation op = session.stopRead(opId);
+        Database.Entry maxEntry = getMaxEntryMessage(op.getReceived(), message).getEntry();
+
+        // Start write-back
+        final String clientId = op.getClientId();
+        final WriteBackMessage writeBack = new WriteBackMessage(session.startRead(clientId, op.getClientHost()), clientId, maxEntry);
+        sendRequest(new BroadcastMessageRequest(writeBack), DispatcherProtocol.PROTO_ID);
+        logger.debug("Broadcasting {}", writeBack);
+    }
+
+    protected void uponWriteBackMessage(final WriteBackMessageNotification notification, final short protoId) {
+        final WriteBackMessage message = notification.getMessage();
+        final String clientId = message.getClientId();
+        final Database.Entry entry = message.getEntry();
+        final Database.Entry current = db.getEntry(clientId);
+        if (entry.tag().isGreater(current.tag())) {
+            db.put(clientId, entry);
+        }
+
+        final Host targetHost = notification.getSender();
+        final WriteBackAck ack = new WriteBackAck(message.getOpId(), db.getEntry(clientId));
+        sendRequest(new SendMessageRequest(ack, targetHost), DispatcherProtocol.PROTO_ID);
+        logger.debug("Sending {} to {}", ack, targetHost);
+    }
+
+    @Discardable
+    protected void uponWriteBackAck(final WriteBackAckNotification notification, final short protoId) {
+        final WriteBackAck message = notification.getMessage();
+        final String opId = message.getOpId();
+        if (!session.hasOp(opId)) {
+            throw new DiscardIllegalAction();
+        } else if (!session.receiveMessage(opId, message)) {
+            logger.warn(DUPLICATED_MESSAGE_WARN, message);
+            return;
+        } else if (!session.hasQuorum(opId, peersSize)) {
+            return;
+        }
+
+        ReadOperation op = session.stopRead(opId);
+        Database.Entry maxEntry = getMaxEntryMessage(op.getReceived(), message).getEntry();
+
+        final Host client = op.getClientHost();
+        final ClientReadAck ack = new ClientReadAck(op.getClientId(), maxEntry.value());
+        sendRequest(new SendMessageRequest(ack, client), DispatcherProtocol.PROTO_ID);
+        logger.debug("Sending {} to {}", ack, client);
+    }
+
+
+    /* --------------- WRITE OP METHODS --------------- */
+
+
+    protected void uponReadTagMessage(final ReadTagMessageNotification notification, final short protoId) {
+        final ReadTagMessage message = notification.getMessage();
+        final String opId = message.getOpId();
+        final Tag tag = db.getEntry(message.getClientId()).tag();
+
+        final Host targetHost = notification.getSender();
+        final ReadTagAck ack = new ReadTagAck(opId, tag);
+        sendRequest(new SendMessageRequest(ack, targetHost), protoId);
+        logger.debug("Sending {} to {}", ack, targetHost);
+    }
+
+    @Discardable
+    protected void uponReadTagAck(final ReadTagAckNotification notification, final short protoId) {
+        final ReadTagAck message = notification.getMessage();
+        final String opId = message.getOpId();
+        if (!session.hasOp(opId)) {
+            throw new DiscardIllegalAction();
+        } else if (!session.receiveMessage(opId, message)) {
+            logger.warn(DUPLICATED_MESSAGE_WARN, message);
+            return;
+        } else if (!session.hasQuorum(opId, peersSize)) {
+            return;
+        }
+
+        // Prepare data for new quorum round
+        final WriteOperation op = session.stopWrite(opId);
+        final int maxSeq = getMaxTagMessage(op.getReceived(), message).getTag().getSeqNumb();
+        final byte[] value = op.getValue();
+        final String clientId = op.getClientId();
+        final Database.Entry entry = new Database.Entry(new Tag(maxSeq + 1, version), value);
+
+        // Send write
+        final WriteMessage write = new WriteMessage(session.startWrite(clientId, op.getClientHost(), value), clientId, entry);
+        sendRequest(new BroadcastMessageRequest(write), DispatcherProtocol.PROTO_ID);
+        logger.debug("Broadcasting {}", write);
+    }
+
+    protected void uponWriteMessage(final WriteMessageNotification notification, final short protoId) {
+        final WriteMessage message = notification.getMessage();
+        final String clientId = message.getClientId();
+        final Database.Entry toWrite = message.getEntry();
+        final Database.Entry current = db.getEntry(clientId);
+        if (toWrite.tag().isGreater(current.tag())) {
+            db.put(clientId, toWrite);
+        }
+
+        final Host targetHost = notification.getSender();
+        final WriteAck ack = new WriteAck(message.getOpId(), db.getEntry(clientId));
+        sendRequest(new SendMessageRequest(ack, targetHost), DispatcherProtocol.PROTO_ID);
+        logger.debug("Sending {} to {}", ack, targetHost);
+    }
+
+    @Discardable
+    protected void uponWriteAck(final WriteAckNotification notification, final short protoId) {
+        final WriteAck message = notification.getMessage();
+        final String opId = message.getOpId();
+        if (!session.hasOp(opId)) {
+            throw new DiscardIllegalAction();
+        } if (!session.receiveMessage(opId, message)) {
+            logger.warn(DUPLICATED_MESSAGE_WARN, message);
+            return;
+        } else if (!session.hasQuorum(opId, peersSize)) {
+            return;
+        }
+
+        final Operation op = session.stop(opId);
+        final Host client = op.getClientHost();
+        final ClientWriteAck ack = new ClientWriteAck(op.getClientId());
+        sendRequest(new SendMessageRequest(ack, client), DispatcherProtocol.PROTO_ID);
+        logger.debug("Sending {} to {}", ack, client);
+    }
+
+
+    /* --------------- AUX METHODS --------------- */
+
+
+    private EntryMessage getMaxEntryMessage(final Set<ReplicaMessage> received, final EntryMessage startMax) {
+        EntryMessage max = startMax;
+        for(final ReplicaMessage m : received) {
+            if (!(m instanceof final EntryMessage ack)) throw new IllegalMessageException(m);
+            final Database.Entry otherEntry = ack.getEntry();
+            if (otherEntry.tag().isGreater(max.getEntry().tag())) {
+                max = ack;
+            }
+        }
+        return max;
+    }
+
+    private TagMessage getMaxTagMessage(final Set<ReplicaMessage> received, final TagMessage startMax) {
+        TagMessage max = startMax;
+        for (final var m : received) {
+            if (!(m instanceof TagMessage tagMessage)) throw new IllegalMessageException(m);
+            final int otherSeq = tagMessage.getTag().getSeqNumb();
+            if (otherSeq > max.getTag().getSeqNumb()) {
+                max = tagMessage;
+            }
+        }
+        return max;
+    }
+}

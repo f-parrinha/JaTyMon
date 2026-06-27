@@ -1,0 +1,15 @@
+import jatymon.babelprojects.abdquorum.notifications.messages.client.*;
+
+typestate ProbabilisticClient {
+    Init = {
+        void startClient(ClientProtocol.Op): Main
+    }
+
+    Main = {
+        void sendWriteMessage(boolean)[0.25]: Main,
+        void sendReadMessage(boolean)[0.25]: Main,
+        void uponClientWriteAck(ClientWriteAckNotification, short)[0.25]: Main,
+        void uponClientReadAck(ClientReadAckNotification, short)[0.25]: Main,
+        void stopClient(): end
+    }
+}

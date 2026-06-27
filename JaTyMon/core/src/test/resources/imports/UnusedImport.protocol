@@ -1,0 +1,6 @@
+import imports.folder.EmptyClass;
+import imports.folder.subfolder.SubEmptyClass;
+
+typestate UnusedImport {
+    State0 = { EmptyClass m(): State0 }
+}

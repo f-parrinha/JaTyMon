@@ -1,0 +1,27 @@
+import jatymon.babelprojects.multipaxos.notifications.messages.client.*;
+import jatymon.babelprojects.multipaxos.operations.Operation;
+
+typestate LinearClient {
+    Init = {
+        Operation.Type getFirstOp(): <READ: SendRead, WRITE: SendWrite>
+    }
+
+    SendWrite = (
+        void collectReadStatistics(): SendWrite,
+        void sendWriteMessage(boolean): ReceiveWrite,
+        void stopClient(): end
+    )
+
+    ReceiveWrite = {
+        void uponClientWriteAck(ClientWriteAckNotification, short) : SendRead
+    }
+
+    SendRead = (
+        void collectWriteStatistics(): SendRead,
+        void sendReadMessage(boolean): ReceiveRead
+    )
+
+    ReceiveRead = {
+        void uponClientReadAck(ClientReadAckNotification, short): SendWrite
+    }
+}

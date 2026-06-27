@@ -1,0 +1,7 @@
+
+// :: UnknownTypeDiagnostics -> primitives cannot be generic
+typestate InvalidGeneric3 {
+    State0 = {
+        void m(int<String>): State0
+    }
+}

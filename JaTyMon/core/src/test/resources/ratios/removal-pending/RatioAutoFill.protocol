@@ -1,0 +1,7 @@
+astValidationContext RatioAutoFill {
+    State0 = {
+        void m1()[0.6]: State0 ,
+        void m2()[*]: State0 ,
+        void m3()[*]: end
+    }
+}

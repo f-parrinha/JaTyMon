@@ -1,0 +1,5 @@
+typestate UndefinedState {
+    State0 = {
+        void m(): State1
+    }
+}

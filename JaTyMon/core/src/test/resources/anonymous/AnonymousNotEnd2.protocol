@@ -1,0 +1,12 @@
+typestate AnonymousNotEnd2 {
+    State0 = {
+        void m1(): end,
+        void m2(): {
+            void m1(): State1
+        }
+    }
+
+    State1 = {
+        void m1(): State1
+    }
+}

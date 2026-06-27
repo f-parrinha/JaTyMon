@@ -1,0 +1,5 @@
+typestate RatioBadValue3{
+    State0 = {
+        void method()[abc]: package
+    }
+}

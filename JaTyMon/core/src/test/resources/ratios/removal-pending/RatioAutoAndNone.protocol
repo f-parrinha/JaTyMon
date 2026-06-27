@@ -1,0 +1,6 @@
+astValidationContext RatioAutoAndNone {
+    State0 = {
+        void m1(): State0,
+        void m2() [*]: end
+    }
+}

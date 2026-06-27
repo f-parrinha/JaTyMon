@@ -1,0 +1,28 @@
+import jatymon.babelprojects.ping.notifications.connection.ConnectionUpNotification;
+import jatymon.babelprojects.ping.notifications.connection.ConnectionDownNotification;
+import jatymon.babelprojects.ping.notifications.messages.ReceivedEchoRequest;
+import jatymon.babelprojects.ping.notifications.messages.ReceivedEchoReply;
+
+typestate Ping {
+    Ext peersSize;
+    Val conns = 0;
+
+    Assign connUp: conns := conns + 1;
+    Assign connDown: conns := conns - 1;
+
+    Pred hasAllConns: conns = peersSize - 1;
+
+    /* Connections state */
+    State0 = {
+        void uponConnectionUp(ConnectionUpNotification, short)[connUp; hasAllConns]: State1,
+        void uponConnectionDown(ConnectionDownNotification, short)[connDown; _]: State1
+    }
+
+    State1 = {
+        void uponConnectionDown(ConnectionDownNotification, short)[connDown; _]: State0,
+
+        /* Protocol methods */
+        void uponReceivedEchoRequest(ReceivedEchoRequest, short)[0.5]: State1,
+        void uponReceivedEchoReply(ReceivedEchoReply, short)[0.5]: State1
+    } + (void broadcastEchoRequest(): State1)
+}

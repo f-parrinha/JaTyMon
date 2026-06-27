@@ -1,0 +1,14 @@
+
+// The DroneClient, once connected, can repeatedly receive camera refresh updates from the drone
+typestate DroneClient {
+    State0 = (boolean connect(): <true: State1, false: State0>) + {void turnoff(): end}
+
+    State1 = {
+        void cameraRefresh(): State1,
+        void turnoff(): end
+    } + (
+        void disconnect(): State0,
+        void manualInput(): State1,
+        void target(): State1
+    )
+}

@@ -1,0 +1,7 @@
+import perdiagnostic.common.TestEnum;
+
+typestate UnexpectedDecisionState {
+    State0 = {
+        TestEnum m(): <TEST_1: State0, TEST_2: State0, TEST_3: State0, RANDOM_LABEL: State0>
+    }
+}

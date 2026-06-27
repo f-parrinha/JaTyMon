@@ -1,0 +1,29 @@
+typestate FaultyFile {
+
+  Init = {
+    // :: error: (Expected decision state to include all enumeration labels)
+    FileStatus open(): <OK: Open, FOO: end>
+  }
+
+  Read = {
+    // :: error: (Unexpected decision state)
+    int read(): <true: Read, false: Close>,
+    // :: error: (Unknown type voidd)
+    voidd close(): end
+  }
+
+  Open = {
+    void close(): end,
+    // :: error: (Expected a decision state)
+    boolean hasNext2(): {},
+    // :: error: (Expected decision state with two labels (true/false))
+    boolean hasNext(): <true: Read>
+  }
+
+
+  Close = {
+    void close(): end,
+    // :: error: (Duplicate transition)
+    void close(): Close
+  }
+}

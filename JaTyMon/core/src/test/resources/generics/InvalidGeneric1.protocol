@@ -1,0 +1,8 @@
+import java.util.*;
+
+typestate InvalidGeneric1 {
+    State0 = {
+        // error: method not found. Return type should be List<String>
+        List<Integer> m(): State0
+    }
+}
