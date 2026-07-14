@@ -10,3 +10,5 @@ We test and evaluate our tool with two implementations of well-known consensus p
 
 ### Structure
 The source code for the tool can be found in the "Tool" folder. The source code for both use cases is inside the "Use Cases" folder: "ABD" contains the code for the majority quorum example, while "MultiPaxos" for the Multi-Paxos implementation (obviosuly).
+
+## Get Started (TODO)
