@@ -16,6 +16,8 @@ Inside **Use Cases** there are two folders: **ABD** and **Multi-Paxos**. Each co
 
 We also collected benchmarks to test the differences between executing the examples with monitor on and off, to evaluate whether they incur significant performance losses. A file called **benchmarks.xlxs** exists inside the **Use Cases** folder, containing all collected benchmarks. The tests are reproducible with the provided scripts.
 
+All uses cases contain a configuration to introduce random faults, testing whether monitors can detect incorrect behaviour from these induced errors.
+
 ## Using the tool
 JaTyMon is a Java annotation processor. This means that to execute JaTyMon, one only needs to provide the annotation processor to the normal Java compiler (using the tool's jar file). Note that it may be needed to provided all project dependencies to the compiler (check **run-JaTyMon-maven.sh**. The script adds existing dependencies in a Maven project to the compiler and also provides JaTyMon to the normal **javac** command). It is also recommended to disable any output from the **javac** command. This will ensure that the only ouputs are the generated monitor classes.
 
