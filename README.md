@@ -10,7 +10,6 @@ We test and evaluate our tool with two implementations of well-known consensus p
 # Getting Started
 The repository contains two folders: **Tool**, where the source code is, and **Use Cases**, containing the source code for with implementations of the two consenus protocols.
 
-## Use cases
 Inside **Use Cases** there are two folders: **ABD** and **Multi-Paxos**. Each contains an .MD file with the instructions on how to run the examples. As short summary, both projects contain a **run.sh** script to execute the examples with five different replicas. This is configurable inside the script. They also contain a script **run-JaTyMon.sh** to execute JaTyMon and generate **monitor classes**. Therefore:
  - run.sh: starts the execution of the examples with a (configurable) number of replicas
  - run-JaTyMon-maven.sh: executes JaTyMon and generates monitor classes.
