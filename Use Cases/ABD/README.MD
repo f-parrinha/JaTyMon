@@ -12,7 +12,7 @@ The project contains two scripts. One for executing (and compiling) the whole pr
 JaTyMon to generate monitors
 
 __run.sh:__ The _run.sh_ script compiles the project and launches different replicas and clients (the numbers are configurable in 
-the script via _peers_count_ and _clients_count_). By default, the script starts __five__ replicas and _one_ client.
+the script via _peers_count_ and _clients_count_). By default, the script starts __five__ replicas and __one__ client.
 
 __run-JaTyMon.sh:__ This script requires core-1.0-jar-with-dependencies.jar to be in the same directory as the script's. It executes
 JaTyMon to generate new monitors from the typestate specifications in the project.
