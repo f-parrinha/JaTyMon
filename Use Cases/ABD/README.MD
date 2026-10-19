@@ -1,6 +1,6 @@
 # JaTyMon: Attya Bar-Noy Dolev Majority Quorum
 
-The following project implements a majority quorum for read/write operations by [Attya Bar-Noy Dolev](https://dl.acm.org/doi/10.1145/200836.200869). We
+The following project implements a majority quorum for read/write operations by [Attya, Bar-Noy and Dolev](https://dl.acm.org/doi/10.1145/200836.200869). We
 use this project to test the behaviour of JaTyMon, a monitor generation tool from typestate specifications
 for distributed protocols designed with [Babel](https://asc.di.fct.unl.pt/~jleitao/ngstorage/pubs/fouto-srds22.pdf). The project comes with a client protocol that sends read/write
 operationss, sequentially, to a random replica in the quorum system. Essentially, a client is just a replica that
