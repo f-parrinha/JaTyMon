@@ -20,7 +20,6 @@ The project is highly configurable via _config.properties_. These are the main c
 - __use_monitors__: Use JaTyMon monitor's or not
 - __fault_test_on__: Include faults in the execution or not
 - __fault_list__: List with fault types (MessageDrop, MessageTinker, ConnectionDrop)
-- __clients_ports__: List with the ports that are meant to be clients. Replicas commonly start with port 9000, so the list should be "9000, 9001, 9002" etc...
 - __client_ops_numb__: Total number of operations that the client should execute
 
 
