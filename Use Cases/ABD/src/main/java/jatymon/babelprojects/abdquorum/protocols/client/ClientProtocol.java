@@ -3,14 +3,12 @@ package jatymon.babelprojects.abdquorum.protocols.client;
 import jatymon.annotations.Typestate;
 import jatymon.babelprojects.abdquorum.ConfigKeys;
 import jatymon.babelprojects.abdquorum.utils.NetworkUtils;
-import jatymon.babelprojects.abdquorum.messages.StopMessage;
 import jatymon.babelprojects.abdquorum.messages.client.ClientReadAck;
 import jatymon.babelprojects.abdquorum.messages.client.ClientReadMessage;
 import jatymon.babelprojects.abdquorum.messages.client.ClientWriteMessage;
 import jatymon.babelprojects.abdquorum.notifications.messages.client.ClientReadAckNotification;
 import jatymon.babelprojects.abdquorum.notifications.messages.client.ClientWriteAckNotification;
 import jatymon.babelprojects.abdquorum.protocols.dispatcher.DispatcherProtocol;
-import jatymon.babelprojects.abdquorum.requests.BroadcastMessageRequest;
 import jatymon.babelprojects.abdquorum.requests.SendMessageRequest;
 import jatymon.babelprojects.abdquorum.timers.ClientRetryTimer;
 import jatymon.babelprojects.abdquorum.timers.ClientStartTimer;
@@ -21,6 +19,7 @@ import pt.unl.fct.di.novasys.babel.exceptions.HandlerRegistrationException;
 import pt.unl.fct.di.novasys.network.data.Host;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.*;
@@ -63,21 +62,10 @@ public class ClientProtocol extends GenericProtocol {
     @Override
     public void init(final Properties props) throws HandlerRegistrationException, IOException {
         final long startDelay = Long.parseLong(props.getProperty(ConfigKeys.CLIENT_START_DELAY));
-        final String port = props.getProperty(ConfigKeys.PORT_CONFIG);
-        final List<String> clientsPorts = Arrays.stream(props.getProperty(ConfigKeys.CLIENTS_PORTS_CONFIG)
-                .split(","))
-                .map(String::strip)
-                .toList();
-
-        // Do not set up the protocol if it is not a client
-        if (!clientsPorts.contains(port)) {
-            return;
-        }
 
         // Setup client state
-        logger.info("{} is a Client", port);
         this.opsNumb = Integer.parseInt(props.getProperty(ConfigKeys.CLIENT_OPS_NUMB));
-        this.peers = NetworkUtils.setupPeers(props.getProperty(ConfigKeys.PEERS_CONFIG)).toArray(new Host[0]);
+        this.peers = NetworkUtils.getHosts(props.getProperty(ConfigKeys.PEERS_CONFIG)).toArray(new Host[0]);
         this.opsCount = 0;
         this.badWritesCount = 0;
         this.writeStartTime = -1;
@@ -95,6 +83,11 @@ public class ClientProtocol extends GenericProtocol {
     }
 
     public void startClient(final Op op) {
+        if (this.peers.length == 0) {
+            logger.info("There are no replicas in the system");
+            return;
+        }
+
         logger.info("Starting client operations");
         startTimestamp = Timestamp.from(Instant.now());
 
@@ -109,13 +102,8 @@ public class ClientProtocol extends GenericProtocol {
         System.out.print("\n");
         logger.info("Client finished");
         showStatistics();
-        sendRequest(new BroadcastMessageRequest(new StopMessage()), DispatcherProtocol.PROTO_ID);
+        //sendRequest(new BroadcastMessageRequest(new StopMessage()), DispatcherProtocol.PROTO_ID);
     }
-
-    public Op getFirstOp() {
-        return rand.nextInt() == 0 ? Op.WRITE : Op.READ;
-    }
-
 
     /* ------------ ACK HANDLERS ------------ */
 
@@ -153,8 +141,7 @@ public class ClientProtocol extends GenericProtocol {
 
 
     protected void uponClientStartTimer(final ClientStartTimer timer, final long timerId) {
-        final Op firstOp = getFirstOp();
-        startClient(firstOp);
+        startClient(rand.nextBoolean() ? Op.WRITE : Op.READ);
     }
 
     protected void uponClientRetryTimer(final ClientRetryTimer timer, final long timerId) {
@@ -211,7 +198,7 @@ public class ClientProtocol extends GenericProtocol {
     /* ------------ STATISTIC METHODS ------------ */
 
 
-    protected void collectWriteStatistics() {
+    public void collectWriteStatistics() {
         if (writeStartTime == -1) {
             return;
         }
@@ -220,7 +207,7 @@ public class ClientProtocol extends GenericProtocol {
         writeStartTime = -1;
     }
 
-    protected void collectReadStatistics() {
+    public void collectReadStatistics() {
         if (readStartTime == -1) {
             return;
         }

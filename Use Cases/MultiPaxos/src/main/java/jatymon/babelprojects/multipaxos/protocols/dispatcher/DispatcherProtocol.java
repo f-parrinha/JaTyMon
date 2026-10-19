@@ -3,7 +3,6 @@ package jatymon.babelprojects.multipaxos.protocols.dispatcher;
 import jatymon.annotations.Ext;
 import jatymon.annotations.Typestate;
 import jatymon.babelprojects.multipaxos.ConfigKeys;
-import jatymon.babelprojects.multipaxos.messages.StopMessage;
 import jatymon.babelprojects.multipaxos.messages.client.ClientReadAck;
 import jatymon.babelprojects.multipaxos.messages.client.ClientReadMessage;
 import jatymon.babelprojects.multipaxos.messages.client.ClientWriteAck;
@@ -73,7 +72,7 @@ public class DispatcherProtocol extends GenericProtocol {
         final InetAddress address = InetAddress.getByName(props.getProperty(ConfigKeys.ADDRESS_CONFIG));
         final String port = props.getProperty(ConfigKeys.PORT_CONFIG);
         this.myself = new Host(address, Integer.parseInt(port));
-        this.peers.addAll(NetworkUtils.setupPeers(props.getProperty(ConfigKeys.PEERS_CONFIG)));
+        this.peers.addAll(NetworkUtils.getHosts(props.getProperty(ConfigKeys.PEERS_CONFIG)));
         this.channelId = createTcpChannel(address.getHostAddress(), port);
 
         registerChannelEventHandler(channelId, OutConnectionFailed.EVENT_ID, this::uponOutConnectionFailed);
@@ -81,8 +80,6 @@ public class DispatcherProtocol extends GenericProtocol {
         registerChannelEventHandler(channelId, OutConnectionDown.EVENT_ID, this::uponOutConnectionDown);
         registerChannelEventHandler(channelId, InConnectionUp.EVENT_ID, this::uponInConnectionUp);
         registerChannelEventHandler(channelId, InConnectionDown.EVENT_ID, this::uponInConnectionDown);
-        registerMessageHandler(channelId, StopMessage.ID, this::uponStopMessage);
-        registerMessageSerializer(channelId, StopMessage.ID, StopMessage.serializer);
 
         // Client messages
         registerMessageHandler(channelId, ClientReadMessage.ID, this::uponClientReadMessage);
@@ -116,7 +113,6 @@ public class DispatcherProtocol extends GenericProtocol {
         // Start
         connectAll();
     }
-
 
     /* -------------- CLIENT MESSAGE EVENT HANDLERS -------------- */
 
@@ -170,7 +166,10 @@ public class DispatcherProtocol extends GenericProtocol {
 
 
     protected void uponSendMessageRequest(final SendMessageRequest request, short sourceProto) {
-        sendMessage(channelId, request.getMessage(), request.getDestination());
+        var message = request.getMessage();
+        var destination = request.getDestination();
+        sendMessage(channelId, message, destination);
+        logger.debug("Sending {} to {}", message, destination);
     }
 
     protected void uponBroadcastMessageRequest(final BroadcastMessageRequest request, short sourceProto) {
@@ -196,6 +195,7 @@ public class DispatcherProtocol extends GenericProtocol {
         final Host host = event.getNode();
         if (connections.add(host)) {
             triggerNotification(new ConnectionUpNotification(event.getNode(), connections.size(), peers.size(), channelId));
+            openConnection(host, channelId);
         }
 
         conns = connections.size();
@@ -230,11 +230,6 @@ public class DispatcherProtocol extends GenericProtocol {
         }
 
         conns = connections.size();
-    }
-
-    private void uponStopMessage(final StopMessage message, final Host sender, final short protoId, final int channelId) {
-        logger.info("Goodbye!");
-        System.exit(0);
     }
 
 
@@ -281,3 +276,4 @@ public class DispatcherProtocol extends GenericProtocol {
         }
     }
 }
+

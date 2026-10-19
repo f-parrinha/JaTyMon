@@ -27,18 +27,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- ByteBuddy for Java agents -->
-        <dependency>
-            <groupId>net.bytebuddy</groupId>
-            <artifactId>byte-buddy</artifactId>
-            <version>1.14.18</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bytebuddy</groupId>
-            <artifactId>byte-buddy-agent</artifactId>
-            <version>1.14.18</version>
-        </dependency>
-
     </dependencies>
     <build>
         <plugins>
@@ -50,11 +38,6 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-                    <archive>
-                        <manifestEntries>
-                            <Premain-Class>jatymon.runtime.JaTyMonAgent</Premain-Class>
-                        </manifestEntries>
-                    </archive>
                 </configuration>
                 <executions>
                     <execution>

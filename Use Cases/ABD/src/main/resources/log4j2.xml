@@ -21,5 +21,4 @@
             <AppenderRef ref="Console" level="debug"/>
         </Root>
     </Loggers>
-
 </Configuration>

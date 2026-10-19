@@ -65,28 +65,18 @@ public class ClientProtocol extends GenericProtocol {
     @Override
     public void init(final Properties props) throws HandlerRegistrationException, IOException {
         final long startDelay = Long.parseLong(props.getProperty(ConfigKeys.CLIENT_START_DELAY));
-        final String port = props.getProperty(ConfigKeys.PORT_CONFIG);
-        final List<String> clientsPorts = Arrays.stream(props.getProperty(ConfigKeys.CLIENTS_PORTS_CONFIG)
-                        .split(","))
-                .map(String::strip)
-                .toList();
-
-        // Do not set up the protocol if it is not a client
-        if (!clientsPorts.contains(port)) {
-            return;
-        }
 
         // Setup client state
-        logger.info("{} is a Client", port);
-        this.myself = new Host(InetAddress.getByName(props.getProperty(ConfigKeys.ADDRESS_CONFIG)), Integer.parseInt(port));
-        this.opsNumb = Integer.parseInt(props.getProperty(ConfigKeys.CLIENT_OPS_NUMB));
-        this.peers = NetworkUtils.setupPeers(props.getProperty(ConfigKeys.PEERS_CONFIG)).toArray(new Host[0]);
         this.opsCount = 0;
         this.badWritesCount = 0;
         this.writeStartTime = -1;
         this.readStartTime = -1;
         this.lastWrittenValue = new byte[0];
         this.retryTimerId = -1;
+        this.opsNumb = Integer.parseInt(props.getProperty(ConfigKeys.CLIENT_OPS_NUMB));
+        this.peers = NetworkUtils.getHosts(props.getProperty(ConfigKeys.PEERS_CONFIG)).toArray(new Host[0]);
+        this.myself = new Host(InetAddress.getByName(props.getProperty(ConfigKeys.ADDRESS_CONFIG)),
+                Integer.parseInt(props.getProperty(ConfigKeys.PORT_CONFIG)));
 
         // Setup handlers
         registerTimerHandler(ClientStartTimer.ID, this::uponClientStartTimer);
@@ -98,6 +88,11 @@ public class ClientProtocol extends GenericProtocol {
     }
 
     public void startClient(final Operation.Type op) {
+        if (this.peers.length == 0) {
+            logger.info("There are no replicas in the system");
+            return;
+        }
+
         logger.info("Starting client operations");
         startTimestamp = Timestamp.from(Instant.now());
 
@@ -114,10 +109,6 @@ public class ClientProtocol extends GenericProtocol {
         showStatistics();
     }
 
-    public Operation.Type getFirstOp() {
-        return rand.nextInt() == 0 ? Operation.Type.WRITE : Operation.Type.READ;
-    }
-
 
     /* ------------ ACK HANDLERS ------------ */
 
@@ -130,8 +121,6 @@ public class ClientProtocol extends GenericProtocol {
             logger.warn("Wrong reply destination. Client with id {} received an ACK for client with id {}", clientId, message.getClientId());
             return;
         }
-
-        logger.debug("Received {} from {}", notification.getMessage(), notification.getSender());
         sendReadMessage(true);
     }
 
@@ -151,8 +140,6 @@ public class ClientProtocol extends GenericProtocol {
                     HexFormat.of().formatHex(lastWrittenValue),
                     HexFormat.of().formatHex(readValue));
         }
-
-        logger.debug("Received {} from {}", message, notification.getSender());
         sendWriteMessage(true);
     }
 
@@ -161,8 +148,7 @@ public class ClientProtocol extends GenericProtocol {
 
 
     protected void uponClientStartTimer(final ClientStartTimer timer, final long timerId) {
-        final Operation.Type firstOp = getFirstOp();
-        startClient(firstOp);
+        startClient(rand.nextBoolean() ? Operation.Type.WRITE : Operation.Type.READ);
     }
 
     protected void uponClientRetryTimer(final ClientRetryTimer timer, final long timerId) {
@@ -197,7 +183,6 @@ public class ClientProtocol extends GenericProtocol {
         final ClientWriteMessage message = new ClientWriteMessage(clientId, myself, lastWrittenValue);
         final Host targetHost = getRandomPeer();
         sendRequest(new SendMessageRequest(message, targetHost), DispatcherProtocol.PROTO_ID);
-        logger.debug("Sending {} to {}", message, targetHost);
 
         retryTimerId = setupTimer(new ClientRetryTimer(Operation.Type.WRITE), ClientRetryTimer.TIMEOUT);
     }
@@ -214,8 +199,6 @@ public class ClientProtocol extends GenericProtocol {
         final ClientReadMessage message = new ClientReadMessage(clientId, myself);
         final Host targetHost = getRandomPeer();
         sendRequest(new SendMessageRequest(message, targetHost), DispatcherProtocol.PROTO_ID);
-        logger.debug("Sending {} to {}", message, targetHost);
-
         retryTimerId = setupTimer(new ClientRetryTimer(Operation.Type.READ), ClientRetryTimer.TIMEOUT);
     }
 
@@ -223,7 +206,7 @@ public class ClientProtocol extends GenericProtocol {
     /* ------------ STATISTIC METHODS ------------ */
 
 
-    protected void collectWriteStatistics() {
+    public void collectWriteStatistics() {
         if (writeStartTime == -1) {
             return;
         }
@@ -232,7 +215,7 @@ public class ClientProtocol extends GenericProtocol {
         writeStartTime = -1;
     }
 
-    protected void collectReadStatistics() {
+    public void collectReadStatistics() {
         if (readStartTime == -1) {
             return;
         }

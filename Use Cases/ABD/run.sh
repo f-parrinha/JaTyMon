@@ -5,33 +5,54 @@
 
 jar_name="ABDQuorum-1.0-SNAPSHOT-jar-with-dependencies.jar"
 port=9000
-peers="localhost:${port}"
 peers_count=5
-agent_path="$HOME/.m2/repository/jatymon/lib/1.0/lib-1.0.jar"
+clients_count=1
 
 #########################################################
+
+jar_path="target/$jar_name"
+peers=""
+clients=""
 
 
 # Populates the peers list with their correct info (ip address and port)
 populate_peers() {
-  i=1
+  if [[ "$peers_count" -eq 0 ]]; then
+    peers="EMPTY"
+    return
+  fi
+
+  peers="localhost:${port}"
+  local i=1
   while [ "$i" -lt "$peers_count" ]; do
-      peers="${peers},localhost:$((port + i * 1))"
+      peers="${peers},localhost:$((port + i))"
+      i=$((i + 1))
+  done
+}
+populate_clients() {
+  if [[ "$clients_count" -eq 0 ]]; then
+    clients="EMPTY"
+    return
+  fi
+
+  clients="localhost:$((port + peers_count))"
+  local i=1
+  while [ "$i" -lt "$clients_count" ]; do
+      clients="${clients},localhost:$((port + peers_count + i))"
       i=$((i + 1))
   done
 }
 
 # Starts and verifies the execution of one node
-start_node() {
+start_process() {
   local port=$1
-  local jar_path="target/$jar_name"
   if [[ ! -f "$jar_path" ]]; then
-      echo "Error: JAR file '$jar_path' not found!"
-      return 1
-    fi
+    echo "Error: JAR file '$jar_path' not found!"
+    return 1
+  fi
 
-  # Start node
-  java -javaagent:$agent_path -Dport="$port" -jar $jar_path port="$port" peers="$peers" &
+  # Start replica
+  java -Dport="$port" -jar $jar_path port="$port" peers="$peers" clients="$clients" &
   local pid=$!
   sleep 1
 
@@ -44,6 +65,7 @@ start_node() {
     echo
   fi
 }
+
 
 # Kills all pending node processes
 kill_nodes() {
@@ -67,11 +89,15 @@ if mvn clean package; then
   populate_peers
   echo "Using peers list: $peers"
 
+  populate_clients
+  echo "Using clients list: $clients"
+
   i=0
-  while [ $i -lt $peers_count ]; do
-    start_node $((port + i * 1))
+  while [ $i -lt $((peers_count + clients_count)) ]; do
+    start_process $((port + i))
     i=$((i + 1))
   done
+
 
   read -r
   kill_nodes

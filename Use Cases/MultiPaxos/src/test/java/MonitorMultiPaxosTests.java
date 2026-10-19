@@ -55,7 +55,7 @@ public class MonitorMultiPaxosTests {
         assertEquals(1, logger.getLogTypeCount(IllegalActionLog.class));
 
         // Illegal action
-        monitoredMultiPaxos.uponConnectionUp(MonitorTestsUtils.TEST_CONNECTION_UP_NOTIFICATION, (short) 1);
+        monitoredMultiPaxos.uponPrepareOkMessage(MonitorTestsUtils.TEST_PREPARE_OK_MESSAGE_NOTIFICATION, (short) 1);
         assertEquals(2, logger.getLogTypeCount(IllegalActionLog.class));
     }
 

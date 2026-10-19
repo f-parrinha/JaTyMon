@@ -1,7 +1,6 @@
 package jatymon.babelprojects.abdquorum.protocols.quorum;
 
 import jatymon.annotations.Ext;
-import jatymon.annotations.Key;
 import jatymon.annotations.Typestate;
 import jatymon.babelprojects.abdquorum.ConfigKeys;
 import jatymon.babelprojects.abdquorum.data.Database;
@@ -30,7 +29,9 @@ import pt.unl.fct.di.novasys.babel.exceptions.HandlerRegistrationException;
 import pt.unl.fct.di.novasys.network.data.Host;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.Properties;
+import java.util.Set;
 
 @Typestate("ABDReceiver")
 public class ABDReceiverProtocol extends GenericProtocol {
@@ -51,7 +52,7 @@ public class ABDReceiverProtocol extends GenericProtocol {
 
     @Override
     public void init(final Properties props) throws HandlerRegistrationException, IOException {
-        this.peersSize = NetworkUtils.setupPeers(props.getProperty(ConfigKeys.PEERS_CONFIG)).size();
+        this.peersSize = NetworkUtils.getHosts(props.getProperty(ConfigKeys.PEERS_CONFIG)).size();
 
         subscribeNotification(ConnectionUpNotification.ID, this::uponConnectionUp);
         subscribeNotification(ConnectionDownNotification.ID, this::uponConnectionDown);
@@ -82,7 +83,6 @@ public class ABDReceiverProtocol extends GenericProtocol {
         final Host targetHost = notification.getSender();
         final ReadAck ack = new ReadAck(message.getOpId(), dbEntry);
         sendRequest(new SendMessageRequest(ack, targetHost), DispatcherProtocol.PROTO_ID);
-        logger.debug("Sending {} to {}", ack, targetHost);
     }
 
     protected void uponWriteBackMessage(final WriteBackMessageNotification notification, final short protoId) {
@@ -97,7 +97,6 @@ public class ABDReceiverProtocol extends GenericProtocol {
         final Host targetHost = notification.getSender();
         final WriteBackAck ack = new WriteBackAck(message.getOpId(), db.getEntry(clientId));
         sendRequest(new SendMessageRequest(ack, targetHost), DispatcherProtocol.PROTO_ID);
-        logger.debug("Sending {} to {}", ack, targetHost);
     }
 
 
@@ -112,7 +111,6 @@ public class ABDReceiverProtocol extends GenericProtocol {
         final Host targetHost = notification.getSender();
         final ReadTagAck ack = new ReadTagAck(opId, tag);
         sendRequest(new SendMessageRequest(ack, targetHost), protoId);
-        logger.debug("Sending {} to {}", ack, targetHost);
     }
 
 
@@ -128,6 +126,5 @@ public class ABDReceiverProtocol extends GenericProtocol {
         final Host targetHost = notification.getSender();
         final WriteAck ack = new WriteAck(message.getOpId(), db.getEntry(clientId));
         sendRequest(new SendMessageRequest(ack, targetHost), DispatcherProtocol.PROTO_ID);
-        logger.debug("Sending {} to {}", ack, targetHost);
     }
 }

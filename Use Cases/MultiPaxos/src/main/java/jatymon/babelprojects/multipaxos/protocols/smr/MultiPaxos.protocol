@@ -16,7 +16,7 @@ typestate MultiPaxos {
     Assign incPrepareOkCount: prepareOkCount := prepareOkCount + 1;
     Assign resetPrepareOkCount: prepareOkCount := 0;
 
-    Pred hasConns: conns = peersSize;
+    Pred hasConns: conns >= peersSize;
     Pred lostQuorum: conns <= (peersSize - 1) / 2;
     Pred hasPrepareOkQuorum: prepareOkCount > peersSize / 2;
 
@@ -30,6 +30,7 @@ typestate MultiPaxos {
     }
 
     NonLeader = {
+        void uponConnectionUp(ConnectionUpNotification, short)[incConns; hasConns]: NonLeader,
         void uponConnectionDown(ConnectionDownNotification, short)[decConns; lostQuorum]: Connect,
 
         // Client actions
@@ -44,6 +45,7 @@ typestate MultiPaxos {
     }
 
     Leader = {
+        void uponConnectionUp(ConnectionUpNotification, short)[incConns; hasConns]: Leader,
         void uponConnectionDown(ConnectionDownNotification, short)[decConns; lostQuorum]: Connect,
 
         // Client actions

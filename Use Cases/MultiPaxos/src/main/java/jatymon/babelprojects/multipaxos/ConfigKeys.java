@@ -23,7 +23,7 @@ public class ConfigKeys {
 
     /* Custom */
 
-    public static final String CLIENTS_PORTS_CONFIG = "clients_ports";
+    public static final String CLIENTS_CONFIG = "clients";
     public static final String CLIENT_START_DELAY = "client_start_delay";
     public static final String CLIENT_OPS_NUMB = "client_ops_numb";
 }

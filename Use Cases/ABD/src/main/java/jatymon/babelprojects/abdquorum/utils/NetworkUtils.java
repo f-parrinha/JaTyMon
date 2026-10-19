@@ -9,26 +9,30 @@ import java.security.InvalidParameterException;
 import java.util.*;
 
 public class NetworkUtils {
+    public static final String EMPTY_HOST_STRING = "EMPTY";
+
     private static final Logger logger = LogManager.getLogger(NetworkUtils.class);
 
-    public static Set<Host> setupPeers(String peersString) {
-        Set<Host> peers = new HashSet<>();
-        String[] peersInStr = peersString.split(",");
+    public static Set<Host> getHosts(String hostString) {
+        final Set<Host> hosts = new HashSet<>();
+        if(hostString == null || hostString.isBlank() || hostString.equals(EMPTY_HOST_STRING)) {
+            return hosts;
+        }
 
+        final String[] hostsInStr = hostString.split(",");
         try {
-            for(var peer : peersInStr) {
-                String[] address_port = peer.split(":");
-                InetAddress address = InetAddress.getByName(address_port[0]);
-                int port = Integer.parseInt(address_port[1]);
-
-                peers.add(new Host(address, port));
+            for(var host : hostsInStr) {
+                final String[] address_port = host.split(":");
+                final InetAddress address = InetAddress.getByName(address_port[0]);
+                final int port = Integer.parseInt(address_port[1]);
+                hosts.add(new Host(address, port));
             }
-
-            return peers;
+            return hosts;
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
         }
     }
+
 
     /**
      * Returns the ipv4 address of the given interface
@@ -37,13 +41,13 @@ public class NetworkUtils {
      */
     public static String getAddress(String inter) {
         try {
-            NetworkInterface byName = NetworkInterface.getByName(inter);
+            final NetworkInterface byName = NetworkInterface.getByName(inter);
             if (byName == null) {
                 logger.error("No interface named " + inter);
                 return null;
             }
 
-            Enumeration<InetAddress> addresses = byName.getInetAddresses();
+            final Enumeration<InetAddress> addresses = byName.getInetAddresses();
             InetAddress currentAddress;
             while (addresses.hasMoreElements()) {
                 currentAddress = addresses.nextElement();
@@ -60,7 +64,7 @@ public class NetworkUtils {
     }
 
     public static void addInterfaceIp(Properties props) throws InvalidParameterException {
-        String interfaceName;
+        final String interfaceName;
         if ((interfaceName = props.getProperty("interface")) != null && !interfaceName.trim().isEmpty()) {
             String ip = getAddress(interfaceName);
             if (ip != null)

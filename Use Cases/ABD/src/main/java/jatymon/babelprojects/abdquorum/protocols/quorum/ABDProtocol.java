@@ -1,6 +1,5 @@
 package jatymon.babelprojects.abdquorum.protocols.quorum;
 
-import jatymon.annotations.Discardable;
 import jatymon.annotations.Ext;
 import jatymon.annotations.Typestate;
 import jatymon.babelprojects.abdquorum.ConfigKeys;
@@ -41,7 +40,6 @@ import jatymon.babelprojects.abdquorum.protocols.dispatcher.DispatcherProtocol;
 import jatymon.babelprojects.abdquorum.requests.BroadcastMessageRequest;
 import jatymon.babelprojects.abdquorum.requests.SendMessageRequest;
 import jatymon.babelprojects.abdquorum.utils.NetworkUtils;
-import jatymon.exceptions.discarding.DiscardIllegalAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pt.unl.fct.di.novasys.babel.core.GenericProtocol;
@@ -49,6 +47,7 @@ import pt.unl.fct.di.novasys.babel.exceptions.HandlerRegistrationException;
 import pt.unl.fct.di.novasys.network.data.Host;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.*;
 
 /**
@@ -81,7 +80,7 @@ public class ABDProtocol extends GenericProtocol {
     @Override
     public void init(final Properties props) throws HandlerRegistrationException, IOException {
         this.version = Integer.parseInt(props.getProperty(ConfigKeys.PORT_CONFIG));
-        this.peersSize = NetworkUtils.setupPeers(props.getProperty(ConfigKeys.PEERS_CONFIG)).size();
+        this.peersSize = NetworkUtils.getHosts(props.getProperty(ConfigKeys.PEERS_CONFIG)).size();
 
         subscribeNotification(ConnectionUpNotification.ID, this::uponConnectionUp);
         subscribeNotification(ConnectionDownNotification.ID, this::uponConnectionDown);
@@ -122,7 +121,6 @@ public class ABDProtocol extends GenericProtocol {
 
         final ReadMessage read = new ReadMessage(opId, clientId);
         sendRequest(new BroadcastMessageRequest(read), DispatcherProtocol.PROTO_ID);
-        logger.debug("Broadcasting {}", read);
     }
 
     protected void uponClientWriteMessage(final ClientWriteMessageNotification notification, final short protoId) {
@@ -133,7 +131,6 @@ public class ABDProtocol extends GenericProtocol {
 
         final ReadTagMessage readTag = new ReadTagMessage(opId, clientId);
         sendRequest(new BroadcastMessageRequest(readTag), DispatcherProtocol.PROTO_ID);
-        logger.debug("Broadcasting {}", readTag);
     }
 
 
@@ -147,15 +144,13 @@ public class ABDProtocol extends GenericProtocol {
         final Host targetHost = notification.getSender();
         final ReadAck ack = new ReadAck(message.getOpId(), dbEntry);
         sendRequest(new SendMessageRequest(ack, targetHost), DispatcherProtocol.PROTO_ID);
-        logger.debug("Sending {} to {}", ack, targetHost);
     }
 
-    @Discardable
     protected void uponReadAck(final ReadAckNotification notification, final short protoId) {
         final ReadAck message = notification.getMessage();
         final String opId = message.getOpId();
         if (!session.hasOp(opId)) {
-            throw new DiscardIllegalAction();
+            return;
         } else if (!session.receiveMessage(opId, message)) {
             logger.warn(DUPLICATED_MESSAGE_WARN, message);
             return;
@@ -171,7 +166,6 @@ public class ABDProtocol extends GenericProtocol {
         final String clientId = op.getClientId();
         final WriteBackMessage writeBack = new WriteBackMessage(session.startRead(clientId, op.getClientHost()), clientId, maxEntry);
         sendRequest(new BroadcastMessageRequest(writeBack), DispatcherProtocol.PROTO_ID);
-        logger.debug("Broadcasting {}", writeBack);
     }
 
     protected void uponWriteBackMessage(final WriteBackMessageNotification notification, final short protoId) {
@@ -186,15 +180,13 @@ public class ABDProtocol extends GenericProtocol {
         final Host targetHost = notification.getSender();
         final WriteBackAck ack = new WriteBackAck(message.getOpId(), db.getEntry(clientId));
         sendRequest(new SendMessageRequest(ack, targetHost), DispatcherProtocol.PROTO_ID);
-        logger.debug("Sending {} to {}", ack, targetHost);
     }
 
-    @Discardable
     protected void uponWriteBackAck(final WriteBackAckNotification notification, final short protoId) {
         final WriteBackAck message = notification.getMessage();
         final String opId = message.getOpId();
         if (!session.hasOp(opId)) {
-            throw new DiscardIllegalAction();
+            return;
         } else if (!session.receiveMessage(opId, message)) {
             logger.warn(DUPLICATED_MESSAGE_WARN, message);
             return;
@@ -208,7 +200,6 @@ public class ABDProtocol extends GenericProtocol {
         final Host client = op.getClientHost();
         final ClientReadAck ack = new ClientReadAck(op.getClientId(), maxEntry.value());
         sendRequest(new SendMessageRequest(ack, client), DispatcherProtocol.PROTO_ID);
-        logger.debug("Sending {} to {}", ack, client);
     }
 
 
@@ -223,15 +214,13 @@ public class ABDProtocol extends GenericProtocol {
         final Host targetHost = notification.getSender();
         final ReadTagAck ack = new ReadTagAck(opId, tag);
         sendRequest(new SendMessageRequest(ack, targetHost), protoId);
-        logger.debug("Sending {} to {}", ack, targetHost);
     }
 
-    @Discardable
     protected void uponReadTagAck(final ReadTagAckNotification notification, final short protoId) {
         final ReadTagAck message = notification.getMessage();
         final String opId = message.getOpId();
         if (!session.hasOp(opId)) {
-            throw new DiscardIllegalAction();
+            return;
         } else if (!session.receiveMessage(opId, message)) {
             logger.warn(DUPLICATED_MESSAGE_WARN, message);
             return;
@@ -249,7 +238,6 @@ public class ABDProtocol extends GenericProtocol {
         // Send write
         final WriteMessage write = new WriteMessage(session.startWrite(clientId, op.getClientHost(), value), clientId, entry);
         sendRequest(new BroadcastMessageRequest(write), DispatcherProtocol.PROTO_ID);
-        logger.debug("Broadcasting {}", write);
     }
 
     protected void uponWriteMessage(final WriteMessageNotification notification, final short protoId) {
@@ -264,15 +252,13 @@ public class ABDProtocol extends GenericProtocol {
         final Host targetHost = notification.getSender();
         final WriteAck ack = new WriteAck(message.getOpId(), db.getEntry(clientId));
         sendRequest(new SendMessageRequest(ack, targetHost), DispatcherProtocol.PROTO_ID);
-        logger.debug("Sending {} to {}", ack, targetHost);
     }
 
-    @Discardable
     protected void uponWriteAck(final WriteAckNotification notification, final short protoId) {
         final WriteAck message = notification.getMessage();
         final String opId = message.getOpId();
         if (!session.hasOp(opId)) {
-            throw new DiscardIllegalAction();
+            return;
         } if (!session.receiveMessage(opId, message)) {
             logger.warn(DUPLICATED_MESSAGE_WARN, message);
             return;
@@ -284,7 +270,6 @@ public class ABDProtocol extends GenericProtocol {
         final Host client = op.getClientHost();
         final ClientWriteAck ack = new ClientWriteAck(op.getClientId());
         sendRequest(new SendMessageRequest(ack, client), DispatcherProtocol.PROTO_ID);
-        logger.debug("Sending {} to {}", ack, client);
     }
 
 

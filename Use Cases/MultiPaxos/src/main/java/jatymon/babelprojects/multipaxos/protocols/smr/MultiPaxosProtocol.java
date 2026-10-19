@@ -1,6 +1,5 @@
 package jatymon.babelprojects.multipaxos.protocols.smr;
 
-import jatymon.annotations.Discardable;
 import jatymon.annotations.Ext;
 import jatymon.annotations.Typestate;
 import jatymon.babelprojects.multipaxos.ConfigKeys;
@@ -21,7 +20,6 @@ import jatymon.babelprojects.multipaxos.session.Operation;
 import jatymon.babelprojects.multipaxos.session.Session;
 import jatymon.babelprojects.multipaxos.timers.MultiPaxosRetryTimer;
 import jatymon.babelprojects.multipaxos.util.NetworkUtils;
-import jatymon.exceptions.discarding.DiscardIllegalAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pt.unl.fct.di.novasys.babel.core.GenericProtocol;
@@ -73,7 +71,7 @@ public class MultiPaxosProtocol extends GenericProtocol {
 
     @Override
     public void init(final Properties props) throws HandlerRegistrationException, IOException {
-        final Set<Host> peers = NetworkUtils.setupPeers(props.getProperty(ConfigKeys.PEERS_CONFIG));
+        final Set<Host> peers = NetworkUtils.getHosts(props.getProperty(ConfigKeys.PEERS_CONFIG));
         final InetAddress address = InetAddress.getByName(props.getProperty(ConfigKeys.ADDRESS_CONFIG));
         final String port = props.getProperty(ConfigKeys.PORT_CONFIG);
 
@@ -150,7 +148,6 @@ public class MultiPaxosProtocol extends GenericProtocol {
                 ? new AcceptMessage(opId, nextSlot, ballot, value, noop)
                 : new PrepareMessage(opId, nextSlot, ballot);
         sendRequest(new BroadcastMessageRequest(toSend), DispatcherProtocol.PROTO_ID);
-        logger.debug("Broadcasting {}", toSend);
 
         // Set up a retry timer (the leader may stop working)
         final long timerId = setupTimer(new MultiPaxosRetryTimer(opId), MultiPaxosRetryTimer.TIMEOUT);
@@ -175,16 +172,14 @@ public class MultiPaxosProtocol extends GenericProtocol {
 
             final Host host = notification.getSender();
             sendRequest(new SendMessageRequest(promise, host), DispatcherProtocol.PROTO_ID);
-            logger.debug("Sending {} to {}", promise, host);
         }
     }
 
-    @Discardable
     protected void uponPrepareOkMessage(final PrepareOkMessageNotification notification, final short protoId) {
         final PrepareOkMessage prepareOk = notification.getMessage();
         final String opId = prepareOk.getOpId();
         if (!session.hasOp(opId)) {
-            throw new DiscardIllegalAction();
+            return;
         } else if (!session.receiveMessage(opId, prepareOk)) {
             logger.warn(DUPLICATED_MESSAGE_WARN, prepareOk);
             return;
@@ -210,7 +205,6 @@ public class MultiPaxosProtocol extends GenericProtocol {
         final String newOpId = session.restart(op);
         final AcceptMessage accept = new AcceptMessage(newOpId, op.getSlot(), op.getBallot(), op.getValue(), op.getType() == Operation.Type.READ);
         sendRequest(new BroadcastMessageRequest(accept), DispatcherProtocol.PROTO_ID);
-        logger.debug("Broadcasting {}", accept);
 
         // Start new retry (for leader)
         long newTimerId = setupTimer(new MultiPaxosRetryTimer(newOpId), MultiPaxosRetryTimer.TIMEOUT);
@@ -235,17 +229,15 @@ public class MultiPaxosProtocol extends GenericProtocol {
             final Host host = notification.getSender();
             final AcceptOkMessage learn = new AcceptOkMessage(accept.getOpId(), ballot, value);
             sendRequest(new SendMessageRequest(learn,  host), DispatcherProtocol.PROTO_ID);
-            logger.debug("Sending {} to {}", learn, host);
         }
         return leader.equals(myself);
     }
 
-    @Discardable
     protected void uponAcceptOkMessage(final AcceptOkMessageNotification notification, final short protoId) {
         final AcceptOkMessage acceptOk = notification.getMessage();
         final String opId = acceptOk.getOpId();
         if (!session.hasOp(opId)) {
-            throw new DiscardIllegalAction();
+            return;
         } else if (!session.receiveMessage(opId, acceptOk)) {
             logger.warn(DUPLICATED_MESSAGE_WARN, acceptOk);
             return;
@@ -265,7 +257,6 @@ public class MultiPaxosProtocol extends GenericProtocol {
         final Host host = op.getClientHost();
         final ClientMessage clientReply = buildClientReply(op, op.getValue());
         sendRequest(new SendMessageRequest(clientReply, host), DispatcherProtocol.PROTO_ID);
-        logger.debug("Sending {} to {}", clientReply, host);
 
         cancelTimer(op.getRetryTimerId());
     }

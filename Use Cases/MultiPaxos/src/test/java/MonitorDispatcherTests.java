@@ -42,7 +42,7 @@ public class MonitorDispatcherTests {
         assertEquals(2, logger.getLogTypeCount(IllegalActionLog.class));
 
         // Creates internal exception: brute force set state
-        monitoredDispatcher.init(new Properties());
+        monitoredDispatcher.init(MonitorTestsUtils.TEST_PROPS);
         MonitorTestsUtils.changeCurrentStateVar(monitoredDispatcher, "CreateTCPChannel");
 
         // Creates internal exception: brute force set state

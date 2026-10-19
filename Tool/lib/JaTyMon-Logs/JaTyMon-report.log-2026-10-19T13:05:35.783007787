@@ -1,0 +1,50 @@
+(2026-10-19T13:05:35.782058460 | TestTypestate) [IllegalActionLog] Illegal input action "action" executed in state "State1"
+(2026-10-19T13:05:35.782148194 | TestTypestate) [InternalExceptionLog] Internal Exception -> Test exception message.
+(2026-10-19T13:05:35.782191408 | TestTypestate) [MonitorStartLog] Starting monitor with confidence level 0.950000
+(2026-10-19T13:05:35.782204353 | INTERNAL) [LoggerWriteFailedLog] Failed to write logs to a file
+(2026-10-19T13:05:35.782217608 | TestTypestate) [IllegalActionLog] Illegal input action "action" executed in state "State1"
+(2026-10-19T13:05:35.782268417 | TestTypestate) [InternalExceptionLog] Internal Exception -> Test exception message.
+(2026-10-19T13:05:35.782288976 | TestTypestate) [MonitorStartLog] Starting monitor with confidence level 0.950000
+(2026-10-19T13:05:35.782299587 | INTERNAL) [LoggerWriteFailedLog] Failed to write logs to a file
+(2026-10-19T13:05:35.782311320 | TestTypestate) [IllegalActionLog] Illegal input action "action" executed in state "State1"
+(2026-10-19T13:05:35.782339003 | TestTypestate) [InternalExceptionLog] Internal Exception -> Test exception message.
+(2026-10-19T13:05:35.782357178 | TestTypestate) [MonitorStartLog] Starting monitor with confidence level 0.950000
+(2026-10-19T13:05:35.782366647 | INTERNAL) [LoggerWriteFailedLog] Failed to write logs to a file
+(2026-10-19T13:05:35.782377718 | TestTypestate) [IllegalActionLog] Illegal input action "action" executed in state "State1"
+(2026-10-19T13:05:35.782406915 | TestTypestate) [InternalExceptionLog] Internal Exception -> Test exception message.
+(2026-10-19T13:05:35.782424659 | TestTypestate) [MonitorStartLog] Starting monitor with confidence level 0.950000
+(2026-10-19T13:05:35.782433907 | INTERNAL) [LoggerWriteFailedLog] Failed to write logs to a file
+(2026-10-19T13:05:35.782445720 | TestTypestate) [IllegalActionLog] Illegal input action "action" executed in state "State1"
+(2026-10-19T13:05:35.782558558 | TestTypestate) [InternalExceptionLog] Internal Exception -> Test exception message.
+(2026-10-19T13:05:35.782578827 | TestTypestate) [MonitorStartLog] Starting monitor with confidence level 0.950000
+(2026-10-19T13:05:35.782588155 | INTERNAL) [LoggerWriteFailedLog] Failed to write logs to a file
+(2026-10-19T13:05:35.782600189 | TestTypestate) [IllegalActionLog] Illegal input action "action" executed in state "State1"
+(2026-10-19T13:05:35.782626279 | TestTypestate) [InternalExceptionLog] Internal Exception -> Test exception message.
+(2026-10-19T13:05:35.782643603 | TestTypestate) [MonitorStartLog] Starting monitor with confidence level 0.950000
+(2026-10-19T13:05:35.782673741 | INTERNAL) [LoggerWriteFailedLog] Failed to write logs to a file
+(2026-10-19T13:05:35.782687127 | TestTypestate) [IllegalActionLog] Illegal input action "action" executed in state "State1"
+(2026-10-19T13:05:35.782718488 | TestTypestate) [InternalExceptionLog] Internal Exception -> Test exception message.
+(2026-10-19T13:05:35.782737625 | TestTypestate) [MonitorStartLog] Starting monitor with confidence level 0.950000
+(2026-10-19T13:05:35.782747013 | INTERNAL) [LoggerWriteFailedLog] Failed to write logs to a file
+(2026-10-19T13:05:35.782761541 | TestTypestate) [IllegalActionLog] Illegal input action "action" executed in state "State1"
+(2026-10-19T13:05:35.782789275 | TestTypestate) [InternalExceptionLog] Internal Exception -> Test exception message.
+(2026-10-19T13:05:35.782808251 | TestTypestate) [MonitorStartLog] Starting monitor with confidence level 0.950000
+(2026-10-19T13:05:35.782818591 | INTERNAL) [LoggerWriteFailedLog] Failed to write logs to a file
+(2026-10-19T13:05:35.782833340 | TestTypestate) [IllegalActionLog] Illegal input action "action" executed in state "State1"
+(2026-10-19T13:05:35.782859300 | TestTypestate) [InternalExceptionLog] Internal Exception -> Test exception message.
+(2026-10-19T13:05:35.782878106 | TestTypestate) [MonitorStartLog] Starting monitor with confidence level 0.950000
+(2026-10-19T13:05:35.782887595 | INTERNAL) [LoggerWriteFailedLog] Failed to write logs to a file
+(2026-10-19T13:05:35.782898957 | TestTypestate) [IllegalActionLog] Illegal input action "action" executed in state "State1"
+(2026-10-19T13:05:35.782954624 | TestTypestate) [InternalExceptionLog] Internal Exception -> Test exception message.
+(2026-10-19T13:05:35.782978200 | TestTypestate) [MonitorStartLog] Starting monitor with confidence level 0.950000
+(2026-10-19T13:05:35.782988801 | INTERNAL) [LoggerWriteFailedLog] Failed to write logs to a file
+(2026-10-19T13:05:35.782103838 | TestTypestate) [InvalidHighRatioLog] (State1 -> boot) receiving too many: 0.8 not in [0.3; 0.7]
+(2026-10-19T13:05:35.782248588 | TestTypestate) [InvalidHighRatioLog] (State1 -> boot) receiving too many: 0.8 not in [0.3; 0.7]
+(2026-10-19T13:05:35.782325337 | TestTypestate) [InvalidHighRatioLog] (State1 -> boot) receiving too many: 0.8 not in [0.3; 0.7]
+(2026-10-19T13:05:35.782391715 | TestTypestate) [InvalidHighRatioLog] (State1 -> boot) receiving too many: 0.8 not in [0.3; 0.7]
+(2026-10-19T13:05:35.782459216 | TestTypestate) [InvalidHighRatioLog] (State1 -> boot) receiving too many: 0.8 not in [0.3; 0.7]
+(2026-10-19T13:05:35.782613635 | TestTypestate) [InvalidHighRatioLog] (State1 -> boot) receiving too many: 0.8 not in [0.3; 0.7]
+(2026-10-19T13:05:35.782703899 | TestTypestate) [InvalidHighRatioLog] (State1 -> boot) receiving too many: 0.8 not in [0.3; 0.7]
+(2026-10-19T13:05:35.782776149 | TestTypestate) [InvalidHighRatioLog] (State1 -> boot) receiving too many: 0.8 not in [0.3; 0.7]
+(2026-10-19T13:05:35.782846415 | TestTypestate) [InvalidHighRatioLog] (State1 -> boot) receiving too many: 0.8 not in [0.3; 0.7]
+(2026-10-19T13:05:35.782911782 | TestTypestate) [InvalidHighRatioLog] (State1 -> boot) receiving too many: 0.8 not in [0.3; 0.7]

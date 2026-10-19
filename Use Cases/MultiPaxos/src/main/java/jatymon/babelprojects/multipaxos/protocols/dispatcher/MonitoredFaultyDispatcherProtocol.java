@@ -11,7 +11,6 @@ import jatymon.babelprojects.multipaxos.messages.replica.AcceptMessage;
 import jatymon.babelprojects.multipaxos.messages.replica.AcceptOkMessage;
 import jatymon.babelprojects.multipaxos.messages.replica.PrepareMessage;
 import jatymon.babelprojects.multipaxos.messages.replica.PrepareOkMessage;
-import jatymon.exceptions.discarding.MonitorDiscardException;
 import jatymon.logging.JaTyMonLogger;
 import jatymon.logging.logs.action.IllegalActionLog;
 import jatymon.logging.logs.internal.InternalExceptionLog;
@@ -19,7 +18,6 @@ import jatymon.logging.logs.internal.MonitorStartLog;
 import jatymon.logging.logs.ratio.RatioLogFactory;
 import jatymon.math.JaTyMonMath;
 import jatymon.math.intervals.Interval;
-import jatymon.runtime.Monitor;
 import java.io.IOException;
 import java.lang.Exception;
 import java.lang.Override;
@@ -34,7 +32,7 @@ import pt.unl.fct.di.novasys.channel.tcp.events.OutConnectionFailed;
 import pt.unl.fct.di.novasys.channel.tcp.events.OutConnectionUp;
 import pt.unl.fct.di.novasys.network.data.Host;
 
-public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol implements Monitor {
+public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol {
   public static final String TYPESTATE_NAME = "Dispatcher";
 
   private final double confidenceLevel;
@@ -63,78 +61,59 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
   }
 
   @Override
-  public void uponPrepareMessage(PrepareMessage arg0, Host arg1, short arg2, int arg3) {
+  public void uponClientWriteAck(ClientWriteAck arg0, Host arg1, short arg2, int arg3) {
     final States oldState = currentState;
-    boolean logIllegalActions = false;
     try {
       if (currentState == States.Main) {
         currentState = States.Main;
-        super.uponPrepareMessage(arg0, arg1, arg2, arg3);
+        super.uponClientWriteAck(arg0, arg1, arg2, arg3);
       } else {
-        logIllegalActions = true;
-        super.uponPrepareMessage(arg0, arg1, arg2, arg3);
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponClientWriteAck", ActionType.Input));
+        super.uponClientWriteAck(arg0, arg1, arg2, arg3);
       }
-    } catch(final MonitorDiscardException e) {
-      logIllegalActions = false;
     } catch(final Exception e) {
       currentState = oldState;
       logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-    if (logIllegalActions) {
-      logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponPrepareMessage", ActionType.Input));
     }
   }
 
   @Override
-  public void uponClientWriteAck(ClientWriteAck arg0, Host arg1, short arg2, int arg3) {
+  public void uponPrepareMessage(PrepareMessage arg0, Host arg1, short arg2, int arg3) {
     final States oldState = currentState;
-    boolean logIllegalActions = false;
     try {
       if (currentState == States.Main) {
         currentState = States.Main;
-        super.uponClientWriteAck(arg0, arg1, arg2, arg3);
+        super.uponPrepareMessage(arg0, arg1, arg2, arg3);
       } else {
-        logIllegalActions = true;
-        super.uponClientWriteAck(arg0, arg1, arg2, arg3);
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponPrepareMessage", ActionType.Input));
+        super.uponPrepareMessage(arg0, arg1, arg2, arg3);
       }
-    } catch(final MonitorDiscardException e) {
-      logIllegalActions = false;
     } catch(final Exception e) {
       currentState = oldState;
       logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-    if (logIllegalActions) {
-      logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponClientWriteAck", ActionType.Input));
     }
   }
 
   @Override
   public void uponPrepareOkMessage(PrepareOkMessage arg0, Host arg1, short arg2, int arg3) {
     final States oldState = currentState;
-    boolean logIllegalActions = false;
     try {
       if (currentState == States.Main) {
         currentState = States.Main;
         super.uponPrepareOkMessage(arg0, arg1, arg2, arg3);
       } else {
-        logIllegalActions = true;
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponPrepareOkMessage", ActionType.Input));
         super.uponPrepareOkMessage(arg0, arg1, arg2, arg3);
       }
-    } catch(final MonitorDiscardException e) {
-      logIllegalActions = false;
     } catch(final Exception e) {
       currentState = oldState;
       logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-    if (logIllegalActions) {
-      logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponPrepareOkMessage", ActionType.Input));
     }
   }
 
   @Override
   public void uponOutConnectionFailed(OutConnectionFailed<ProtoMessage> arg0, int arg1) {
     final States oldState = currentState;
-    boolean logIllegalActions = false;
     try {
       switch (currentState) {
         case Connect:
@@ -146,24 +125,18 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
           super.uponOutConnectionFailed(arg0, arg1);
           break;
         default:
-          logIllegalActions = true;
+          logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponOutConnectionFailed", ActionType.Input));
           super.uponOutConnectionFailed(arg0, arg1);
       }
-    } catch(final MonitorDiscardException e) {
-      logIllegalActions = false;
     } catch(final Exception e) {
       currentState = oldState;
       logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-    if (logIllegalActions) {
-      logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponOutConnectionFailed", ActionType.Input));
     }
   }
 
   @Override
   public void uponInConnectionDown(InConnectionDown arg0, int arg1) {
     final States oldState = currentState;
-    boolean logIllegalActions = false;
     try {
       if (currentState == States.Main) {
         if (noConns()) {
@@ -171,24 +144,18 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
         }
         super.uponInConnectionDown(arg0, arg1);
       } else {
-        logIllegalActions = true;
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponInConnectionDown", ActionType.Input));
         super.uponInConnectionDown(arg0, arg1);
       }
-    } catch(final MonitorDiscardException e) {
-      logIllegalActions = false;
     } catch(final Exception e) {
       currentState = oldState;
       logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-    if (logIllegalActions) {
-      logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponInConnectionDown", ActionType.Input));
     }
   }
 
   @Override
   public void uponInConnectionUp(InConnectionUp arg0, int arg1) {
     final States oldState = currentState;
-    boolean logIllegalActions = false;
     try {
       switch (currentState) {
         case Main:
@@ -202,116 +169,86 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
           super.uponInConnectionUp(arg0, arg1);
           break;
         default:
-          logIllegalActions = true;
+          logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponInConnectionUp", ActionType.Input));
           super.uponInConnectionUp(arg0, arg1);
       }
-    } catch(final MonitorDiscardException e) {
-      logIllegalActions = false;
     } catch(final Exception e) {
       currentState = oldState;
       logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-    if (logIllegalActions) {
-      logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponInConnectionUp", ActionType.Input));
     }
   }
 
   @Override
   public void uponAcceptOkMessage(AcceptOkMessage arg0, Host arg1, short arg2, int arg3) {
     final States oldState = currentState;
-    boolean logIllegalActions = false;
     try {
       if (currentState == States.Main) {
         currentState = States.Main;
         super.uponAcceptOkMessage(arg0, arg1, arg2, arg3);
       } else {
-        logIllegalActions = true;
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponAcceptOkMessage", ActionType.Input));
         super.uponAcceptOkMessage(arg0, arg1, arg2, arg3);
       }
-    } catch(final MonitorDiscardException e) {
-      logIllegalActions = false;
     } catch(final Exception e) {
       currentState = oldState;
       logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-    if (logIllegalActions) {
-      logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponAcceptOkMessage", ActionType.Input));
     }
   }
 
   @Override
   public void uponClientReadMessage(ClientReadMessage arg0, Host arg1, short arg2, int arg3) {
     final States oldState = currentState;
-    boolean logIllegalActions = false;
     try {
       if (currentState == States.Main) {
         currentState = States.Main;
         super.uponClientReadMessage(arg0, arg1, arg2, arg3);
       } else {
-        logIllegalActions = true;
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponClientReadMessage", ActionType.Input));
         super.uponClientReadMessage(arg0, arg1, arg2, arg3);
       }
-    } catch(final MonitorDiscardException e) {
-      logIllegalActions = false;
     } catch(final Exception e) {
       currentState = oldState;
       logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-    if (logIllegalActions) {
-      logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponClientReadMessage", ActionType.Input));
     }
   }
 
   @Override
   public void connectAll() {
     final States oldState = currentState;
-    boolean logIllegalActions = false;
     try {
       if (currentState == States.Connect) {
         currentState = States.Connect;
         super.connectAll();
       } else {
-        logIllegalActions = true;
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "connectAll", ActionType.Output));
         super.connectAll();
       }
-    } catch(final MonitorDiscardException e) {
-      logIllegalActions = false;
     } catch(final Exception e) {
       currentState = oldState;
       logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-    if (logIllegalActions) {
-      logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "connectAll", ActionType.Output));
     }
   }
 
   @Override
   public void init(Properties arg0) throws HandlerRegistrationException, IOException {
     final States oldState = currentState;
-    boolean logIllegalActions = false;
     try {
       if (currentState == States.Init) {
         currentState = States.CreateTCPChannel;
         super.init(arg0);
       } else {
-        logIllegalActions = true;
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "init", ActionType.Input));
         super.init(arg0);
       }
-    } catch(final MonitorDiscardException e) {
-      logIllegalActions = false;
     } catch(final Exception e) {
       currentState = oldState;
       logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-    if (logIllegalActions) {
-      logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "init", ActionType.Input));
     }
   }
 
   @Override
   public void uponOutConnectionUp(OutConnectionUp arg0, int arg1) {
     final States oldState = currentState;
-    boolean logIllegalActions = false;
     try {
       switch (currentState) {
         case Connect:
@@ -325,40 +262,29 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
           super.uponOutConnectionUp(arg0, arg1);
           break;
         default:
-          logIllegalActions = true;
+          logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponOutConnectionUp", ActionType.Input));
           super.uponOutConnectionUp(arg0, arg1);
       }
-    } catch(final MonitorDiscardException e) {
-      logIllegalActions = false;
     } catch(final Exception e) {
       currentState = oldState;
       logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-    if (logIllegalActions) {
-      logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponOutConnectionUp", ActionType.Input));
     }
   }
 
   @Override
   public void uponClientWriteMessage(ClientWriteMessage arg0, Host arg1, short arg2, int arg3) {
     final States oldState = currentState;
-    boolean logIllegalActions = false;
     try {
       if (currentState == States.Main) {
         currentState = States.Main;
         super.uponClientWriteMessage(arg0, arg1, arg2, arg3);
       } else {
-        logIllegalActions = true;
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponClientWriteMessage", ActionType.Input));
         super.uponClientWriteMessage(arg0, arg1, arg2, arg3);
       }
-    } catch(final MonitorDiscardException e) {
-      logIllegalActions = false;
     } catch(final Exception e) {
       currentState = oldState;
       logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-    if (logIllegalActions) {
-      logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponClientWriteMessage", ActionType.Input));
     }
   }
 
@@ -366,23 +292,17 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
   public int createTcpChannel(String arg0, String arg1) {
     int superResult = 0;
     final States oldState = currentState;
-    boolean logIllegalActions = false;
     try {
       if (currentState == States.CreateTCPChannel) {
         currentState = States.Connect;
         superResult = super.createTcpChannel(arg0, arg1);
       } else {
-        logIllegalActions = true;
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "createTcpChannel", ActionType.Input));
         superResult = super.createTcpChannel(arg0, arg1);
       }
-    } catch(final MonitorDiscardException e) {
-      logIllegalActions = false;
     } catch(final Exception e) {
       currentState = oldState;
       logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-    if (logIllegalActions) {
-      logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "createTcpChannel", ActionType.Input));
     }
     return superResult;
   }
@@ -390,7 +310,6 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
   @Override
   public void uponOutConnectionDown(OutConnectionDown arg0, int arg1) {
     final States oldState = currentState;
-    boolean logIllegalActions = false;
     try {
       if (currentState == States.Main) {
         if (noConns()) {
@@ -398,63 +317,46 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
         }
         super.uponOutConnectionDown(arg0, arg1);
       } else {
-        logIllegalActions = true;
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponOutConnectionDown", ActionType.Input));
         super.uponOutConnectionDown(arg0, arg1);
       }
-    } catch(final MonitorDiscardException e) {
-      logIllegalActions = false;
     } catch(final Exception e) {
       currentState = oldState;
       logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-    if (logIllegalActions) {
-      logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponOutConnectionDown", ActionType.Input));
     }
   }
 
   @Override
   public void uponClientReadAck(ClientReadAck arg0, Host arg1, short arg2, int arg3) {
     final States oldState = currentState;
-    boolean logIllegalActions = false;
     try {
       if (currentState == States.Main) {
         currentState = States.Main;
         super.uponClientReadAck(arg0, arg1, arg2, arg3);
       } else {
-        logIllegalActions = true;
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponClientReadAck", ActionType.Input));
         super.uponClientReadAck(arg0, arg1, arg2, arg3);
       }
-    } catch(final MonitorDiscardException e) {
-      logIllegalActions = false;
     } catch(final Exception e) {
       currentState = oldState;
       logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-    if (logIllegalActions) {
-      logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponClientReadAck", ActionType.Input));
     }
   }
 
   @Override
   public void uponAcceptMessage(AcceptMessage arg0, Host arg1, short arg2, int arg3) {
     final States oldState = currentState;
-    boolean logIllegalActions = false;
     try {
       if (currentState == States.Main) {
         currentState = States.Main;
         super.uponAcceptMessage(arg0, arg1, arg2, arg3);
       } else {
-        logIllegalActions = true;
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponAcceptMessage", ActionType.Input));
         super.uponAcceptMessage(arg0, arg1, arg2, arg3);
       }
-    } catch(final MonitorDiscardException e) {
-      logIllegalActions = false;
     } catch(final Exception e) {
       currentState = oldState;
       logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-    if (logIllegalActions) {
-      logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponAcceptMessage", ActionType.Input));
     }
   }
 
@@ -485,11 +387,11 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
   }
 
   private enum States {
-    Init,
+    Connect,
 
     Main,
 
-    Connect,
+    Init,
 
     CreateTCPChannel
   }

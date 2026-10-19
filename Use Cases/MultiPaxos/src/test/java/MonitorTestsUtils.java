@@ -35,11 +35,17 @@ public class MonitorTestsUtils {
     public static final Host TEST_HOST = new Host(InetAddress.getLoopbackAddress(), TEST_PORT);
     public static final String BABEL_INSTANCE_FIELD_NAME = "system";
     public static final String CURRENT_STATE_FIELD_NAME = "currentState";
+    public static final Properties CLIENT_TEST_PROPS =  new Properties();
     public static final Properties TEST_PROPS =  new Properties();
     static {
-        TEST_PROPS.setProperty(ConfigKeys.PEERS_CONFIG, "9000");
-        TEST_PROPS.setProperty(ConfigKeys.CLIENT_START_DELAY, "0");
-        TEST_PROPS.setProperty(ConfigKeys.CLIENTS_PORTS_CONFIG, "9000");
+        TEST_PROPS.setProperty(ConfigKeys.PORT_CONFIG, "9000");
+        TEST_PROPS.setProperty(ConfigKeys.PEERS_CONFIG, "localhost:9000");
+
+        CLIENT_TEST_PROPS.setProperty(ConfigKeys.PORT_CONFIG, "9000");
+        CLIENT_TEST_PROPS.setProperty(ConfigKeys.PEERS_CONFIG, "localhost:9000");
+        CLIENT_TEST_PROPS.setProperty(ConfigKeys.CLIENT_START_DELAY, "0");
+        CLIENT_TEST_PROPS.setProperty(ConfigKeys.CLIENTS_CONFIG, "localhost:9000");
+        CLIENT_TEST_PROPS.setProperty(ConfigKeys.CLIENT_OPS_NUMB, "1");
     }
 
 

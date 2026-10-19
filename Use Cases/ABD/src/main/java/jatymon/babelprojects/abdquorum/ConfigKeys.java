@@ -4,8 +4,6 @@ public class ConfigKeys {
     public static final String PORT_CONFIG = "port";
     public static final String ADDRESS_CONFIG = "address";
     public static final String PEERS_CONFIG = "peers";
-    public static final String SENDER_CONFIG = "sender";
-    public static final String RECEIVER_CONFIG = "receiver";
     public static final String PROTOCOL_TYPE_CONFIG = "protocol_type";
 
     public static final String SIMPLE_PROTO_CONFIG = "simple";
@@ -23,7 +21,7 @@ public class ConfigKeys {
 
     /* Custom */
 
-    public static final String CLIENTS_PORTS_CONFIG = "clients_ports";
+    public static final String CLIENTS_CONFIG = "clients";
     public static final String CLIENT_START_DELAY = "client_start_delay";
     public static final String CLIENT_OPS_NUMB = "client_ops_numb";
 }

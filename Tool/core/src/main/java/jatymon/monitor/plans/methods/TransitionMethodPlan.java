@@ -2,7 +2,6 @@ package jatymon.monitor.plans.methods;
 
 import com.palantir.javapoet.*;
 import jatymon.actions.ActionType;
-import jatymon.exceptions.discarding.MonitorDiscardException;
 import jatymon.monitor.MonitorFactory;
 import jatymon.monitor.MonitorUtils;
 import jatymon.monitor.plans.code.logging.LogIllegalActionCodePlan;
@@ -31,7 +30,6 @@ public record TransitionMethodPlan(String name,
                                    List<? extends TypeMirror> thrownTypes,
                                    ActionType actionType,
                                    Set<TransitionCasePlan> casePlans) implements MethodPlan {
-    private static final String LOG_ILLEGAL_ACTIONS_VAR = "logIllegalActions";
 
 
     @Override
@@ -45,23 +43,15 @@ public record TransitionMethodPlan(String name,
         // Init method (init return res, init old state var and start try-catch for internal exceptions)
         body.add(superCallResVar.emit(ctx))
                 .add(oldStateVar.emit(ctx))
-                .addStatement("boolean $L = false", LOG_ILLEGAL_ACTIONS_VAR)
                 .beginControlFlow("try");
 
         // Build switch case for each transition possible depending on the input state
         body.add(buildTransitionCases(ctx, superCallPlan));
 
         // Close try-catch for internal exceptions
-        body.nextControlFlow("catch(final $T e)", ClassName.get(MonitorDiscardException.class))
-                .addStatement("$L = false", LOG_ILLEGAL_ACTIONS_VAR)
-                .nextControlFlow("catch(final $T e)", ClassName.get(Exception.class))
+        body.nextControlFlow("catch(final $T e)", ClassName.get(Exception.class))
                 .addStatement(CurrentStateFieldPlan.getAssignCode(ctx.typestateData().getKey(), CodeBlock.of("$L", TransitionOldStateVariablePlan.VAR_NAME)))
                 .addStatement(new LogInternalExceptionCodePlan("e.getMessage()").emit(ctx))
-                .endControlFlow();
-
-        // Log illegal actions
-        body.beginControlFlow("if ($L)", LOG_ILLEGAL_ACTIONS_VAR)
-                .addStatement(new LogIllegalActionCodePlan(name, actionType).emit(ctx))
                 .endControlFlow();
 
         // Add return statement if required (the return value is the one given by the super() call) and catch internal exceptions
@@ -93,7 +83,7 @@ public record TransitionMethodPlan(String name,
             cases.beginControlFlow("if ($L == $T.$L)", currentStateValue, ctx.getClassName(StatesEnumPlan.ENUM_NAME), single.inputState())
                     .add(single.emit(ctx, superCallPlan))
                     .nextControlFlow("else")
-                    .addStatement("$L = true", LOG_ILLEGAL_ACTIONS_VAR)
+                    .addStatement(new LogIllegalActionCodePlan(name, actionType).emit(ctx))
                     .add(superCallPlan.emit(ctx))
                     .endControlFlow();
             return cases.build();
@@ -107,7 +97,7 @@ public record TransitionMethodPlan(String name,
             cases.addStatement("break").unindent();
         });
         cases.add("default:\n").indent()
-                .addStatement("$L = true", LOG_ILLEGAL_ACTIONS_VAR)
+                .addStatement(new LogIllegalActionCodePlan(name, actionType).emit(ctx))
                 .add(superCallPlan.emit(ctx))
                 .unindent()
                 .endControlFlow();
