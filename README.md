@@ -21,6 +21,6 @@ JaTyMon is a Java annotation processor. This means that to execute JaTyMon, one 
 
 Nonetheless, we provide a **build.sh** script inside the folder named **Tool** which builds the tool and generates two scripts:
  - **install-JaTyMon-maven.sh**: removes previous versions of JaTyMon from the Maven local repository and adds the latest generated version
- - **run-JaTyMon-maven**: collects dependencies from the the intended Maven project and executes JaTyMon to generate monitors
+ - **run-JaTyMon-maven.sh**: collects dependencies from the the intended Maven project and executes JaTyMon to generate monitors
 
 Developers create typestates in separate files (ending with _.protocol_) and assign them to classes using a @Typestate annotation containing the path to the typestate file. Compiling the code with JaTyMon as its annotation processor will result in the generation of monitor classes. All use cases show how to annotated Babel classes and setup typestate files.
