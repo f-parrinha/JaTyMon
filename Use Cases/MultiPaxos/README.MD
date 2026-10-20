@@ -39,4 +39,3 @@ __Faulty Dispatcher:__ A subclass of the dispatcher protocol. Wraps the executio
 faults such message drop, message tinkering or connection drop.
 
 __MultiPaxos:__ The class MultiPaxosProtocol contains all methods required for the unified version of the multi-paxos protocol (contains both leader and non-leader roles)
-
