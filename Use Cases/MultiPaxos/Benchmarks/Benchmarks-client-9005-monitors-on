@@ -1,0 +1,7 @@
+run: Benchmarks
+[32mI 18:35:13,499 ClientProtocol [9005][m Total writes: 10000
+[32mI 18:35:13,499 ClientProtocol [9005][m Bad writes: 0
+[32mI 18:35:13,500 ClientProtocol [9005][m Bad write percentage: 0.0
+[32mI 18:35:13,500 ClientProtocol [9005][m Average write latency (ms): 0.8688
+[32mI 18:35:13,500 ClientProtocol [9005][m Average read latency (ms): 0.837916208379162
+[32mI 18:35:13,500 ClientProtocol [9005][m Elapsed time (s): 17.373

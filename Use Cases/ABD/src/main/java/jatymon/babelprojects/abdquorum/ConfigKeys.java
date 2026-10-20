@@ -3,7 +3,7 @@ package jatymon.babelprojects.abdquorum;
 public class ConfigKeys {
     public static final String PORT_CONFIG = "port";
     public static final String ADDRESS_CONFIG = "address";
-    public static final String PEERS_CONFIG = "peers";
+    public static final String REPLICAS_CONFIG = "replicas";
     public static final String PROTOCOL_TYPE_CONFIG = "protocol_type";
 
     public static final String SIMPLE_PROTO_CONFIG = "simple";

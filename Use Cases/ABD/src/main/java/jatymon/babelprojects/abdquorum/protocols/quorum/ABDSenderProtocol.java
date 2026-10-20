@@ -43,7 +43,6 @@ import pt.unl.fct.di.novasys.babel.exceptions.HandlerRegistrationException;
 import pt.unl.fct.di.novasys.network.data.Host;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.util.Properties;
 import java.util.Set;
 
@@ -70,7 +69,7 @@ public class ABDSenderProtocol extends GenericProtocol {
     @Override
     public void init(final Properties props) throws HandlerRegistrationException, IOException {
         this.version = Integer.parseInt(props.getProperty(ConfigKeys.PORT_CONFIG));
-        this.peersSize = NetworkUtils.getHosts(props.getProperty(ConfigKeys.PEERS_CONFIG)).size();
+        this.peersSize = NetworkUtils.getHosts(props.getProperty(ConfigKeys.REPLICAS_CONFIG)).size();
 
 
         subscribeNotification(ConnectionUpNotification.ID, this::uponConnectionUp);

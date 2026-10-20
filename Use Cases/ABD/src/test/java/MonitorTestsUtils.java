@@ -49,10 +49,10 @@ public class MonitorTestsUtils {
     public static final Properties TEST_PROPS =  new Properties();
     static {
         TEST_PROPS.setProperty(ConfigKeys.PORT_CONFIG, "9000");
-        TEST_PROPS.setProperty(ConfigKeys.PEERS_CONFIG, "localhost:9000");
+        TEST_PROPS.setProperty(ConfigKeys.REPLICAS_CONFIG, "localhost:9000");
 
         CLIENT_TEST_PROPS.setProperty(ConfigKeys.PORT_CONFIG, "9000");
-        CLIENT_TEST_PROPS.setProperty(ConfigKeys.PEERS_CONFIG, "localhost:9000");
+        CLIENT_TEST_PROPS.setProperty(ConfigKeys.REPLICAS_CONFIG, "localhost:9000");
         CLIENT_TEST_PROPS.setProperty(ConfigKeys.CLIENT_START_DELAY, "0");
         CLIENT_TEST_PROPS.setProperty(ConfigKeys.CLIENTS_CONFIG, "localhost:9000");
         CLIENT_TEST_PROPS.setProperty(ConfigKeys.CLIENT_OPS_NUMB, "1");

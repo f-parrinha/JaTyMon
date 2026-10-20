@@ -72,7 +72,7 @@ public class DispatcherProtocol extends GenericProtocol {
         final InetAddress address = InetAddress.getByName(props.getProperty(ConfigKeys.ADDRESS_CONFIG));
         final String port = props.getProperty(ConfigKeys.PORT_CONFIG);
         this.myself = new Host(address, Integer.parseInt(port));
-        this.peers.addAll(NetworkUtils.getHosts(props.getProperty(ConfigKeys.PEERS_CONFIG)));
+        this.peers.addAll(NetworkUtils.getHosts(props.getProperty(ConfigKeys.REPLICAS_CONFIG)));
         this.channelId = createTcpChannel(address.getHostAddress(), port);
 
         registerChannelEventHandler(channelId, OutConnectionFailed.EVENT_ID, this::uponOutConnectionFailed);

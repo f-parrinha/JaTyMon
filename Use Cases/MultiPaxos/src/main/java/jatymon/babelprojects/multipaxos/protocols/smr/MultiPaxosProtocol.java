@@ -71,7 +71,7 @@ public class MultiPaxosProtocol extends GenericProtocol {
 
     @Override
     public void init(final Properties props) throws HandlerRegistrationException, IOException {
-        final Set<Host> peers = NetworkUtils.getHosts(props.getProperty(ConfigKeys.PEERS_CONFIG));
+        final Set<Host> peers = NetworkUtils.getHosts(props.getProperty(ConfigKeys.REPLICAS_CONFIG));
         final InetAddress address = InetAddress.getByName(props.getProperty(ConfigKeys.ADDRESS_CONFIG));
         final String port = props.getProperty(ConfigKeys.PORT_CONFIG);
 

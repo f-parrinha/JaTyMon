@@ -169,9 +169,9 @@ public class MonitoredClientProtocol extends ClientProtocol {
   }
 
   private enum States {
-    Main,
-
     end,
+
+    Main,
 
     Init
   }

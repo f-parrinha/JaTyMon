@@ -19,7 +19,6 @@ import pt.unl.fct.di.novasys.babel.exceptions.HandlerRegistrationException;
 import pt.unl.fct.di.novasys.network.data.Host;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.*;
@@ -65,7 +64,7 @@ public class ClientProtocol extends GenericProtocol {
 
         // Setup client state
         this.opsNumb = Integer.parseInt(props.getProperty(ConfigKeys.CLIENT_OPS_NUMB));
-        this.peers = NetworkUtils.getHosts(props.getProperty(ConfigKeys.PEERS_CONFIG)).toArray(new Host[0]);
+        this.peers = NetworkUtils.getHosts(props.getProperty(ConfigKeys.REPLICAS_CONFIG)).toArray(new Host[0]);
         this.opsCount = 0;
         this.badWritesCount = 0;
         this.writeStartTime = -1;

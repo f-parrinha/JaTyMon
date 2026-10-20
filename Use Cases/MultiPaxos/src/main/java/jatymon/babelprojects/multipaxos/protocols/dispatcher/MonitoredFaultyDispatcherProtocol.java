@@ -61,23 +61,6 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
   }
 
   @Override
-  public void uponClientWriteAck(ClientWriteAck arg0, Host arg1, short arg2, int arg3) {
-    final States oldState = currentState;
-    try {
-      if (currentState == States.Main) {
-        currentState = States.Main;
-        super.uponClientWriteAck(arg0, arg1, arg2, arg3);
-      } else {
-        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponClientWriteAck", ActionType.Input));
-        super.uponClientWriteAck(arg0, arg1, arg2, arg3);
-      }
-    } catch(final Exception e) {
-      currentState = oldState;
-      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-  }
-
-  @Override
   public void uponPrepareMessage(PrepareMessage arg0, Host arg1, short arg2, int arg3) {
     final States oldState = currentState;
     try {
@@ -87,6 +70,23 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
       } else {
         logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponPrepareMessage", ActionType.Input));
         super.uponPrepareMessage(arg0, arg1, arg2, arg3);
+      }
+    } catch(final Exception e) {
+      currentState = oldState;
+      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
+    }
+  }
+
+  @Override
+  public void uponClientWriteAck(ClientWriteAck arg0, Host arg1, short arg2, int arg3) {
+    final States oldState = currentState;
+    try {
+      if (currentState == States.Main) {
+        currentState = States.Main;
+        super.uponClientWriteAck(arg0, arg1, arg2, arg3);
+      } else {
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponClientWriteAck", ActionType.Input));
+        super.uponClientWriteAck(arg0, arg1, arg2, arg3);
       }
     } catch(final Exception e) {
       currentState = oldState;
@@ -116,12 +116,12 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
     final States oldState = currentState;
     try {
       switch (currentState) {
-        case Connect:
-          currentState = States.Connect;
-          super.uponOutConnectionFailed(arg0, arg1);
-          break;
         case Main:
           currentState = States.Main;
+          super.uponOutConnectionFailed(arg0, arg1);
+          break;
+        case Connect:
+          currentState = States.Connect;
           super.uponOutConnectionFailed(arg0, arg1);
           break;
         default:
@@ -158,14 +158,14 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
     final States oldState = currentState;
     try {
       switch (currentState) {
-        case Main:
-          currentState = States.Main;
-          super.uponInConnectionUp(arg0, arg1);
-          break;
         case Connect:
           if (hasConns()) {
             currentState = States.Main;
           }
+          super.uponInConnectionUp(arg0, arg1);
+          break;
+        case Main:
+          currentState = States.Main;
           super.uponInConnectionUp(arg0, arg1);
           break;
         default:
@@ -251,14 +251,14 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
     final States oldState = currentState;
     try {
       switch (currentState) {
+        case Main:
+          currentState = States.Main;
+          super.uponOutConnectionUp(arg0, arg1);
+          break;
         case Connect:
           if (hasConns()) {
             currentState = States.Main;
           }
-          super.uponOutConnectionUp(arg0, arg1);
-          break;
-        case Main:
-          currentState = States.Main;
           super.uponOutConnectionUp(arg0, arg1);
           break;
         default:
@@ -360,12 +360,12 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
     }
   }
 
-  private boolean noConns() {
-    return conns == 0;
-  }
-
   private boolean hasConns() {
     return conns > 0;
+  }
+
+  private boolean noConns() {
+    return conns == 0;
   }
 
   private void validateRatio(final ActionId actionId, final double trueRatio) {
@@ -387,12 +387,12 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
   }
 
   private enum States {
-    Connect,
-
-    Main,
+    CreateTCPChannel,
 
     Init,
 
-    CreateTCPChannel
+    Main,
+
+    Connect
   }
 }

@@ -11,10 +11,10 @@ also has the client protocol running.
 The project contains two scripts. One for executing (and compiling) the whole project, and another for running
 JaTyMon to generate monitors
 
-__run.sh:__ The _run.sh_ script compiles the project and launches different replicas (the number is configurable in 
-the script via _peers_count_). By default, the script starts __five__ replicas.
+__run.sh:__ The _run.sh_ script compiles the project and launches different replicas and clients (the numbers are configurable in 
+the script via _peers_count_ and _clients_count_). By default, the script starts __five__ replicas and __one__ client.
 
-__run-JaTyMon.sh:__ This script requires jatymon-core-1.0.jar to be in the same directory as the script's. It executes
+__run-JaTyMon.sh:__ This script requires core-1.0-jar-with-dependencies.jar to be in the same directory as the script's. It executes
 JaTyMon to generate new monitors from the typestate specifications in the project.
 
 ### Configurations
@@ -23,7 +23,6 @@ The project is highly configurable via _config.properties_. These are the main c
 - __use_monitors__: Use JaTyMon monitor's or not
 - __fault_test_on__: Include faults in the execution or not
 - __fault_list__: List with fault types (MessageDrop, MessageTinker, ConnectionDrop)
-- __clients_ports__: List with the ports that are meant to be clients. Replicas commonly start with port 9000, so the list should be "9000, 9001, 9002" etc...
 - __client_ops_numb__: Total number of operations that the client should execute
 
 
@@ -47,3 +46,4 @@ such as sending read-tag, read, or write messages
 
 __ABDReceiverProtocol:__ The class ABDReceiverProtocol contains all methods required for the receiver role of the quorum protocol,
 such as sending read-tag or read acknowledgements
+

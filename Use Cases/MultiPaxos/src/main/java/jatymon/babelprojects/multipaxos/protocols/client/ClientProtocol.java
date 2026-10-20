@@ -74,7 +74,7 @@ public class ClientProtocol extends GenericProtocol {
         this.lastWrittenValue = new byte[0];
         this.retryTimerId = -1;
         this.opsNumb = Integer.parseInt(props.getProperty(ConfigKeys.CLIENT_OPS_NUMB));
-        this.peers = NetworkUtils.getHosts(props.getProperty(ConfigKeys.PEERS_CONFIG)).toArray(new Host[0]);
+        this.peers = NetworkUtils.getHosts(props.getProperty(ConfigKeys.REPLICAS_CONFIG)).toArray(new Host[0]);
         this.myself = new Host(InetAddress.getByName(props.getProperty(ConfigKeys.ADDRESS_CONFIG)),
                 Integer.parseInt(props.getProperty(ConfigKeys.PORT_CONFIG)));
 

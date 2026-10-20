@@ -29,9 +29,7 @@ import pt.unl.fct.di.novasys.babel.exceptions.HandlerRegistrationException;
 import pt.unl.fct.di.novasys.network.data.Host;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.util.Properties;
-import java.util.Set;
 
 @Typestate("ABDReceiver")
 public class ABDReceiverProtocol extends GenericProtocol {
@@ -52,7 +50,7 @@ public class ABDReceiverProtocol extends GenericProtocol {
 
     @Override
     public void init(final Properties props) throws HandlerRegistrationException, IOException {
-        this.peersSize = NetworkUtils.getHosts(props.getProperty(ConfigKeys.PEERS_CONFIG)).size();
+        this.peersSize = NetworkUtils.getHosts(props.getProperty(ConfigKeys.REPLICAS_CONFIG)).size();
 
         subscribeNotification(ConnectionUpNotification.ID, this::uponConnectionUp);
         subscribeNotification(ConnectionDownNotification.ID, this::uponConnectionDown);
