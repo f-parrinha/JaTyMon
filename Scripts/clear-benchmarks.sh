@@ -10,4 +10,4 @@
 set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
 
-sudo rm -rf -- "$BENCHMARKS"
+rm -rf -- "$BENCHMARKS"/*
