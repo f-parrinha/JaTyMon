@@ -8,13 +8,13 @@
 # Requires:
 # 		- common.sh
 #
-# Usage: run-orchestrator.sh <ABD|MultiPaxos|both> <number > 0> <number > 0> <on|off>
+# Usage: run-orchestrator.sh <ABD|MultiPaxos|both> <runs> <client_ops> <pause_between_runs> <on|off>
 #
 # Environment:
-#   REPLICAS    number of replicas   (default: 5)
-#   CLIENTS     number of clients    (default: 1)
-#   MONITORS    on|off               (default: on)
-#   FAULTS      on|off               (default: off)
+# 			- REPLICAS    	number of replicas   	(default: 5)
+#   		- CLIENTS    	number of clients    	(default: 1)
+#   		- MONITORS    	on|off               	(default: on)
+#   		- FAULTS      	on|off               	(default: off)
 #
 # Author: Francisco Parrinha
 #
@@ -29,8 +29,9 @@ fi
 
 UC_ARG="$1"
 RUNS="${2:-10}"
-PAUSE_BETWEEN_RUNS="${3:-2}"
-PRINT="${4:-off}"
+CLIENT_OPS="${3:-10000}"
+PAUSE_BETWEEN_RUNS="${4:-2}"
+PRINT="${5:-off}"
 MONITORS="${MONITORS:-on}"
 FAULTS="${FAULTS:-off}"
 REPLICAS="${REPLICAS:-5}"
@@ -82,6 +83,7 @@ run_one() {
     FAULTS="$FAULTS" \
     BENCHMARKS="$out" \
     PRINT="$PRINT" \
+    CLIENT_OPS="$CLIENT_OPS" \
     bash "$run_sh" "$jar" --no-build
   )
 }
@@ -97,24 +99,25 @@ for idx in "${!SELECTED[@]}"; do
     # 1. Run with monitors ON
     status=0
     uc="${SELECTED[$idx]}"
-    run_id="$uc-$(date +%Y%m%dT%H%M%S)"
+    run_id="$uc-$i"
     run_one "$uc" on "$run_id" || status=$?
     if [ "$status" -ne 0 ]; then
-      echo "[run] ${SELECTED[$idx]} with monitors (on) failed (exit $status)" >&2
-      failed=1
-      break
+    		echo
+      	echo "[run] ${SELECTED[$idx]} with monitors (on) failed (exit $status)" >&2
+      	failed=1
+     	break
     fi
     
-    echo "Waiting for ports to be closed (1s)"
     sleep 1
     
     # 2. Run with monitors OFF
     status=0
     run_one "${SELECTED[$idx]}" off "$run_id" || status=$?
     if [ "$status" -ne 0 ]; then
-      echo "[run] ${SELECTED[$idx]} without monitors (off) failed (exit $status)" >&2
-      failed=2
-      break
+    		echo
+      	echo "[run] ${SELECTED[$idx]} without monitors (off) failed (exit $status)" >&2
+      	failed=1
+      	break
     fi 
   done
 done

@@ -8,9 +8,9 @@
 #
 # Usage:
 #	- Build: docker build -t jatymon .
-#	- ABD: docker run --rm -it -v "$PWD/Benchmarks:/Benchmarks" jatymon bash -c "bash Scripts/run-orchestrator.sh ABD && bash Scripts/gen-benchmarks.sh"
-#	- MultiPaxos: docker run --rm -it -v "$PWD/Benchmarks:/Benchmarks" jatymon bash -c "bash Scripts/run-orchestrator.sh MultiPaxos && bash Scripts/gen-benchmarks.sh"
-#	- Both: docker run --rm -it -v "$PWD/Benchmarks:/Benchmarks" jatymon bash -c "bash Scripts/run-orchestrator.sh both && bash Scripts/gen-benchmarks.sh"
+#	- ABD: docker run --rm -i -v "$PWD/Benchmarks:/Benchmarks" jatymon bash -c "bash Scripts/run-orchestrator.sh ABD && bash Scripts/gen-benchmarks.sh"
+#	- MultiPaxos: docker run --rm -i -v "$PWD/Benchmarks:/Benchmarks" jatymon bash -c "bash Scripts/run-orchestrator.sh MultiPaxos && bash Scripts/gen-benchmarks.sh"
+#	- Both: docker run --rm -i -v "$PWD/Benchmarks:/Benchmarks" jatymon bash -c "bash Scripts/run-orchestrator.sh both && bash Scripts/gen-benchmarks.sh"
 #
 # Environment (pass with -e, e.g. -e MONITORS=off):
 #	- REPLICAS 	(<int> default: 5)
@@ -66,7 +66,7 @@ RUN set -eux; \
       arm64) \
         jdk_asset="OpenJDK21U-jdk_aarch64_linux_hotspot_21.0.12.1_1.tar.gz"; \
         jdk_sha256="23e37e026f12f3e706f18938ff611db3032d075b09d0879a25d06718c773e223"; \
-        ;; \
+        ;; \ 
       *) \
         echo "unsupported architecture: $arch" >&2; \
         exit 1; \
@@ -104,7 +104,7 @@ RUN java -version && \
 
 WORKDIR /app
 
-# Repository (Tool/ and "Use Cases/")
+# Repository
 COPY . .
 
 RUN bash Scripts/build-tool.sh

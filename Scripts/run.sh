@@ -20,6 +20,7 @@
 #		- MONITORS				(default on)
 #		- FAULTS					(default off)
 #		- PRINT					(default off)
+#		- CLIENT_OPS			(default 10000)
 #
 # Author: Francisco Parrinha
 #
@@ -34,6 +35,7 @@ benchmarks_dir="${BENCHMARKS:-./Benchmarks}"
 monitors="${MONITORS:-on}"
 faults="${FAULTS:-off}"
 print="${PRINT:-off}"
+client_ops="${CLIENT_OPS:-10000}"
 
 stats_pattern="Total writes|Bad writes|Bad write percentage|Average (write|read) latency|Elapsed time";
 jar_path=""
@@ -166,14 +168,24 @@ start_client() {
                   	fault_test_on="$fault_test_on" \
                   	> >(tee >(grep --line-buffered -E "$stats_pattern" >> "$bench_file")) 2>&1 &
   else
-    # Suppress console output but save benchmark statistics.
+    # Suppress console output but save benchmark statistics. Ah, and it prints the progress every second
     java -Dport="$p" -jar "$jar_path" \
 			port="$p" \
     			replicas="$replicas" \
     			clients="$clients" \
     			use_monitors="$use_monitors" \
     			fault_test_on="$fault_test_on" \
-    			> >(tee >(grep --line-buffered -E "$stats_pattern" >> "$bench_file") | awk 'BEGIN { RS="\r"; ORS="" } /Progress:/ { printf "%s\r", $0; fflush() }') 2>&1 &
+    			client_ops_numb="$client_ops" \
+    			> >(tee >(grep --line-buffered -E "$stats_pattern" >> "$bench_file") \
+					| stdbuf -oL tr '\r' '\n' \
+					| { last=-1; latest=""
+						while IFS= read -r line; do
+							case "$line" in
+								*Progress:*) latest=$line
+								             [ "$SECONDS" != "$last" ] && { printf '\r\033[K%s' "$line"; last=$SECONDS; latest=""; } ;;
+							esac
+						done
+						[ -z "$latest" ] || printf '%s\n' "$latest"; }) 2>&1 &
   fi
   local pid=$!
   pids+=("$pid")
@@ -251,11 +263,15 @@ done
 
 # Wait until all clients output their final statistics into their Benchmarks files
 for ((p=client_start; p<=client_end; p++)); do
-  until grep -qE "Elapsed time|Total writes" "$benchmarks_dir/Benchmarks-client-$p-monitors-$monitors" 2>/dev/null; do
+  f="$benchmarks_dir/Benchmarks-client-$p-monitors-$monitors"
+  cpid="${pids[$((replicas_count + p - client_start))]}"
+  until grep -qE "Elapsed time|Total writes" "$f" 2>/dev/null; do
+    kill -0 "$cpid" 2>/dev/null || { echo "Client $p died before finishing" >&2; break; }
     sleep 1
   done
 done
 
+echo
 echo "---------------------------------------------------"
 echo "Benchmark finished. Benchmarks files are ready."
 
