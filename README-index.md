@@ -37,18 +37,37 @@
 ### Available scripts
 - Introduce section: a guide explaining each script. What they do, which options they accept, and how they are used in the benchmark collection pipeline. 
 - Show a usage example for each script.
-- common.sh. Present this script here because it contains global values
+- State that all scripts are meant to be executed in a linux environment (docker contains a linux distirbution)
+
+
+##### common.sh
+This script is meant to be sourced by the other scripts, not to be executed. Contains common attributes:
+    - ROOT: the root directory 
+    - JATYMON_OUT: the directory to where the build output of JaTyMon is placed.
+    - USE_CASES_DIR: the directory where all uses cases are
+    - SCRIPTS_DIR: the directory where all scripts are
+    - BENCHMARKS: the directory where benchmark results are placed
+
 
 #### Building
-- build-tool.sh
-- build-usecases.sh
-- gen-monitors.sh
+##### build-tool.sh
+
+Builds the tool to a directory configured in **common.sh** (default: /opt/jatymon) using the tool's **build.sh**. First script to be executed in the benchmarking pipeline.
+
+Usage: ./build-tool.sh
+
+Requires:
+- common.sh
+
+
+##### build-usecases.sh
+##### gen-monitors.sh
  
 #### Main execution
-- run-orchestrator.sh
-- run.sh
-- gen-benchmarks.sh
-- clear-benchmarks.sh
+##### run-orchestrator.sh
+##### run.sh
+##### gen-benchmarks.sh
+##### clear-benchmarks.sh
 
 
 ## Fail Tests
@@ -56,6 +75,10 @@
 - Explain how to execute each project
 
 ### Rule 1: No Duplicate State Name
+This project breaks Rule 1 (No Duplicate State Name) of our well-formedness rules. It contains one typestate with two states sharing the same name. In this project, JaTyMon must report: "Duplicate state 'State0'".
+
+To execute and confirm that JaTyMon properly presents the error, execute the run.sh script in the project directory.
+
 ### Rule 2: Valid Ratio Sum
 ### Rule 3: Enumare All Decisions
 ### Rule 4: Closed Assignments and Predicates

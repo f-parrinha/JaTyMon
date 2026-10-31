@@ -1,0 +1,25 @@
+/*
+ * Rule7Protocol > Well-Typed Relational Terms
+ *  This typestate breaks Rule 7 (Well-Typed Relational Terms) from our work for ECOOP 2027
+ *  Relational terms must have the following operators {=, !=, >, <, >=, <=, &&, ||}. Therefore, no math operators.
+ *    We break this rule in this protocol so we can show that JaTyMon can correctly report found errors.
+ *
+ * Number of errors to display: 1
+ * Author: Francisco Parrinha
+ */
+
+typestate Rule7Protocol {
+    Ext c;
+    Val v = 0;
+
+    Pred p1: v != 0;
+    Pred p2: v = c;
+    Pred p: true && (p1 || p2) && 2 < 3 || (v - c) > 5;
+
+    // Error > TODO
+    Pred pError: v - c;
+
+    State0 = {
+        void action(): State0
+    }
+}

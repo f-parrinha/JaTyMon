@@ -1,0 +1,21 @@
+/*
+ * Rule4Protocol > Closed Assignments And Predicates
+ *  This typestate breaks Rule 4 (Closed Assignments And Predicates) from our work for ECOOP 2027
+ *  Every assignment and predicate that is added to an action must be previously defined. This protocol
+ *      breaks that rule so we can see JaTyMon properly reporting the found error.
+ *
+ * Number of errors to display: 2
+ * Author: Francisco Parrinha
+ */
+
+typestate Rule4Protocol {
+    Val v = 0;
+    Assign a1: v := v + 1;
+    Pred p1: v = 2;
+
+    // Error > Assignment 'a2' is not defined
+    // Error > Predicate 'p2' is not defined
+    State0 = {
+        void action()[a1,a2; p1,p2]: State0
+    }
+}

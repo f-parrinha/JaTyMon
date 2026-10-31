@@ -1,0 +1,22 @@
+/*
+ * Rule2Protocol > Valid Ratio Sum
+ *  This typestate breaks Rule 2 (Valid Ratio Sum) from our work for ECOOP 2027
+ *  The sum of ratios of all monitorable actions in a state must be one. This typestate breaks that rule.
+ *
+ * Author: Francisco Parrinha
+ */
+
+typestate Rule2Protocol {
+
+    // Error > sum of all ratios is greater than one
+    State0 = {
+        void actionOne()[0.6]: State0,
+        void actionTwo()[0.5]: State1
+    }
+
+    // Error > sum of all ratios is lesser than one
+    State1 = {
+        void actionOne()[0.5]: State1,
+        void actionTwo(): State1
+    }
+}

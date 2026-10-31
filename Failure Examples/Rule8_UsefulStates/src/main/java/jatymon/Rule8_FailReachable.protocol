@@ -1,0 +1,25 @@
+/*
+ * Rule8_FailProductive > Useful States
+ *  This typestate breaks Rule 8 (Useful States) from our work for ECOOP 2027
+ *  All states must be reachable from the 'start', and if there is a terminal state, that terminal state must be
+ *      reachable from all other states (the automata must be productive).
+ *  This protocol breaks the reachability component of Rule 8
+ *
+ * Author: Francisco Parrinha
+ */
+
+
+typestate Rule8_FailReachable {
+    State0 = {
+        void m1(): State1
+        void m2(): State2
+    }
+
+    State2 = {
+        void m1(): State1
+    }
+
+    State3 = {
+        void m1(): State3
+    }
+}

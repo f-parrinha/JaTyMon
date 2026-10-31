@@ -1,0 +1,15 @@
+/*
+ * Rule9Protocol > Deterministic
+ *  This typestate breaks Rule 9 (Deterministic) from our work for ECOOP 2027
+ *  There cannot be two same transition names with different return values or destinations. This protocol breaks that rule
+ *
+ * Author: Francisco Parrinha
+ */
+
+
+typestate Rule9Protocol {
+    State0 = {
+        void m(): State0,
+        void m(): State1
+    }
+}

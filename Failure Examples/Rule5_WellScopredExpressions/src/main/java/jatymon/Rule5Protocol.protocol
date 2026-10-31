@@ -1,0 +1,25 @@
+/*
+ * Rule5Protocol > Well-Scoped Expressions
+ *  This typestate breaks Rule 5 (Well-Scoped Expressions) from our work for ECOOP 2027
+ *  Every assignment and predicate must us a counter (variable or read-only) that is already defined.2
+ *      This protocol breaks that rule so we can see the corresponding errors reported by JaTyMon
+ *
+ * Number of errors to display: 2
+ * Author: Francisco Parrinha
+ */
+
+ typestate Rule5Protocol {
+    Val v = 0;
+    Ext c;
+
+    // Error > Var field v1 is not previously declared
+    Assign a: v1 := 1;
+
+    // Error > Var field v2 is not previously declared
+    // Error > Ext field c1 is not previously declared
+    Pred p: v2 = c1;
+
+    State0 = {
+        void action(): State0
+    }
+ }

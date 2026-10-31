@@ -1,0 +1,19 @@
+/*
+ * Rule3Protocol > Enumerate All Decisions
+ *  This typestate breaks Rule 3 (Enumerate All Decisions) from our work for ECOOP 2027
+ *  Decision states must have their corresponding enum (including boolean types) labels
+ *      completely enumerated in the decision state. This protocol breaks this rule
+ *      so JaTyMon can display the corresponding error.
+ *
+ * Author: Francisco Parrinha
+ */
+
+typestate Rule3Protocol {
+    State0 = {
+        void MyEnum decideEnum(): <ONE: State0, TWO: State1, THREE: end>
+    }
+
+    State1 = {
+        void boolean decideBoolean(): <true: State0>
+    }
+}

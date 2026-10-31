@@ -1,0 +1,20 @@
+/*
+ * Rule6Protocol > Read-only constants
+ *  This typestate breaks Rule 6 (Read-only Constants) from our work for ECOOP 2027
+ *  Read-only variable counters (Ext fields) cannot be mutated by the typestate. We break that rule
+ *      in this protocol so we can see the report given by JaTyMon.
+ *
+ * Number of errors to display: 1
+ * Author: Francisco Parrinha
+ */
+
+ typestate Rule6Protocol {
+    Ext c;
+
+    // Error > Read-only constants cannot be mutated
+    Assign a1: c := c + 1;
+
+    State0 = {
+        void action();
+    }
+ }
