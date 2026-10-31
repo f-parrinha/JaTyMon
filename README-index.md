@@ -48,10 +48,12 @@ This script is meant to be sourced by the other scripts, not to be executed. Con
 - SCRIPTS_DIR: the directory where all scripts are
 - BENCHMARKS: the directory where benchmark results are placed
 
+<br>
 
 ### Building
-#### build-tool.sh
+The following scripts are used to build the tool, setup JaTyMon library, generate monitors, and finally build all use cases
 
+#### build-tool.sh
 Builds the tool to a directory configured in **common.sh** (default: /opt/jatymon) using the tool's **build.sh**. First script to be executed in the benchmarking pipeline.
 
 **Usage:** ./build-tool.sh
@@ -59,16 +61,30 @@ Builds the tool to a directory configured in **common.sh** (default: /opt/jatymo
 **Requires:**
 - common.sh
 
+---
 
 #### build-usecases.sh
+
+---
 #### gen-monitors.sh
- 
+
+<br>
+
 #### Main execution
+The following scripts are used to execute and test the tool on the different use cases. It is assumed everything is already build and set up. We also include, in these scripts procedures, for automatically generating benchmarks 
+
 #### run-orchestrator.sh
+
+---
 #### run.sh
+
+---
 #### gen-benchmarks.sh
+
+---
 #### clear-benchmarks.sh
 
+<br>
 
 ## Fail Tests
 - Introduce section: project that show errors being displayed by JaTyMon from ill-formed typestates. We present nine rules in the ECOOP paper.
