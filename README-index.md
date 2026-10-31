@@ -70,7 +70,7 @@ Builds the tool to a directory configured in **common.sh** (default: /opt/jatymo
 
 <br>
 
-#### Main execution
+### Main execution
 The following scripts are used to execute and test the tool on the different use cases. It is assumed everything is already build and set up. We also include, in these scripts procedures, for automatically generating benchmarks 
 
 #### run-orchestrator.sh
