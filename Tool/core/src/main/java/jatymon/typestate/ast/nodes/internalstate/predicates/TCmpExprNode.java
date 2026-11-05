@@ -45,7 +45,7 @@ public class TCmpExprNode extends TBoolExprNode {
 
     @Override
     public List<TNode> getChildren() {
-        return List.of();
+        return List.of(arith1, arith2);
     }
 
     @Override
@@ -67,6 +67,7 @@ public class TCmpExprNode extends TBoolExprNode {
         var json = super.toJson();
         json.put(JsonKeys.TYPE, TYPE);
         json.put(JsonKeys.ARITH_1, arith1.toJson());
+        json.put(JsonKeys.OPERATOR, operator);
         json.put(JsonKeys.ARITH_2, arith2.toJson());
         return json;
     }

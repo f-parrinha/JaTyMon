@@ -217,6 +217,7 @@
                     },
                     "value" : "x"
                 },
+                "operator" : "EQ",
                 "arith2" : {
                     "type" : "numberOperand",
                     "pos" : {
@@ -247,6 +248,7 @@
                     },
                     "value" : "x"
                 },
+                "operator" : "EQ",
                 "arith2" : {
                     "type" : "numberOperand",
                     "pos" : {

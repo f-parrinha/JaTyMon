@@ -45,7 +45,7 @@ public class TBinaryBoolExprNode extends TBoolExprNode {
 
     @Override
     public List<TNode> getChildren() {
-        return List.of();
+        return List.of(boolExpr1, boolExpr2);
     }
 
     @Override

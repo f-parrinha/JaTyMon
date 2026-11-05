@@ -201,6 +201,7 @@
           },
           "value" : "acks"
         },
+        "operator" : "EQ",
         "arith2" : {
           "type" : "idOperand",
           "pos" : {
@@ -231,6 +232,7 @@
           },
           "value" : "retries"
         },
+        "operator" : "EQ",
         "arith2" : {
           "type" : "numberOperand",
           "pos" : {

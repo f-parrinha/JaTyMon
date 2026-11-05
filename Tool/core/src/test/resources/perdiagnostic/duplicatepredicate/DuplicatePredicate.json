@@ -33,6 +33,7 @@
           },
           "value" : 0
         },
+        "operator" : "EQ",
         "arith2" : {
           "type" : "numberOperand",
           "pos" : {
@@ -63,6 +64,7 @@
           },
           "value" : 0
         },
+        "operator" : "EQ",
         "arith2" : {
           "type" : "numberOperand",
           "pos" : {

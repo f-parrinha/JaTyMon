@@ -133,6 +133,7 @@
           },
           "value" : "conns"
         },
+        "operator" : "EQ",
         "arith2" : {
           "type" : "idOperand",
           "pos" : {
