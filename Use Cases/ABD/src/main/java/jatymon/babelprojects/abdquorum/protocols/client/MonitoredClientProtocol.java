@@ -48,11 +48,11 @@ public class MonitoredClientProtocol extends ClientProtocol {
     final States oldState = currentState;
     try {
       if (currentState == States.Main) {
-        validateRatio(new ActionId("Main", "sendReadMessage", ActionType.Input), 0.25);
+        validateRatio(new ActionId("Main", "sendReadMessage", ActionType.Output), 0.25);
         currentState = States.Main;
         super.sendReadMessage(arg0);
       } else {
-        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "sendReadMessage", ActionType.Input));
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "sendReadMessage", ActionType.Output));
         super.sendReadMessage(arg0);
       }
     } catch(final Exception e) {
@@ -66,12 +66,29 @@ public class MonitoredClientProtocol extends ClientProtocol {
     final States oldState = currentState;
     try {
       if (currentState == States.Main) {
-        validateRatio(new ActionId("Main", "sendWriteMessage", ActionType.Input), 0.25);
+        validateRatio(new ActionId("Main", "sendWriteMessage", ActionType.Output), 0.25);
         currentState = States.Main;
         super.sendWriteMessage(arg0);
       } else {
-        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "sendWriteMessage", ActionType.Input));
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "sendWriteMessage", ActionType.Output));
         super.sendWriteMessage(arg0);
+      }
+    } catch(final Exception e) {
+      currentState = oldState;
+      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
+    }
+  }
+
+  @Override
+  public void startClient(ClientProtocol.Op arg0) {
+    final States oldState = currentState;
+    try {
+      if (currentState == States.Init) {
+        currentState = States.Main;
+        super.startClient(arg0);
+      } else {
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "startClient", ActionType.Input));
+        super.startClient(arg0);
       }
     } catch(final Exception e) {
       currentState = oldState;
@@ -125,23 +142,6 @@ public class MonitoredClientProtocol extends ClientProtocol {
       } else {
         logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponClientWriteAck", ActionType.Input));
         super.uponClientWriteAck(arg0, arg1);
-      }
-    } catch(final Exception e) {
-      currentState = oldState;
-      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-  }
-
-  @Override
-  public void startClient(ClientProtocol.Op arg0) {
-    final States oldState = currentState;
-    try {
-      if (currentState == States.Init) {
-        currentState = States.Main;
-        super.startClient(arg0);
-      } else {
-        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "startClient", ActionType.Input));
-        super.startClient(arg0);
       }
     } catch(final Exception e) {
       currentState = oldState;

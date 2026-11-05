@@ -2,18 +2,27 @@
 #
 # 		build-tool.sh
 #
-# Builds the tool to some directory using the tool's build.sh (default: /opt/jatymon)
+# Builds the tool to some directory using the tool's build.sh
 # First script to be ran
 #
-# Usage: ./build-tool.sh
+# Usage: bash build-tool.sh
 # Requires:
-# 	- common.sh
+# 		- common.sh
 #
 # Author: Francisco Parrinha
 #
 
 set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
+
+if [ "$#" -gt 0 ]; then
+echo "Usage: $0" >&2
+    exit 1
+fi
+
+
+# ----------------- Main Execution ----------------- #
+
 
 cd "$ROOT/Tool"
 

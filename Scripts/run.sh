@@ -46,25 +46,13 @@ replicas=""
 clients=""
 pids=()
 
-usage() { sed -n '/^# Usage/,/^$/p' "$0" | sed 's/^# \{0,1\}//'; }
 
-while [ $# -gt 0 ]; do
-  case "$1" in
-    --no-build)   build=0; shift ;;
-    --skip-tests) skip_tests=1; shift ;;
-    -h|--help)    usage; exit 0 ;;
-    -*) echo "Unknown option: $1" >&2; usage >&2; exit 1 ;;
-    *)  [ -z "$jar_path" ] || { echo "Unexpected argument: $1" >&2; exit 1; }
-        jar_path="$1"; shift ;;
-  esac
-done
+# ----------------- METHODS ----------------- #
 
-[ -n "$jar_path" ] || { echo "Error: jar path is required" >&2; usage >&2; exit 1; }
 
-mkdir -p "$benchmarks_dir"
-
-[ "$monitors" = "on" ] && use_monitors="true" || use_monitors="false"
-[ "$faults" = "on" ] && fault_test_on="true" || fault_test_on="false"
+usage() { 
+	sed -n '/^# Usage/,/^$/p' "$0" | sed 's/^# \{0,1\}//'; 
+}
 
 
 #
@@ -72,7 +60,6 @@ mkdir -p "$benchmarks_dir"
 # 
 # Creates the replicas string list
 #
-
 populate_replicas() {
   if [[ "$replicas_count" -eq 0 ]]; then
     replicas="EMPTY"
@@ -113,7 +100,6 @@ populate_clients() {
 # Receives:
 # 	- p: port
 #
-
 start_replica() {
   local p=$1
   if [ "$print" = "on" ]; then
@@ -153,7 +139,6 @@ start_replica() {
 # Receives:
 # 	- p: port
 #
-
 start_client() {
   local p=$1
   local bench_file="$benchmarks_dir/Benchmarks-client-$p-monitors-$monitors"
@@ -203,7 +188,6 @@ start_client() {
 #
 # Kills all processes
 #
-
 kill_processes() {
   echo ""
   echo "Stopping all nodes..."
@@ -213,13 +197,32 @@ kill_processes() {
   echo "Done!"
 }
 
+
+# ----------------- Main Execution ----------------- #
+
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --no-build)   build=0; shift ;;
+    --skip-tests) skip_tests=1; shift ;;
+    -h|--help)    usage; exit 0 ;;
+    -*) echo "Unknown option: $1" >&2; usage >&2; exit 1 ;;
+    *)  [ -z "$jar_path" ] || { echo "Unexpected argument: $1" >&2; exit 1; }
+        jar_path="$1"; shift ;;
+  esac
+done
+
+[ -n "$jar_path" ] || { echo "Error: jar path is required" >&2; usage >&2; exit 1; }
+
+mkdir -p "$benchmarks_dir"
+
+[ "$monitors" = "on" ] && use_monitors="true" || use_monitors="false"
+[ "$faults" = "on" ] && fault_test_on="true" || fault_test_on="false"
+
+
+
 # Catch Ctrl+C (SIGINT) and SIGTERM immediately
 trap 'kill_processes; exit 130' SIGINT SIGTERM
-
-#
-# Main Execution
-#
-
 
 # Build source code (optional)
 if [ "$build" -eq 1 ]; then

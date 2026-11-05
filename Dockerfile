@@ -8,9 +8,10 @@
 #
 # Usage:
 #	- Build: docker build -t jatymon .
-#	- ABD: docker run --rm -i -v "$PWD/Benchmarks:/Benchmarks" jatymon bash -c "bash Scripts/run-orchestrator.sh ABD && bash Scripts/gen-benchmarks.sh"
-#	- MultiPaxos: docker run --rm -i -v "$PWD/Benchmarks:/Benchmarks" jatymon bash -c "bash Scripts/run-orchestrator.sh MultiPaxos && bash Scripts/gen-benchmarks.sh"
-#	- Both: docker run --rm -i -v "$PWD/Benchmarks:/Benchmarks" jatymon bash -c "bash Scripts/run-orchestrator.sh both && bash Scripts/gen-benchmarks.sh"
+# - Run interactive mode: docker run --rm -it -v "$PWD/Benchmarks:/Benchmarks" jatymon
+#	- Benchmark ABD: docker run --rm -i -v "$PWD/Benchmarks:/Benchmarks" jatymon bash -c "bash Scripts/run-orchestrator.sh ABD && bash Scripts/gen-benchmarks.sh"
+#	- Benchmark MultiPaxos: docker run --rm -i -v "$PWD/Benchmarks:/Benchmarks" jatymon bash -c "bash Scripts/run-orchestrator.sh MultiPaxos && bash Scripts/gen-benchmarks.sh"
+#	- Becnhmark both use cases: docker run --rm -i -v "$PWD/Benchmarks:/Benchmarks" jatymon bash -c "bash Scripts/run-orchestrator.sh both && bash Scripts/gen-benchmarks.sh"
 #
 # Environment (pass with -e, e.g. -e MONITORS=off):
 #	- REPLICAS 	(<int> default: 5)

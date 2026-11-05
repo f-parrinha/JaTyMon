@@ -5,16 +5,17 @@
 # Runs the benchmarks of the use cases through each use case's run.sh,
 # passing it the jar built by build-usecases.sh.
 #
+# Usage: run-orchestrator.sh <use_case:ABD|MultiPaxos|both> <runs:int> <client_ops:int>
 # Requires:
 # 		- common.sh
 #
-# Usage: run-orchestrator.sh <ABD|MultiPaxos|both> <runs> <client_ops> <pause_between_runs> <on|off>
-#
 # Environment:
-# 			- REPLICAS    	number of replicas   	(default: 5)
-#   		- CLIENTS    	number of clients    	(default: 1)
-#   		- MONITORS    	on|off               	(default: on)
-#   		- FAULTS      	on|off               	(default: off)
+# 			- REPLICAS    					number of replicas   	(default: 5)
+#   		- CLIENTS    					number of clients    	(default: 1)
+#   		- MONITORS    					on|off|both           	(default: on)
+#   		- FAULTS      					on|off               	(default: off)
+#   		- PAUSE_BETWEEN_RUNS  	seconds               	(default: 1)
+#   		- PRINT      					on|off               	(default: off)
 #
 # Author: Francisco Parrinha
 #
@@ -23,20 +24,27 @@ set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
 
 if [ "$#" -lt 1 ]; then
-echo "Usage: $0 <ABD|MultiPaxos|both>" >&2
+echo "Usage: $0 <ABD|MultiPaxos|both> <runs:int> <client_ops:int>" >&2
+    exit 1
+fi
+
+if [ "$#" -gt 3 ]; then
+echo "Usage: $0 <ABD|MultiPaxos|both> <runs:int> <client_ops:int>" >&2
     exit 1
 fi
 
 UC_ARG="$1"
 RUNS="${2:-10}"
 CLIENT_OPS="${3:-10000}"
-PAUSE_BETWEEN_RUNS="${4:-2}"
-PRINT="${5:-off}"
-MONITORS="${MONITORS:-on}"
-FAULTS="${FAULTS:-off}"
+
 REPLICAS="${REPLICAS:-5}"
 CLIENTS="${CLIENTS:-1}"
+MONITORS="${MONITORS:-on}"
+FAULTS="${FAULTS:-off}"
+PAUSE_BETWEEN_RUNS="${PAUSE_BETWEEN_RUNS:-2}"
+PRINT="${PRINT:-off}"
 
+# Validate arguments
 case "$UC_ARG" in
   both|all) SELECTED=("${USE_CASES[@]}") ;;
   *)
@@ -45,10 +53,17 @@ case "$UC_ARG" in
     [ "${#SELECTED[@]}" -gt 0 ] || { echo "Unknown use case: $UC_ARG (expected ${USE_CASES[*]} or both)" >&2; exit 1; }
     ;;
 esac
-case "$MONITORS" in on|off) ;; *) echo "Monitors must be 'on' or 'off'" >&2; exit 1 ;; esac
+case "$MONITORS" in on|off|both) ;; *) echo "Monitors must be 'on', 'off' or 'both'" >&2; exit 1 ;; esac
 case "$FAULTS" in on|off) ;; *) echo "Faults must be 'on' or 'off'" >&2; exit 1 ;; esac
 
+
+# ----------------- METHODS ----------------- #
+
+
+#
 # Prints the path of the use case jar; fails unless exactly one exists
+# 		$1: Use case folder
+#
 find_jar() {
   local dir="$USE_CASES_DIR/$1"
   local jars=()
@@ -60,6 +75,12 @@ find_jar() {
   echo "${jars[0]}"
 }
 
+#
+# Executes a single use case
+#		$1: Use case folder name (e.g., ABD, MultiPaxoss)
+#		$2: Monitor state (i.e., "on" or "off")
+#		$3: Identification of this new run
+#
 run_one() {
   local uc="$1"
   local mon="$2"
@@ -88,7 +109,13 @@ run_one() {
   )
 }
 
+
+# ----------------- Main Execution ----------------- #
+
+
+# Clear previous benchmarks
 bash "$ROOT/Scripts/clear-benchmarks.sh"
+
 
 # Run each selected use case in sequence; keep going if one fails
 failed=0
@@ -96,29 +123,31 @@ for idx in "${!SELECTED[@]}"; do
   for ((i=0; i<RUNS; i++)); do
     if [ "$idx" -gt 0 ]; then sleep "$PAUSE_BETWEEN_RUNS"; fi    # let ports be released
     
-    # 1. Run with monitors ON
-    status=0
     uc="${SELECTED[$idx]}"
     run_id="$uc-$i"
-    run_one "$uc" on "$run_id" || status=$?
-    if [ "$status" -ne 0 ]; then
-    		echo
-      	echo "[run] ${SELECTED[$idx]} with monitors (on) failed (exit $status)" >&2
-      	failed=1
-     	break
-    fi
+	
+		# Setup monitor modes
+		if [ "$MONITORS" = "both" ]; then
+				MONITOR_MODES=(on off)
+		else
+				MONITOR_MODES=("$MONITORS")
+		fi
+	
+		# Test each monitor mode
+		for monitor_mode in "${MONITOR_MODES[@]}"; do
+				status=0
+				run_one "$uc" "$monitor_mode" "$run_id" || status=$?
+
+				if [ "$status" -ne 0 ]; then
+				    echo
+				    echo "[run] ${SELECTED[$idx]} with monitors ($monitor_mode) failed (exit $status)" >&2
+				    failed=1
+				    break
+				fi
+		done
     
-    sleep 1
-    
-    # 2. Run with monitors OFF
-    status=0
-    run_one "${SELECTED[$idx]}" off "$run_id" || status=$?
-    if [ "$status" -ne 0 ]; then
-    		echo
-      	echo "[run] ${SELECTED[$idx]} without monitors (off) failed (exit $status)" >&2
-      	failed=1
-      	break
-    fi 
+    # Skip RUNS if failed is no longer 0
+    [ "$failed" -eq 0 ] || break
   done
 done
 

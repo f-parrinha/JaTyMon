@@ -6,7 +6,9 @@ import jatymon.monitor.plans.fields.ConfidenceLevelFieldPlan;
 import jatymon.monitor.plans.fields.TypestateNameFieldPlan;
 import jatymon.monitor.plans.fields.CurrentStateFieldPlan;
 import jatymon.typestate.TypestateData;
+import jatymon.typestate.ast.nodes.internalstate.fields.TValNode;
 
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -44,7 +46,10 @@ public class FieldsPlanner implements Planner<FieldPlan> {
      */
     public Set<ValFieldPlan> planVals(final TypestateData typestateData) {
         final Set<ValFieldPlan> res = new LinkedHashSet<>();
-        typestateData.getVals().forEach(v -> res.add(ValFieldPlan.fromTValMode(v)));
+        typestateData.getVals()
+                .stream()
+                .sorted(Comparator.comparing(TValNode::getName))
+                .forEach(v -> res.add(ValFieldPlan.fromTValMode(v)));
         return res;
     }
 }

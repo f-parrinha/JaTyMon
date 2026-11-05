@@ -30,24 +30,24 @@
         <dependency>
             <groupId>com.google.testing.compile</groupId>
             <artifactId>compile-testing</artifactId>
-            <version>LATEST</version>
+            <version>0.24.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>RELEASE</version>
+            <version>2.22.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr4</artifactId>
-            <version>RELEASE</version>
+            <version>4.13.2</version>
         </dependency>
         <dependency>
             <groupId>com.palantir.javapoet</groupId>
             <artifactId>javapoet</artifactId>
-            <version>0.10.0</version>
+            <version>0.22.0</version>
         </dependency>
     </dependencies>
 

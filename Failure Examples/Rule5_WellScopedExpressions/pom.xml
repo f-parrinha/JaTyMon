@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>jatymon</groupId>
-    <artifactId>Rule1_NoStateDuplication</artifactId>
+    <artifactId>Rule5_WellScopedExpressions</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>

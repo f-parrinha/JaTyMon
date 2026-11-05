@@ -57,55 +57,20 @@ public class MonitoredABDProtocol extends ABDProtocol {
     logger.log(new MonitorStartLog(TYPESTATE_NAME, confidenceLevel));
   }
 
-  @Override
-  public void uponWriteBackAck(WriteBackAckNotification arg0, short arg1) {
-    final States oldState = currentState;
-    try {
-      if (currentState == States.Main) {
-        currentState = States.Main;
-        super.uponWriteBackAck(arg0, arg1);
-      } else {
-        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponWriteBackAck", ActionType.Input));
-        super.uponWriteBackAck(arg0, arg1);
-      }
-    } catch(final Exception e) {
-      currentState = oldState;
-      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
+  private void connDown() {
+    conns = conns - 1;
   }
 
-  @Override
-  public void uponReadTagMessage(ReadTagMessageNotification arg0, short arg1) {
-    final States oldState = currentState;
-    try {
-      if (currentState == States.Main) {
-        currentState = States.Main;
-        super.uponReadTagMessage(arg0, arg1);
-      } else {
-        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponReadTagMessage", ActionType.Input));
-        super.uponReadTagMessage(arg0, arg1);
-      }
-    } catch(final Exception e) {
-      currentState = oldState;
-      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
+  private void connUp() {
+    conns = conns + 1;
   }
 
-  @Override
-  public void uponReadTagAck(ReadTagAckNotification arg0, short arg1) {
-    final States oldState = currentState;
-    try {
-      if (currentState == States.Main) {
-        currentState = States.Main;
-        super.uponReadTagAck(arg0, arg1);
-      } else {
-        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponReadTagAck", ActionType.Input));
-        super.uponReadTagAck(arg0, arg1);
-      }
-    } catch(final Exception e) {
-      currentState = oldState;
-      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
+  private boolean hasAllConns() {
+    return conns >= peersSize;
+  }
+
+  private boolean lostQuorum() {
+    return conns <= peersSize - 1 / 2;
   }
 
   @Override
@@ -126,15 +91,15 @@ public class MonitoredABDProtocol extends ABDProtocol {
   }
 
   @Override
-  public void uponReadMessage(ReadMessageNotification arg0, short arg1) {
+  public void uponClientWriteMessage(ClientWriteMessageNotification arg0, short arg1) {
     final States oldState = currentState;
     try {
       if (currentState == States.Main) {
         currentState = States.Main;
-        super.uponReadMessage(arg0, arg1);
+        super.uponClientWriteMessage(arg0, arg1);
       } else {
-        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponReadMessage", ActionType.Input));
-        super.uponReadMessage(arg0, arg1);
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponClientWriteMessage", ActionType.Input));
+        super.uponClientWriteMessage(arg0, arg1);
       }
     } catch(final Exception e) {
       currentState = oldState;
@@ -143,15 +108,26 @@ public class MonitoredABDProtocol extends ABDProtocol {
   }
 
   @Override
-  public void uponReadAck(ReadAckNotification arg0, short arg1) {
+  public void uponConnectionDown(ConnectionDownNotification arg0, short arg1) {
     final States oldState = currentState;
     try {
-      if (currentState == States.Main) {
-        currentState = States.Main;
-        super.uponReadAck(arg0, arg1);
-      } else {
-        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponReadAck", ActionType.Input));
-        super.uponReadAck(arg0, arg1);
+      switch (currentState) {
+        case Connect:
+          validateRatio(new ActionId("Connect", "uponConnectionDown", ActionType.Input), 0.0);
+          connDown();
+          currentState = States.Connect;
+          super.uponConnectionDown(arg0, arg1);
+          break;
+        case Main:
+          connDown();
+          if (lostQuorum()) {
+            currentState = States.Connect;
+          }
+          super.uponConnectionDown(arg0, arg1);
+          break;
+        default:
+          logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponConnectionDown", ActionType.Input));
+          super.uponConnectionDown(arg0, arg1);
       }
     } catch(final Exception e) {
       currentState = oldState;
@@ -190,15 +166,66 @@ public class MonitoredABDProtocol extends ABDProtocol {
   }
 
   @Override
-  public void uponWriteBackMessage(WriteBackMessageNotification arg0, short arg1) {
+  public void uponReadAck(ReadAckNotification arg0, short arg1) {
     final States oldState = currentState;
     try {
       if (currentState == States.Main) {
         currentState = States.Main;
-        super.uponWriteBackMessage(arg0, arg1);
+        super.uponReadAck(arg0, arg1);
       } else {
-        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponWriteBackMessage", ActionType.Input));
-        super.uponWriteBackMessage(arg0, arg1);
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponReadAck", ActionType.Input));
+        super.uponReadAck(arg0, arg1);
+      }
+    } catch(final Exception e) {
+      currentState = oldState;
+      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
+    }
+  }
+
+  @Override
+  public void uponReadMessage(ReadMessageNotification arg0, short arg1) {
+    final States oldState = currentState;
+    try {
+      if (currentState == States.Main) {
+        currentState = States.Main;
+        super.uponReadMessage(arg0, arg1);
+      } else {
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponReadMessage", ActionType.Input));
+        super.uponReadMessage(arg0, arg1);
+      }
+    } catch(final Exception e) {
+      currentState = oldState;
+      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
+    }
+  }
+
+  @Override
+  public void uponReadTagAck(ReadTagAckNotification arg0, short arg1) {
+    final States oldState = currentState;
+    try {
+      if (currentState == States.Main) {
+        currentState = States.Main;
+        super.uponReadTagAck(arg0, arg1);
+      } else {
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponReadTagAck", ActionType.Input));
+        super.uponReadTagAck(arg0, arg1);
+      }
+    } catch(final Exception e) {
+      currentState = oldState;
+      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
+    }
+  }
+
+  @Override
+  public void uponReadTagMessage(ReadTagMessageNotification arg0, short arg1) {
+    final States oldState = currentState;
+    try {
+      if (currentState == States.Main) {
+        currentState = States.Main;
+        super.uponReadTagMessage(arg0, arg1);
+      } else {
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponReadTagMessage", ActionType.Input));
+        super.uponReadTagMessage(arg0, arg1);
       }
     } catch(final Exception e) {
       currentState = oldState;
@@ -224,6 +251,40 @@ public class MonitoredABDProtocol extends ABDProtocol {
   }
 
   @Override
+  public void uponWriteBackAck(WriteBackAckNotification arg0, short arg1) {
+    final States oldState = currentState;
+    try {
+      if (currentState == States.Main) {
+        currentState = States.Main;
+        super.uponWriteBackAck(arg0, arg1);
+      } else {
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponWriteBackAck", ActionType.Input));
+        super.uponWriteBackAck(arg0, arg1);
+      }
+    } catch(final Exception e) {
+      currentState = oldState;
+      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
+    }
+  }
+
+  @Override
+  public void uponWriteBackMessage(WriteBackMessageNotification arg0, short arg1) {
+    final States oldState = currentState;
+    try {
+      if (currentState == States.Main) {
+        currentState = States.Main;
+        super.uponWriteBackMessage(arg0, arg1);
+      } else {
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponWriteBackMessage", ActionType.Input));
+        super.uponWriteBackMessage(arg0, arg1);
+      }
+    } catch(final Exception e) {
+      currentState = oldState;
+      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
+    }
+  }
+
+  @Override
   public void uponWriteMessage(WriteMessageNotification arg0, short arg1) {
     final States oldState = currentState;
     try {
@@ -238,67 +299,6 @@ public class MonitoredABDProtocol extends ABDProtocol {
       currentState = oldState;
       logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
     }
-  }
-
-  @Override
-  public void uponConnectionDown(ConnectionDownNotification arg0, short arg1) {
-    final States oldState = currentState;
-    try {
-      switch (currentState) {
-        case Main:
-          connDown();
-          if (lostQuorum()) {
-            currentState = States.Connect;
-          }
-          super.uponConnectionDown(arg0, arg1);
-          break;
-        case Connect:
-          validateRatio(new ActionId("Connect", "uponConnectionDown", ActionType.Input), 0.0);
-          connDown();
-          currentState = States.Connect;
-          super.uponConnectionDown(arg0, arg1);
-          break;
-        default:
-          logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponConnectionDown", ActionType.Input));
-          super.uponConnectionDown(arg0, arg1);
-      }
-    } catch(final Exception e) {
-      currentState = oldState;
-      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-  }
-
-  @Override
-  public void uponClientWriteMessage(ClientWriteMessageNotification arg0, short arg1) {
-    final States oldState = currentState;
-    try {
-      if (currentState == States.Main) {
-        currentState = States.Main;
-        super.uponClientWriteMessage(arg0, arg1);
-      } else {
-        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponClientWriteMessage", ActionType.Input));
-        super.uponClientWriteMessage(arg0, arg1);
-      }
-    } catch(final Exception e) {
-      currentState = oldState;
-      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-  }
-
-  private void connDown() {
-    conns = conns - 1;
-  }
-
-  private void connUp() {
-    conns = conns + 1;
-  }
-
-  private boolean lostQuorum() {
-    return conns <= peersSize - 1 / 2;
-  }
-
-  private boolean hasAllConns() {
-    return conns >= peersSize;
   }
 
   private void validateRatio(final ActionId actionId, final double trueRatio) {

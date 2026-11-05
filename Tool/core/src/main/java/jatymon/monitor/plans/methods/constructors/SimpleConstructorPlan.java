@@ -28,4 +28,9 @@ public record SimpleConstructorPlan(Set<FieldPlan> fieldsToInit) implements Meth
                 .addStatement(new LogMonitorStartCodePlan().emit(ctx))
                 .build();
     }
+
+    @Override
+    public String name() {
+        return "SimpleConstructor";
+    }
 }

@@ -35,4 +35,9 @@ public record ParameterizedConstructorPlan(Set<FieldPlan> fieldsToInit) implemen
                 .addStatement(new LogMonitorStartCodePlan().emit(ctx))
                 .build();
     }
+
+    @Override
+    public String name() {
+        return "ParameterizedConstructor";
+    }
 }

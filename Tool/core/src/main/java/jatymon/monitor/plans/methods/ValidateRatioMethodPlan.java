@@ -62,4 +62,9 @@ public record ValidateRatioMethodPlan() implements MethodPlan {
                         .build())
                 .build();
     }
+
+    @Override
+    public String name() {
+        return METHOD_NAME;
+    }
 }

@@ -10,10 +10,10 @@
 
 typestate Rule3Protocol {
     State0 = {
-        void MyEnum decideEnum(): <ONE: State0, TWO: State1, THREE: end>
+        MyEnum decideEnum(): <ONE: State0, TWO: State1, THREE: end>
     }
 
     State1 = {
-        void boolean decideBoolean(): <true: State0>
+        boolean decideBoolean(): <true: State0>
     }
 }

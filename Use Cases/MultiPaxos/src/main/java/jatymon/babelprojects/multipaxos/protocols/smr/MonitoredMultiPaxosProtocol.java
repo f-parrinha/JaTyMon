@@ -61,13 +61,58 @@ public class MonitoredMultiPaxosProtocol extends MultiPaxosProtocol {
     logger.log(new MonitorStartLog(TYPESTATE_NAME, confidenceLevel));
   }
 
+  private void decConns() {
+    conns = conns - 1;
+  }
+
+  private boolean hasConns() {
+    return conns >= peersSize;
+  }
+
+  private boolean hasPrepareOkQuorum() {
+    return prepareOkCount > peersSize / 2;
+  }
+
+  private void incConns() {
+    conns = conns + 1;
+  }
+
+  private void incPrepareOkCount() {
+    prepareOkCount = prepareOkCount + 1;
+  }
+
+  @Override
+  public void init(Properties arg0) throws HandlerRegistrationException, IOException {
+    final States oldState = currentState;
+    try {
+      if (currentState == States.Init) {
+        currentState = States.Connect;
+        super.init(arg0);
+      } else {
+        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "init", ActionType.Input));
+        super.init(arg0);
+      }
+    } catch(final Exception e) {
+      currentState = oldState;
+      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
+    }
+  }
+
+  private boolean lostQuorum() {
+    return conns <= peersSize - 1 / 2;
+  }
+
+  private void resetPrepareOkCount() {
+    prepareOkCount = 0;
+  }
+
   @Override
   public boolean uponAcceptMessage(AcceptMessageNotification arg0, short arg1) {
     boolean superResult = false;
     final States oldState = currentState;
     try {
       switch (currentState) {
-        case Leader:
+        case NonLeader:
           superResult = super.uponAcceptMessage(arg0, arg1);
           if (superResult) {
             currentState = States.Leader;
@@ -75,7 +120,7 @@ public class MonitoredMultiPaxosProtocol extends MultiPaxosProtocol {
             currentState = States.NonLeader;
           }
           break;
-        case NonLeader:
+        case Leader:
           superResult = super.uponAcceptMessage(arg0, arg1);
           if (superResult) {
             currentState = States.Leader;
@@ -112,15 +157,137 @@ public class MonitoredMultiPaxosProtocol extends MultiPaxosProtocol {
   }
 
   @Override
-  public void init(Properties arg0) throws HandlerRegistrationException, IOException {
+  public void uponClientReadMessage(ClientReadMessageNotification arg0, short arg1) {
     final States oldState = currentState;
     try {
-      if (currentState == States.Init) {
-        currentState = States.Connect;
-        super.init(arg0);
-      } else {
-        logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "init", ActionType.Input));
-        super.init(arg0);
+      switch (currentState) {
+        case Leader:
+          currentState = States.Leader;
+          super.uponClientReadMessage(arg0, arg1);
+          break;
+        case NonLeader:
+          currentState = States.NonLeader;
+          super.uponClientReadMessage(arg0, arg1);
+          break;
+        default:
+          logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponClientReadMessage", ActionType.Input));
+          super.uponClientReadMessage(arg0, arg1);
+      }
+    } catch(final Exception e) {
+      currentState = oldState;
+      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
+    }
+  }
+
+  @Override
+  public void uponClientWriteMessage(ClientWriteMessageNotification arg0, short arg1) {
+    final States oldState = currentState;
+    try {
+      switch (currentState) {
+        case NonLeader:
+          currentState = States.NonLeader;
+          super.uponClientWriteMessage(arg0, arg1);
+          break;
+        case Leader:
+          currentState = States.Leader;
+          super.uponClientWriteMessage(arg0, arg1);
+          break;
+        default:
+          logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponClientWriteMessage", ActionType.Input));
+          super.uponClientWriteMessage(arg0, arg1);
+      }
+    } catch(final Exception e) {
+      currentState = oldState;
+      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
+    }
+  }
+
+  @Override
+  public void uponConnectionDown(ConnectionDownNotification arg0, short arg1) {
+    final States oldState = currentState;
+    try {
+      switch (currentState) {
+        case Leader:
+          decConns();
+          if (lostQuorum()) {
+            currentState = States.Connect;
+          }
+          super.uponConnectionDown(arg0, arg1);
+          break;
+        case NonLeader:
+          decConns();
+          if (lostQuorum()) {
+            currentState = States.Connect;
+          }
+          super.uponConnectionDown(arg0, arg1);
+          break;
+        case Connect:
+          decConns();
+          currentState = States.Connect;
+          super.uponConnectionDown(arg0, arg1);
+          break;
+        default:
+          logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponConnectionDown", ActionType.Input));
+          super.uponConnectionDown(arg0, arg1);
+      }
+    } catch(final Exception e) {
+      currentState = oldState;
+      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
+    }
+  }
+
+  @Override
+  public void uponConnectionUp(ConnectionUpNotification arg0, short arg1) {
+    final States oldState = currentState;
+    try {
+      switch (currentState) {
+        case Connect:
+          incConns();
+          if (hasConns()) {
+            currentState = States.NonLeader;
+          }
+          super.uponConnectionUp(arg0, arg1);
+          break;
+        case Leader:
+          incConns();
+          if (hasConns()) {
+            currentState = States.Leader;
+          }
+          super.uponConnectionUp(arg0, arg1);
+          break;
+        case NonLeader:
+          incConns();
+          if (hasConns()) {
+            currentState = States.NonLeader;
+          }
+          super.uponConnectionUp(arg0, arg1);
+          break;
+        default:
+          logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponConnectionUp", ActionType.Input));
+          super.uponConnectionUp(arg0, arg1);
+      }
+    } catch(final Exception e) {
+      currentState = oldState;
+      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
+    }
+  }
+
+  @Override
+  public void uponPaxosRetryTimer(MultiPaxosRetryTimer arg0, long arg1) {
+    final States oldState = currentState;
+    try {
+      switch (currentState) {
+        case Leader:
+          currentState = States.NonLeader;
+          super.uponPaxosRetryTimer(arg0, arg1);
+          break;
+        case NonLeader:
+          currentState = States.NonLeader;
+          super.uponPaxosRetryTimer(arg0, arg1);
+          break;
+        default:
+          logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponPaxosRetryTimer", ActionType.Input));
+          super.uponPaxosRetryTimer(arg0, arg1);
       }
     } catch(final Exception e) {
       currentState = oldState;
@@ -152,122 +319,6 @@ public class MonitoredMultiPaxosProtocol extends MultiPaxosProtocol {
   }
 
   @Override
-  public void uponClientReadMessage(ClientReadMessageNotification arg0, short arg1) {
-    final States oldState = currentState;
-    try {
-      switch (currentState) {
-        case NonLeader:
-          currentState = States.NonLeader;
-          super.uponClientReadMessage(arg0, arg1);
-          break;
-        case Leader:
-          currentState = States.Leader;
-          super.uponClientReadMessage(arg0, arg1);
-          break;
-        default:
-          logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponClientReadMessage", ActionType.Input));
-          super.uponClientReadMessage(arg0, arg1);
-      }
-    } catch(final Exception e) {
-      currentState = oldState;
-      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-  }
-
-  @Override
-  public void uponPaxosRetryTimer(MultiPaxosRetryTimer arg0, long arg1) {
-    final States oldState = currentState;
-    try {
-      switch (currentState) {
-        case NonLeader:
-          currentState = States.NonLeader;
-          super.uponPaxosRetryTimer(arg0, arg1);
-          break;
-        case Leader:
-          currentState = States.NonLeader;
-          super.uponPaxosRetryTimer(arg0, arg1);
-          break;
-        default:
-          logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponPaxosRetryTimer", ActionType.Input));
-          super.uponPaxosRetryTimer(arg0, arg1);
-      }
-    } catch(final Exception e) {
-      currentState = oldState;
-      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-  }
-
-  @Override
-  public void uponConnectionUp(ConnectionUpNotification arg0, short arg1) {
-    final States oldState = currentState;
-    try {
-      switch (currentState) {
-        case Leader:
-          incConns();
-          if (hasConns()) {
-            currentState = States.Leader;
-          }
-          super.uponConnectionUp(arg0, arg1);
-          break;
-        case NonLeader:
-          incConns();
-          if (hasConns()) {
-            currentState = States.NonLeader;
-          }
-          super.uponConnectionUp(arg0, arg1);
-          break;
-        case Connect:
-          incConns();
-          if (hasConns()) {
-            currentState = States.NonLeader;
-          }
-          super.uponConnectionUp(arg0, arg1);
-          break;
-        default:
-          logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponConnectionUp", ActionType.Input));
-          super.uponConnectionUp(arg0, arg1);
-      }
-    } catch(final Exception e) {
-      currentState = oldState;
-      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-  }
-
-  @Override
-  public void uponConnectionDown(ConnectionDownNotification arg0, short arg1) {
-    final States oldState = currentState;
-    try {
-      switch (currentState) {
-        case NonLeader:
-          decConns();
-          if (lostQuorum()) {
-            currentState = States.Connect;
-          }
-          super.uponConnectionDown(arg0, arg1);
-          break;
-        case Leader:
-          decConns();
-          if (lostQuorum()) {
-            currentState = States.Connect;
-          }
-          super.uponConnectionDown(arg0, arg1);
-          break;
-        case Connect:
-          decConns();
-          currentState = States.Connect;
-          super.uponConnectionDown(arg0, arg1);
-          break;
-        default:
-          logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponConnectionDown", ActionType.Input));
-          super.uponConnectionDown(arg0, arg1);
-      }
-    } catch(final Exception e) {
-      currentState = oldState;
-      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-  }
-
-  @Override
   public void uponPrepareOkMessage(PrepareOkMessageNotification arg0, short arg1) {
     final States oldState = currentState;
     try {
@@ -286,57 +337,6 @@ public class MonitoredMultiPaxosProtocol extends MultiPaxosProtocol {
       currentState = oldState;
       logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
     }
-  }
-
-  @Override
-  public void uponClientWriteMessage(ClientWriteMessageNotification arg0, short arg1) {
-    final States oldState = currentState;
-    try {
-      switch (currentState) {
-        case NonLeader:
-          currentState = States.NonLeader;
-          super.uponClientWriteMessage(arg0, arg1);
-          break;
-        case Leader:
-          currentState = States.Leader;
-          super.uponClientWriteMessage(arg0, arg1);
-          break;
-        default:
-          logger.log(new IllegalActionLog(TYPESTATE_NAME, currentState.toString(), "uponClientWriteMessage", ActionType.Input));
-          super.uponClientWriteMessage(arg0, arg1);
-      }
-    } catch(final Exception e) {
-      currentState = oldState;
-      logger.log(new InternalExceptionLog(TYPESTATE_NAME, e.getMessage()));
-    }
-  }
-
-  private void decConns() {
-    conns = conns - 1;
-  }
-
-  private void incPrepareOkCount() {
-    prepareOkCount = prepareOkCount + 1;
-  }
-
-  private void incConns() {
-    conns = conns + 1;
-  }
-
-  private void resetPrepareOkCount() {
-    prepareOkCount = 0;
-  }
-
-  private boolean hasPrepareOkQuorum() {
-    return prepareOkCount > peersSize / 2;
-  }
-
-  private boolean lostQuorum() {
-    return conns <= peersSize - 1 / 2;
-  }
-
-  private boolean hasConns() {
-    return conns >= peersSize;
   }
 
   private void validateRatio(final ActionId actionId, final double trueRatio) {
@@ -358,12 +358,12 @@ public class MonitoredMultiPaxosProtocol extends MultiPaxosProtocol {
   }
 
   private enum States {
-    NonLeader,
+    Connect,
 
     Init,
 
     Leader,
 
-    Connect
+    NonLeader
   }
 }

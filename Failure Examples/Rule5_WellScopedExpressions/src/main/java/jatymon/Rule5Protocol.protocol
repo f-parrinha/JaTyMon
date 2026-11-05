@@ -17,7 +17,7 @@
 
     // Error > Var field v2 is not previously declared
     // Error > Ext field c1 is not previously declared
-    Pred p: v2 = c1;
+    Assign p: v2 := c1;
 
     State0 = {
         void action(): State0

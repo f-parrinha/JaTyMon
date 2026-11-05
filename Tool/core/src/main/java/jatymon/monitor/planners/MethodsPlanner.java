@@ -34,12 +34,16 @@ public class MethodsPlanner implements Planner<MethodPlan> {
     @Override
     public Set<MethodPlan> plan(final MonitorFactory.BuildContext ctx) {
         final TypestateData typestateData = ctx.typestateData();
-        Set<MethodPlan> res =  new LinkedHashSet<>();
+
+        final Set<MethodPlan> res = new LinkedHashSet<>();
         res.addAll(planTransitions(ctx));
         res.addAll(planAssignments(typestateData.getAssignments()));
         res.addAll(planPredicates(typestateData.getPredicates()));
         res.add(new ValidateRatioMethodPlan());
-        return res;
+
+        return res.stream()
+                .sorted(Comparator.comparing(MethodPlan::name))
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     /**
@@ -83,7 +87,7 @@ public class MethodsPlanner implements Planner<MethodPlan> {
                     transition.getActionType(),
                     transitions.stream()
                             .map(TransitionCasePlan::fromGraphTransition)
-                            .collect(Collectors.toSet())));
+                            .collect(Collectors.toCollection(LinkedHashSet::new))));
         }
         return res;
     }

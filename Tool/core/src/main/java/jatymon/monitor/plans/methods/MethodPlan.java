@@ -9,4 +9,5 @@ import jatymon.monitor.plans.Plan;
  * @author Francisco Parrinha
  */
 public interface MethodPlan extends Plan<MethodSpec> {
+    String name();
 }

@@ -1,2 +1,6 @@
-Benchmarks/*
-.idea/*
+Benchmarks/
+.idea/
+JaTyMon Build Results/
+*.log
+*.log.*
+JaTyMon-Logs/
