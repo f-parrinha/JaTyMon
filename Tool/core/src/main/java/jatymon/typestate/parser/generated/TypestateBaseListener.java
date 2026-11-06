@@ -199,18 +199,6 @@ public class TypestateBaseListener implements TypestateListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBool_atom(TypestateParser.Bool_atomContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBool_atom(TypestateParser.Bool_atomContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterArith_expr(TypestateParser.Arith_exprContext ctx) { }
 	/**
 	 * {@inheritDoc}

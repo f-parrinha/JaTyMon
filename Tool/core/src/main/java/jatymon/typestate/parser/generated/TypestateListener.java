@@ -160,16 +160,6 @@ public interface TypestateListener extends ParseTreeListener {
 	 */
 	void exitBool_expr(TypestateParser.Bool_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TypestateParser#bool_atom}.
-	 * @param ctx the parse tree
-	 */
-	void enterBool_atom(TypestateParser.Bool_atomContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TypestateParser#bool_atom}.
-	 * @param ctx the parse tree
-	 */
-	void exitBool_atom(TypestateParser.Bool_atomContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link TypestateParser#arith_expr}.
 	 * @param ctx the parse tree
 	 */

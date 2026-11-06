@@ -9,8 +9,8 @@ public final class GrammarTokens {
     public static final String SUB = "-";
     public static final String MULTIPLY = "*";
     public static final String DIVIDE = "/";
-    public static final String AND = "AND";
-    public static final String OR = "OR";
+    public static final String AND = "&&";
+    public static final String OR = "||";
     public static final String NEG = "!";
     public static final String EQ = "=";
     public static final String NEQ = "!=";

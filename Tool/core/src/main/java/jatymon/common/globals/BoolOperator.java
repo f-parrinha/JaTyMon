@@ -15,7 +15,7 @@ public enum BoolOperator {
      * @param value string operator
      * @return Operator enum
      */
-    public static BoolOperator fromString(final String value) {
+    public static BoolOperator fromString(final String value) throws InvalidException {
         return switch (value) {
             case GrammarTokens.AND -> AND;
             case GrammarTokens.OR -> OR;
@@ -38,7 +38,7 @@ public enum BoolOperator {
         };
     }
 
-    public static final class InvalidException extends RuntimeException {
+    public static final class InvalidException extends Exception {
         private static final String MESSAGE = "Invalid BoolOperator <%s>";
         public InvalidException(final String value) {
             super(MESSAGE.formatted(value));

@@ -1,4 +1,4 @@
-package jatymon.typestate.ast.nodes.internalstate.predicates;
+package jatymon.typestate.ast.nodes.internalstate.bool;
 
 import jatymon.resolving.Resolver;
 import jatymon.common.globals.BoolOperator;
@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 public class TBinaryBoolExprNode extends TBoolExprNode {
+    public static final String TYPE = "binaryBoolExpr";
+
     private final TBoolExprNode boolExpr1;
     private final TBoolExprNode boolExpr2;
     private final BoolOperator boolOperator;
@@ -40,7 +42,7 @@ public class TBinaryBoolExprNode extends TBoolExprNode {
 
     @Override
     public String toCode() {
-        return "%s %s %s".formatted(boolExpr1.toCode(), BoolOperator.toString(boolOperator), boolExpr2.toCode());
+        return "(%s %s %s)".formatted(boolExpr1.toCode(), BoolOperator.toString(boolOperator), boolExpr2.toCode());
     }
 
     @Override

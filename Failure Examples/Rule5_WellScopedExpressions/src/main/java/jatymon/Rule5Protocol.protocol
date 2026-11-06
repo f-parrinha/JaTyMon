@@ -12,11 +12,11 @@
     Val v = 0;
     Ext c;
 
-    // Error > Unknown field name 'v1'
+    // Error > Unknown field with name 'v1'.
     Assign a: v1 := 1;
 
-    // Error > Unknown field name 'v2'
-    // Error > Unknown field name 'c1'
+    // Error > Unknown field with name 'v2'.
+    // Error > Unknown field with name 'c1'.
     Pred p: v2 = c1;
 
     State0 = {

@@ -11,10 +11,10 @@
  typestate Rule6Protocol {
     Ext c;
 
-    // Error > Read-only constants cannot be mutated
+    // Error > Cannot change the value of an Ext fields. Ext fields are immutable.
     Assign a1: c := c + 1;
 
     State0 = {
-        void action();
+        void action(): State0
     }
  }

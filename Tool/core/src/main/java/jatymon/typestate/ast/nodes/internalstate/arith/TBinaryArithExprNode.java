@@ -42,7 +42,7 @@ public class TBinaryArithExprNode extends TArithExprNode {
 
     @Override
     public String toCode() {
-        return "%s %s %s".formatted(arith1.toCode(), ArithOperator.toString(arithOperator), arith2.toCode());
+        return "(%s %s %s)".formatted(arith1.toCode(), ArithOperator.toString(arithOperator), arith2.toCode());
     }
 
     @Override
@@ -60,7 +60,7 @@ public class TBinaryArithExprNode extends TArithExprNode {
     public boolean equals(final Object obj) {
         return obj instanceof TBinaryArithExprNode other &&
                 super.equals(other) &&
-                other.arith1.equals(arith2) &&
+                other.arith1.equals(arith1) &&
                 other.arith2.equals(arith2) &&
                 other.arithOperator.equals(arithOperator);
     }

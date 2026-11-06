@@ -66,21 +66,15 @@ assign_expr
     : ID ':=' arith_expr
     ;
 bool_expr
-    : NOT bool_atom
+    : NOT bool_expr
     | bool_expr AND bool_expr
     | bool_expr OR bool_expr
     | '(' bool_expr ')'
-    | TRUE
-    | FALSE
     | cmp_expr
-    ;
-bool_atom
-    : NOT bool_atom
-    |'(' bool_expr ')'
     | TRUE
     | FALSE
+    | ID
     ;
-
 
 arith_expr
     : arith_expr (MULTIPLY | DIVIDE) arith_expr

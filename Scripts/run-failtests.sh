@@ -31,10 +31,10 @@ TESTS[2]="Rule2_ValidRatioSum;Invalid ratio sum value;2"
 TESTS[3]="Rule3_EnumerateAllDecisions;All decisions in decision states must be enumerated;2"
 TESTS[4]="Rule4_ClosedAssignmentsAndPredicates;Unknown assignment|Unknown predicate;2"
 TESTS[5]="Rule5_WellScopedExpressions;Unknown field with name;3"
-TESTS[6]="Rule6_ReadOnlyConstants;error;1"
-TESTS[7]="Rule7_WellTypedRelationalTerms;error;1"
-TESTS[8]="Rule8_UsefulStates;error;1"
-TESTS[9]="Rule9_Deterministic;error;1"
+TESTS[6]="Rule6_ReadOnlyConstants;Cannot change the value of an Ext fields. Ext fields are immutable;1"
+TESTS[7]="Rule7_WellTypedRelationalTerms;mismatched input;2"
+TESTS[8]="Rule8_UsefulStates;The protocol contains non-productive states|The protocol contains non-reachable states;2"
+TESTS[9]="Rule9_Deterministic;Duplicate method;1"
 
 
 # ---------------------- Main Execution ---------------------- #

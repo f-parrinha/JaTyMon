@@ -103,12 +103,6 @@ public interface TypestateVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBool_expr(TypestateParser.Bool_exprContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link TypestateParser#bool_atom}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBool_atom(TypestateParser.Bool_atomContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link TypestateParser#arith_expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

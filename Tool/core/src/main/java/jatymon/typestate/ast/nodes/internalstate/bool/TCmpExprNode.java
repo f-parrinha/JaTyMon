@@ -1,4 +1,4 @@
-package jatymon.typestate.ast.nodes.internalstate.predicates;
+package jatymon.typestate.ast.nodes.internalstate.bool;
 
 import jatymon.common.globals.ComparisonOperator;
 import jatymon.resolving.Resolver;
@@ -40,7 +40,7 @@ public class TCmpExprNode extends TBoolExprNode {
 
     @Override
     public String toCode() {
-        return "%s %s %s".formatted(arith1.toCode(), ComparisonOperator.toCode(operator), arith2.toCode());
+        return "(%s %s %s)".formatted(arith1.toCode(), ComparisonOperator.toCode(operator), arith2.toCode());
     }
 
     @Override
@@ -59,7 +59,8 @@ public class TCmpExprNode extends TBoolExprNode {
         return obj instanceof TCmpExprNode other &&
                 super.equals(other) &&
                 other.arith1.equals(arith1) &&
-                other.arith2.equals(arith2);
+                other.arith2.equals(arith2) &&
+                other.operator.equals(operator);
     }
 
     @Override

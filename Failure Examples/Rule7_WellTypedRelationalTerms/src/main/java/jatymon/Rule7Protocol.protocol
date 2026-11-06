@@ -15,9 +15,14 @@ typestate Rule7Protocol {
     Pred p1: v != 0;
     Pred p2: v = c;
     Pred p: true && (p1 || p2) && 2 < 3 || (v - c) > 5;
+    Pred pTrue: true;
+    Pred pFalse: false;
 
-    // Error > TODO
-    Pred pError: v - c;
+    // Error > Invalid boolean expression size '0'.
+    Pred pError1: v - c;
+
+    // Error >
+    Pred pError2: true && 5 - 3;
 
     State0 = {
         void action(): State0

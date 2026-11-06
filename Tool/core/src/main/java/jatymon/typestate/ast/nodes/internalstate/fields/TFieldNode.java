@@ -2,7 +2,6 @@ package jatymon.typestate.ast.nodes.internalstate.fields;
 
 import jatymon.common.TokenPosition;
 import jatymon.typestate.ast.nodes.TNode;
-import jatymon.typestate.ast.nodes.internalstate.predicates.TBinaryBoolExprNode;
 
 public abstract class TFieldNode extends TNode {
     private final String name;

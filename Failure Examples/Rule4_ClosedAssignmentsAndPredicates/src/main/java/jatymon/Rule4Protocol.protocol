@@ -13,8 +13,8 @@ typestate Rule4Protocol {
     Assign a1: v := v + 1;
     Pred p1: v = 2;
 
-    // Error > Assignment 'a2' is not defined
-    // Error > Predicate 'p2' is not defined
+    // Error > Unknown assignment with name 'a2'.
+    // Error > Unknown predicate with name 'p2'.
     State0 = {
         void action()[a1,a2; p1,p2]: State0
     }

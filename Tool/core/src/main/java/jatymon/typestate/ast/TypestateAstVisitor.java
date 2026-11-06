@@ -11,7 +11,9 @@ import jatymon.typestate.ast.nodes.declaration.TDeclarationNode;
 import jatymon.typestate.ast.nodes.declaration.TTypestateNode;
 import jatymon.typestate.ast.nodes.imports.TImportNode;
 import jatymon.typestate.ast.nodes.imports.TPackageNode;
+import jatymon.typestate.ast.nodes.internalstate.arith.TArithExprErrorNode;
 import jatymon.typestate.ast.nodes.internalstate.arith.operand.TOperandNode;
+import jatymon.typestate.ast.nodes.internalstate.bool.*;
 import jatymon.typestate.ast.nodes.internalstate.predicates.*;
 import jatymon.typestate.ast.nodes.internalstate.arith.TArithExprNode;
 import jatymon.typestate.ast.nodes.internalstate.arith.TBinaryArithExprNode;
@@ -30,9 +32,9 @@ import jatymon.common.TokenPosition;
 import jatymon.diagnostics.syntax.InvalidDestinationDiagnostic;
 import jatymon.diagnostics.syntax.InvalidIdTypeDiagnostic;
 import jatymon.diagnostics.syntax.SyntaxErrorDiagnostic;
-import jatymon.exceptions.typestate.InvalidArithExprSize;
-import jatymon.exceptions.typestate.InvalidBoolExprSize;
-import jatymon.exceptions.typestate.InvalidOperandType;
+import jatymon.diagnostics.syntax.InvalidArithExprSizeDiagnostic;
+import jatymon.diagnostics.syntax.InvalidBoolExprSizeDiagnostic;
+import jatymon.diagnostics.syntax.InvalidOperandTypeDiagnostic;
 import jatymon.typestate.parser.generated.TypestateBaseVisitor;
 import jatymon.typestate.parser.generated.TypestateParser;
 import org.antlr.v4.runtime.*;
@@ -161,7 +163,8 @@ public class TypestateAstVisitor extends TypestateBaseVisitor<TNode> {
     public TPredNode visitPredicate_declaration(final TypestateParser.Predicate_declarationContext ctx) {
         final String name = ctx.ID().getText();
         final TBoolExprNode boolExpr = (TBoolExprNode) visit(ctx.bool_expr());
-        return new TPredNode(TokenPosition.createFrom(ctx), name, boolExpr);
+        final TokenPosition tokenPos = TokenPosition.createFrom(ctx);
+        return new TPredNode(tokenPos, name, boolExpr);
     }
 
     @Override
@@ -172,71 +175,107 @@ public class TypestateAstVisitor extends TypestateBaseVisitor<TNode> {
     }
 
     @Override
-    public TNode visitBool_expr(final TypestateParser.Bool_exprContext ctx) {
-        var cmpCtx = ctx.cmp_expr();
-        var boolExprCtx = ctx.bool_expr();
-        if (cmpCtx != null) {
-            return visit(cmpCtx);
-        }
-        if (boolExprCtx.size() == 1) {
-            return visit(boolExprCtx.getFirst());
-        }
-        if (boolExprCtx.size() == 2) {
-            final TBoolExprNode left = (TBoolExprNode) visit(ctx.bool_expr(0));
-            final TBoolExprNode right = (TBoolExprNode) visit(ctx.bool_expr(1));
-            final String op = ctx.getChild(1).getText();
-            return new TBinaryBoolExprNode(TokenPosition.createFrom(ctx), left, right, BoolOperator.fromString(op));
+    public TBoolExprNode visitBool_expr(final TypestateParser.Bool_exprContext ctx) {
+        final TokenPosition tokenPos = TokenPosition.createFrom(ctx);
+        if (ctx.exception != null || ctx.getChildCount() == 0) {
+            return new TBoolExprErrorNode(tokenPos);
         }
 
-        throw new InvalidBoolExprSize(boolExprCtx.size());
+        // Check with precedence
+        final var children = ctx.bool_expr();
+        if (ctx.cmp_expr() != null) {
+            return (TBoolExprNode) visit(ctx.cmp_expr());
+        }
+        if (ctx.TRUE() != null) {
+            return new TBoolLiteralNode(tokenPos, true);
+        }
+        if (ctx.FALSE() != null) {
+            return new TBoolLiteralNode(tokenPos, false);
+        }
+        if (ctx.ID() != null) {
+            return new TPredRefNode(tokenPos, ctx.ID().getText());
+        }
+        if (ctx.NOT() != null) {
+            return new TNotExprNode(tokenPos, (TBoolExprNode) visit(children.getFirst()));
+        }
+        if (children.size() == 1) {            // '(' bool_expr ')'
+            return (TBoolExprNode) visit(children.getFirst());
+        }
+        if (children.size() == 2) {
+            final TBoolExprNode left = (TBoolExprNode) visit(children.get(0));
+            final TBoolExprNode right = (TBoolExprNode) visit(children.get(1));
+            final String op = ctx.getChild(1).getText();
+            try {
+                return new TBinaryBoolExprNode(tokenPos, left, right, BoolOperator.fromString(op));
+            } catch (final BoolOperator.InvalidException e) {
+                diagnostics.add(new SyntaxErrorDiagnostic(fileName(ctx), tokenPos, e.getMessage()));
+                return new TBoolExprErrorNode(tokenPos);
+            }
+        }
+
+        diagnostics.add(new InvalidBoolExprSizeDiagnostic(fileName(ctx), tokenPos, children.size()));
+        return new TBoolExprErrorNode(tokenPos);
     }
 
     @Override
-    public TCmpExprNode visitCmp_expr(final TypestateParser.Cmp_exprContext ctx) {
-        if (ctx.arith_expr().size() != 2) {
-            throw new InvalidArithExprSize(ctx.arith_expr().size());
+    public TBoolExprNode visitCmp_expr(final TypestateParser.Cmp_exprContext ctx) {
+        final TokenPosition tokenPos = TokenPosition.createFrom(ctx);
+        if (ctx.exception != null ||
+                ctx.getChildCount() == 0 ||
+                ctx.cmp_operator() == null ||
+                ctx.cmp_operator().getChildCount() == 0 ||
+                ctx.arith_expr().size() != 2) {
+            return new TBoolExprErrorNode(tokenPos);
         }
 
         final TArithExprNode arithExpr1 = (TArithExprNode) visit(ctx.arith_expr(0));
         final TArithExprNode arithExpr2 = (TArithExprNode) visit(ctx.arith_expr(1));
         try {
             final ComparisonOperator operator = ComparisonOperator.fromString(ctx.cmp_operator().getText());
-            return new TCmpExprNode(TokenPosition.createFrom(ctx), arithExpr1, arithExpr2, operator);
+            return new TCmpExprNode(tokenPos, arithExpr1, arithExpr2, operator);
         } catch (ComparisonOperator.InvalidException e) {
-            throw new RuntimeException(e);
+            diagnostics.add(new SyntaxErrorDiagnostic(fileName(ctx), tokenPos, e.getMessage()));
+            return new TBoolExprErrorNode(tokenPos);
         }
     }
 
     @Override
-    public TNode visitArith_expr(final TypestateParser.Arith_exprContext ctx) {
-        var operandCtx = ctx.operand();
-        var arithExprCtx = ctx.arith_expr();
+    public TArithExprNode visitArith_expr(final TypestateParser.Arith_exprContext ctx) {
+        final TokenPosition tokenPos = TokenPosition.createFrom(ctx);
+        if (ctx.exception != null || ctx.getChildCount() == 0) {
+            return new TArithExprErrorNode(tokenPos);
+        }
+
+        final var operandCtx = ctx.operand();
+        final var arithExprCtx = ctx.arith_expr();
         if (operandCtx != null) {
-            return visit(operandCtx);
+            return (TArithExprNode) visit(operandCtx);
         }
 
         if (arithExprCtx.size() == 1) {
-            return visit(arithExprCtx.getFirst());
+            return (TArithExprNode) visit(arithExprCtx.getFirst());
         } else if (arithExprCtx.size() == 2) {
             final TArithExprNode arithExpr1 = (TArithExprNode) visit(arithExprCtx.get(0));
             final TArithExprNode arithExpr2 = (TArithExprNode) visit(arithExprCtx.get(1));
             final String op = ctx.getChild(1).getText();
-            return new TBinaryArithExprNode(TokenPosition.createFrom(ctx), arithExpr1, arithExpr2, ArithOperator.fromString(op));
+            return new TBinaryArithExprNode(tokenPos, arithExpr1, arithExpr2, ArithOperator.fromString(op));
         }
 
-        throw new InvalidArithExprSize(arithExprCtx.size());
+        diagnostics.add(new InvalidArithExprSizeDiagnostic(fileName(ctx), tokenPos, arithExprCtx.size()));
+        return new TArithExprErrorNode(tokenPos);
     }
 
     @Override
-    public TNode visitOperand(final TypestateParser.OperandContext ctx) {
-        final TokenPosition tokenPosition = TokenPosition.createFrom(ctx);
+    public TArithExprNode visitOperand(final TypestateParser.OperandContext ctx) {
+        final TokenPosition tokenPos = TokenPosition.createFrom(ctx);
         if (ctx.NUMBER() != null) {
             final Integer number = Integer.parseInt(ctx.NUMBER().getText());
-            return new TNumberOperandNode(tokenPosition, number);
+            return new TNumberOperandNode(tokenPos, number);
         } if (ctx.ID() != null) {
-            return new TIdOperandNode(tokenPosition, ctx.ID().getText());
+            return new TIdOperandNode(tokenPos, ctx.ID().getText());
         }
-        throw new InvalidOperandType();
+        diagnostics.add(new InvalidOperandTypeDiagnostic(fileName(ctx), tokenPos));
+        return new TArithExprErrorNode(tokenPos);
     }
 
     @Override
@@ -301,7 +340,7 @@ public class TypestateAstVisitor extends TypestateBaseVisitor<TNode> {
     }
 
     @Override
-    public TNode visitRef(final TypestateParser.RefContext ctx) {
+    public TRefNode visitRef(final TypestateParser.RefContext ctx) {
         final List<TerminalNode> ids = ctx.ID();
         final TokenPosition refStartPos = TokenPosition.createFrom(ctx);
 
@@ -329,8 +368,7 @@ public class TypestateAstVisitor extends TypestateBaseVisitor<TNode> {
         } else if (ctx.END() != null) {
             return new TIdNode(TokenPosition.createFrom(ctx), ctx.END().getText());
         } else {
-            String fileName = ctx.getStart().getTokenSource().getInputStream().getSourceName();
-            diagnostics.add(new InvalidIdTypeDiagnostic(Paths.get(fileName).getFileName().toString(), TokenPosition.createFrom(ctx)));
+            diagnostics.add(new InvalidIdTypeDiagnostic(fileName(ctx), TokenPosition.createFrom(ctx)));
             return null;
         }
     }
@@ -360,11 +398,10 @@ public class TypestateAstVisitor extends TypestateBaseVisitor<TNode> {
 
     @Override
     public TNode visitErrorNode(final ErrorNode node) {
-        Token token = node.getSymbol(); // get the underlying token
-        String fileName = token.getTokenSource().getInputStream().getSourceName();
-        TokenPosition pos = TokenPosition.createFrom(token);
-        diagnostics.add(new SyntaxErrorDiagnostic(Paths.get(fileName).getFileName().toString(), pos, node.getText()));
-        return null;
+        final Token token = node.getSymbol(); // get the underlying token
+        final TokenPosition tokenPos = TokenPosition.createFrom(token);
+        diagnostics.add(new SyntaxErrorDiagnostic(fileName(token), tokenPos, node.getText()));
+        return new TErrorNode(tokenPos);
     }
 
 
@@ -437,5 +474,17 @@ public class TypestateAstVisitor extends TypestateBaseVisitor<TNode> {
             diagnostics.add(new InvalidDestinationDiagnostic(Paths.get(fileName).getFileName().toString(), TokenPosition.createFrom(ctx)));
             return null;
         }
+    }
+
+    private String fileName(final Token token) {
+        final String path = token.getTokenSource().getInputStream().getSourceName();
+        if (path == null || path.equals(IntStream.UNKNOWN_SOURCE_NAME)) {
+            return "<unknown>";
+        }
+        return Paths.get(path).getFileName().toString();
+    }
+
+    private String fileName(final ParserRuleContext ctx) {
+        return fileName(ctx.getStart());
     }
 }

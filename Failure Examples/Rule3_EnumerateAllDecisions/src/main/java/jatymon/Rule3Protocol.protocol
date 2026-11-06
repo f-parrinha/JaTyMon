@@ -5,15 +5,18 @@
  *      completely enumerated in the decision state. This protocol breaks this rule
  *      so JaTyMon can display the corresponding error.
  *
+ * Number of errors to display: 2
  * Author: Francisco Parrinha
  */
 
 typestate Rule3Protocol {
     State0 = {
+        // Error > All decisions in decision states must be enumerated
         MyEnum decideEnum(): <ONE: State0, TWO: State1, THREE: end>
     }
 
     State1 = {
+        // Error > All decisions in decision states must be enumerated
         boolean decideBoolean(): <true: State0>
     }
 }

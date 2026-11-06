@@ -3,6 +3,7 @@
  *  This typestate breaks Rule 1 (No Duplicate State Name) from our work for ECOOP 2027
  *  There cannot be two states with the same names. This protocol breaks that rule, so JaTyMon can display the corresponding error.
  *
+ * Number of errors to display: 1
  * Author: Francisco Parrinha
  */
 
@@ -11,7 +12,7 @@ typestate Rule1Protocol {
         void doOne(): State0
     }
 
-    // Error > Duplicate State Name
+    // Error > Duplicate state 'State0'.
     State0 = {
         void doTwo(): State0
     }

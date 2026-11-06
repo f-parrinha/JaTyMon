@@ -7,6 +7,7 @@ import jatymon.typestate.ast.nodes.TNode;
 import jatymon.common.TokenPosition;
 import jatymon.typestate.ast.TypestateAstValidator;
 import jatymon.diagnostics.semantic.internalstate.DuplicatePredicateDiagnostic;
+import jatymon.typestate.ast.nodes.internalstate.bool.TBoolExprNode;
 
 import java.util.LinkedList;
 import java.util.List;

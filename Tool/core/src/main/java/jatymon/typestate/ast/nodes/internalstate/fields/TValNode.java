@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TValNode extends TFieldNode {
-    public final String TYPE = "val";
+    public static final String TYPE = "val";
 
 
     private final TOperandNode<?> operand;

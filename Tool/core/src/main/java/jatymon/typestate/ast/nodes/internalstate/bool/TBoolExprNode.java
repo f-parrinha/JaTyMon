@@ -1,4 +1,4 @@
-package jatymon.typestate.ast.nodes.internalstate.predicates;
+package jatymon.typestate.ast.nodes.internalstate.bool;
 
 import jatymon.typestate.ast.nodes.TNode;
 import jatymon.common.TokenPosition;

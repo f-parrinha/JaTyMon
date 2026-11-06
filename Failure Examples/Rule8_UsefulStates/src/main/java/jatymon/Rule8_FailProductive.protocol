@@ -5,20 +5,22 @@
  *      reachable from all other states (the automata must be productive).
  *  This protocol breaks the productivity component of Rule 8
  *
+ * Number of errors to display: 1
  * Author: Francisco Parrinha
  */
 
 typestate Rule8_FailProductive {
     State0 = {
+        void m1(): State1,
+        void m2(): State2
+    }
+
+    // Error > The protocol contains non-productive states: [State1].
+    State1 = {
         void m1(): State1
-        void m2(): State3
     }
 
     State2 = {
-        void m1(): State2
-    }
-
-    State3 = {
         void m1(): end
     }
 }
