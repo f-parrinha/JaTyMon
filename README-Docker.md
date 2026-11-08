@@ -51,7 +51,7 @@ We also offer [run-failtests.sh](https://github.com/f-parrinha/JaTyMon/blob/main
 ## More verifications
 We also offer automatic random fault injection (i.e., connection loss, message loss, and message tinkering) in each use case to observe the generated monitors correctly reporting the respective runtime violations (i.e., illegal actions and invalid runtime ratios).  
 
-<TODO> 
+TODO
 
 
 <br>
