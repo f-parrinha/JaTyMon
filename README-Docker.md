@@ -34,6 +34,8 @@ To empirically demonstrate that the well-formedness rules of our typestates hold
 
 
 ## Verifying obtained results
+Every script we discuss is inside the ``/Scripts`` folder. Whenever we use the ``bash`` command, we assume the current directory is ``/Scripts`` (e.g., use ``cd Scripts`` first)  
+
 We offer [run-orchestrator.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/run-orchestrator.sh) script to verify our collected benchmarks. The script can be executed in the following way: ``bash run-orchestrator.sh <use_case> <runs> <client_ops>``, with ``<use_case>`` denoting which use case to be executed (i.e., ``ABD``, the read/write majority quorum; ``MultiPaxos``, or ``both``), ``runs`` the number of executions per use case, and ``client_ops`` the number of operations clients will produce per run. We collected our benchmarks using this script with 1 client, 5 replicas, 10 runs per use case with and without monitors, with the client producing 10000 operations. These values are chosen by default, therefore, considering we are inside the container (e.g., via ``-it``), there are two ways verify our benchmarks: 
 - ``bash run-orchestrator.sh both 10 10000``;
 - ``bash run-orchestrator.sh both``.
@@ -57,7 +59,7 @@ TODO
 <br>
 
 ## Autonomous Experiments
-In this section, we introduce how to perform autonomous experiments. We assume the container is executed with following command: ``docker run --rm -it -v "$PWD/Benchmarks:/Benchmarks" jatymon``, considering the image was built with name ``jatymon``. We present per subsection how to use the corresponding script.
+In this section, we introduce how to perform autonomous experiments. We assume the container is executed with following command: ``docker run --rm -it -v "$PWD/Benchmarks:/Benchmarks" jatymon``, considering the image was built with name ``jatymon``. We present per subsection how to use the corresponding script. We also assume the current directory is ``/Scripts`` (e.g., use ``cd Scripts`` first).  
 
 #### build-tool.sh
 Usage: ``bash build-tool.sh``
