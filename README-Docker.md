@@ -14,17 +14,23 @@ A monitor always keeps track of the current state, and has the capability of ver
 
 Due to using __mixed session__, both types of ratio logs contain in their text the confirmation whether it is an __input__ action, therefore, sending too many messages, or an __output__ action, implying the typestate is receiving too many messages.  
 
-We published a paper regarding in PLACES 2026 introducing _stateful mixed-choice typestates_, which can be found [here](https://arxiv.org/abs/2604.06874).
-
+We benchmark our tool in two [use cases](https://github.com/f-parrinha/JaTyMon/tree/main/Use%20Cases). Both are a simple replicated storage systems with only _read_ and _write_ operations, though one uses a [read/write majority quorum](https://dl.acm.org/doi/10.1145/200836.200869) inspired by Attya et al. and the other uses a [Multi-Paxos](https://dl.acm.org/doi/abs/10.1145/279227.279229) protocol to achieve consensus on the order of operations. We also present empirical results showing that the well-formedness rules of our typestates hold. We present a project for each rule [here](https://github.com/f-parrinha/JaTyMon/tree/main/Failure%20Examples), containing one or more ill-formed typestates so __JaTyMon__ can show the appropriate error messages.  
 
 ## Methodology
 We use a docker environment to ensure the reproducibility of our results. The image is built in the following steps. It begins by installing a pinned Debian distribution (snapshot 20261012T000000Z), Maven (version 3.9.9), and JDK 21 (Open JDK 21.0.12.1\_1). Every dependency is pinned. Then, it copies the content in the [project](https://github.com/f-parrinha/JaTyMon) folder. Now it proceeds in three stages:
-- Execute build-tool.sh
-- Execute gen-monitors.sh
-- Execute build-usecases.sh
+- Execute [build-tool.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/build-tool.sh)
+- Execute [gen-monitors.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/gen-monitors.sh)
+- Execute [build-usecases.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/build-usecases.sh)
 
-Firstly, it builds the tool using the [build-tool.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/build-tool.sh) script, which yields two ``.jar`` files -- ``lib.jar`` containing the library code (e.g., annotations), and ``core.jar`` which contains the actual monitor generator -- and two scripts,``install-JaTyMon.sh`` and ``run-JaTyMon.sh``. The former for installing __JaTyMon__ as a dependency in the Maven local repository, and the latter for executing __JaTyMon__ and generating monitors. The final stage of [build-tool.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/build-tool.sh) executes ``install-JaTyMon.sh``. Now it executes
+Firstly, it builds the tool using the [build-tool.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/build-tool.sh) script, which yields two ``.jar`` files -- ``lib.jar`` containing the library code (e.g., annotations), and ``core.jar`` which contains the actual monitor generator -- and two scripts,``install-JaTyMon.sh`` and ``run-JaTyMon.sh``. The former for installing __JaTyMon__ as a dependency in the Maven local repository, and the latter for executing __JaTyMon__ and generating monitors. The final stage of [build-tool.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/build-tool.sh) executes ``install-JaTyMon.sh``.  
 
+Secondly, it runs [gen-monitors.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/gen-monitors.sh) which orchestrates the generation of monitors in our use cases with a predefined _confidence level_ (i.e., 0.9). Each use case already contains monitors. The script produces an hash on the content of every ``.java`` file in the source code of each use case before and after generating new monitors, and verifies whether these hashes (i.e., before and after synthesizing monitors) are the same, confirming that the code generation procedure is deterministic.  
+
+Lastly, it builds both use cases with [build-usecases.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/build-usecases.sh) (i.e., replicated storage systems with read/write majority quorum and Multi-Paxos protocols, respectively). The image is now ready.  
+
+We benchmark our tool on our use cases, collecting the average latencies in _read_ and _write_ operations in executions with and without monitors. These are collected with the [run-orchestrator.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/run-orchestrator.sh) script which manages the benchmark collection execution. Each execution creates one folder with two files: one with results with monitors and another containing results without monitors. Once every execution has finished, the script calls [gen-benchmarks.sh](github.com/f-parrinha/JaTyMon/blob/main/Scripts/gen-benchmarks.sh) to generate a ``.csv`` file with the average of the collected latencies per use case, with and without monitors, including the standard deviation to verify the consistency of the collected results.
+
+To empirically demonstrate that the well-formedness rules of our typestates hold, we created one project for each rule containing one or more ill-formed typestates breaking the respective rule. We de so to observe that __JaTyMon__ catches the respective violations and presents the respective error messages.
 
 ## Verifying obtained results
 
