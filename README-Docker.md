@@ -13,7 +13,7 @@ A monitor always keeps track of the current state, and has the capability of ver
 
 Due to using __mixed session__, both types of ratio logs contain in their text the confirmation whether it is an __input__ action, therefore, sending too many messages, or an __output__ action, implying the typestate is receiving too many messages.  
 
-We benchmark our tool in two [use cases](https://github.com/f-parrinha/JaTyMon/tree/main/Use%20Cases). Both are a simple replicated storage systems with only _read_ and _write_ operations, though one uses a [read/write majority quorum](https://dl.acm.org/doi/10.1145/200836.200869) inspired by Attya et al. and the other uses a [Multi-Paxos](https://dl.acm.org/doi/abs/10.1145/279227.279229) protocol to achieve consensus on the order of operations. We also present empirical results showing that the well-formedness rules of our typestates hold. We present a project for each rule [here](https://github.com/f-parrinha/JaTyMon/tree/main/Failure%20Examples), containing one or more ill-formed typestates so __JaTyMon__ can show the appropriate error messages.  
+We benchmark our tool in two [use cases](https://github.com/f-parrinha/JaTyMon/tree/main/Use%20Cases). Both are simple replicated storage systems with only _read_ and _write_ operations, though one uses a [read/write majority quorum](https://dl.acm.org/doi/10.1145/200836.200869) inspired by Attya et al. and the other uses a [Multi-Paxos](https://dl.acm.org/doi/abs/10.1145/279227.279229) protocol to achieve consensus on the order of operations. We also present empirical results showing that the well-formedness rules of our typestates hold. We present a project for each rule [here](https://github.com/f-parrinha/JaTyMon/tree/main/Failure%20Examples), containing one or more ill-formed typestates so __JaTyMon__ can show the appropriate error messages.  
 
 
 ## Methodology
@@ -56,8 +56,8 @@ TODO
 
 <br>
 
-## Autonomous Experiences
-In this section, we introduce how to perform autonomous experiences. We assume the container is executed with following command: ``docker run --rm -it -v "$PWD/Benchmarks:/Benchmarks" jatymon``, considering the image was built with name ``jatymon``. We present per subsection how to use the corresponding script.
+## Autonomous Experiments
+In this section, we introduce how to perform autonomous experiments. We assume the container is executed with following command: ``docker run --rm -it -v "$PWD/Benchmarks:/Benchmarks" jatymon``, considering the image was built with name ``jatymon``. We present per subsection how to use the corresponding script.
 
 #### build-tool.sh
 Usage: ``bash build-tool.sh``
