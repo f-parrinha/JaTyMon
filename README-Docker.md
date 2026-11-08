@@ -101,7 +101,7 @@ The script [build-usecases.sh](https://github.com/f-parrinha/JaTyMon/blob/main/S
 #### run-orchestrator.sh
 Usage: ``bash run-orchestrator.sh <use_case> <runs> <client_ops>``  
 
-It is possible to produce different kinds of experiments with the [run-failtests.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/run-failtests.sh) script. It is highly configurable via environment variables. The script offers the following variables changing the number clients, replicas and monitoring state:
+It is possible to produce different kinds of experiments with the [run-orchestrator.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/run-orchestrator.sh) script. It is highly configurable via environment variables. The script offers the following variables changing the number clients, replicas and monitoring state:
 - ``CLIENTS``: 1 by default. Changes the number of created clients;
 - ``REPLICAS``: 5 by default. Mutates the number of replicas to launch;
 - ``MONITORS``: ``on`` for with monitors only, ``off`` for otherwise, and ``both`` to execute with and without monitors per run.
@@ -122,7 +122,7 @@ For example, ``PAUSE_BETWEEN_RUNS=4 PRINT=on FAULTS=on bash run-orchestrator.sh 
 #### gen-benchmarks.sh
 Usage: ``bash gen-benchmarks.sh``
 
-The script [gen-benchmarks.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/gen-benchmarks.sh) generates a ``.csv`` file with the average latencies in both use cases comparing executions with and without monitors, including the standard deviation for verifying the consistency of collected results. This script must be executed after [run-failtests.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/run-failtests.sh) on __both__ use cases with and without monitors (i.e., ``MONITORS=both``)
+The script [gen-benchmarks.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/gen-benchmarks.sh) generates a ``.csv`` file with the average latencies in both use cases comparing executions with and without monitors, including the standard deviation for verifying the consistency of collected results. This script must be executed after [run-orchestrator.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/run-orchestrator.sh) on __both__ use cases with and without monitors (i.e., ``MONITORS=both``)
 
 <br>
 
