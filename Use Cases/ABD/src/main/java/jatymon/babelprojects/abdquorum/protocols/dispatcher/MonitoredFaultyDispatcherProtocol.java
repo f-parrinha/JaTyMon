@@ -48,7 +48,7 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
   private final JaTyMonLogger logger;
 
   public MonitoredFaultyDispatcherProtocol() {
-    this.confidenceLevel = 0.95;
+    this.confidenceLevel = 0.85;
     this.currentState = States.Init;
     this.actionsCounter = new ActionsCounter();
     this.logger = new JaTyMonLogger();
@@ -101,7 +101,7 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
   }
 
   private boolean hasConns() {
-    return conns > 0;
+    return (conns > 0);
   }
 
   @Override
@@ -122,7 +122,7 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
   }
 
   private boolean noConns() {
-    return conns == 0;
+    return (conns == 0);
   }
 
   @Override

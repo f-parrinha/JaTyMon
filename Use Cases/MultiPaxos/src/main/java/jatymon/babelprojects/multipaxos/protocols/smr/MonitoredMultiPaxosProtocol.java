@@ -42,7 +42,7 @@ public class MonitoredMultiPaxosProtocol extends MultiPaxosProtocol {
   private int prepareOkCount;
 
   public MonitoredMultiPaxosProtocol() {
-    this.confidenceLevel = 0.95;
+    this.confidenceLevel = 0.85;
     this.currentState = States.Init;
     this.actionsCounter = new ActionsCounter();
     this.logger = new JaTyMonLogger();
@@ -62,23 +62,23 @@ public class MonitoredMultiPaxosProtocol extends MultiPaxosProtocol {
   }
 
   private void decConns() {
-    conns = conns - 1;
+    conns = (conns - 1);
   }
 
   private boolean hasConns() {
-    return conns >= peersSize;
+    return (conns >= peersSize);
   }
 
   private boolean hasPrepareOkQuorum() {
-    return prepareOkCount > peersSize / 2;
+    return (prepareOkCount > (peersSize / 2));
   }
 
   private void incConns() {
-    conns = conns + 1;
+    conns = (conns + 1);
   }
 
   private void incPrepareOkCount() {
-    prepareOkCount = prepareOkCount + 1;
+    prepareOkCount = (prepareOkCount + 1);
   }
 
   @Override
@@ -99,7 +99,7 @@ public class MonitoredMultiPaxosProtocol extends MultiPaxosProtocol {
   }
 
   private boolean lostQuorum() {
-    return conns <= peersSize - 1 / 2;
+    return (conns <= ((peersSize - 1) / 2));
   }
 
   private void resetPrepareOkCount() {

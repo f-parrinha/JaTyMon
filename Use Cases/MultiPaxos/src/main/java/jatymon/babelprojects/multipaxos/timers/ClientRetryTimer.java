@@ -5,7 +5,7 @@ import pt.unl.fct.di.novasys.babel.generic.ProtoTimer;
 
 public class ClientRetryTimer extends ProtoTimer {
     public static final short ID = 301;
-    public static final long TIMEOUT = 10_000;
+    public static final long TIMEOUT = 1000;
 
     private final Operation.Type op;
 

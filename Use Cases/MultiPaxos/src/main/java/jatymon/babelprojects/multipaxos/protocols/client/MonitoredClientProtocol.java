@@ -29,7 +29,7 @@ public class MonitoredClientProtocol extends ClientProtocol {
   private final JaTyMonLogger logger;
 
   public MonitoredClientProtocol() {
-    this.confidenceLevel = 0.95;
+    this.confidenceLevel = 0.85;
     this.currentState = States.Init;
     this.actionsCounter = new ActionsCounter();
     this.logger = new JaTyMonLogger();

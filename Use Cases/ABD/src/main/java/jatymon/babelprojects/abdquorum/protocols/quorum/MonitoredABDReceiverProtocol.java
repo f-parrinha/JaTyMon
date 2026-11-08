@@ -34,7 +34,7 @@ public class MonitoredABDReceiverProtocol extends ABDReceiverProtocol {
   private int conns;
 
   public MonitoredABDReceiverProtocol() {
-    this.confidenceLevel = 0.95;
+    this.confidenceLevel = 0.85;
     this.currentState = States.Connect;
     this.actionsCounter = new ActionsCounter();
     this.logger = new JaTyMonLogger();
@@ -52,19 +52,19 @@ public class MonitoredABDReceiverProtocol extends ABDReceiverProtocol {
   }
 
   private void connDown() {
-    conns = conns - 1;
+    conns = (conns - 1);
   }
 
   private void connUp() {
-    conns = conns + 1;
+    conns = (conns + 1);
   }
 
   private boolean hasAllConns() {
-    return conns == peersSize;
+    return (conns == peersSize);
   }
 
   private boolean lostQuorum() {
-    return conns <= peersSize - 1 / 2;
+    return (conns <= ((peersSize - 1) / 2));
   }
 
   @Override

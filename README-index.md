@@ -2,6 +2,16 @@
 - Explain what JaTyMon is: a monitor generator for Babel protocols from stateful mixed-choice typestates.
 - Present published papers
 
+
+
+Metodologia.
+Verificacao dos resultados do artigo.
+Mais verificacoes.
+Experiencias autonomas.
+
+NOTE: go section by section
+
+
 ## Use cases
 - The repository contains two use cases to test the usability of JaTyMon. They are both two simple replicated storage system that use different consensus protocols: a read/write majority quorum and a MultiPaxos protocol.
 
