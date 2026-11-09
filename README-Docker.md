@@ -111,10 +111,10 @@ It is possible to produce different kinds of experiments with the [run-orchestra
 
 For example, we may configure the script like so: ``CLIENTS=2 REPLICAS=3 MONITORS=on bash run-orchestrator.sh MultiPaxos 1 1000``, which executes the Multi-Paxos use case once, only with monitors, with 3 replicas and 2 clients producing 1000 operations.
 
-Additionally, the script offers a way to configure the wait period between runs, whether to print the internal output of the executions of the given use cases, and whether to have automatic random fault injection or not:
+Additionally, the script offers a way to configure the wait period between runs, whether to print the internal output of the executions of the given use cases, and which faults should be automatically injected:
 - ``PAUSE_BETWEEN_RUNS``: wait interval in seconds between runs, 1 by default; 
 - ``PRINT``: ``on`` for printing the output of given use cases, ``off`` for otherwise;
-- ``FAULTS``: ``on`` or ``off``, with ``off`` by default.  
+- ``FAULTS``: list of faults (i.e., ``ConnectionDrop``, ``MessageDrop``, ``MessageTinker``), separated by a comma (e.g., ``FAULTS=MessageDrop,MessageTinker``. Empty by default.  
 
 For example, ``PAUSE_BETWEEN_RUNS=4 PRINT=on FAULTS=on bash run-orchestrator.sh ABD 2 100`` executes the read/write majority quorum use case twice with the default number of replicas and clients, the client producing 100 operations. In this execution, the scripts waits 4 seconds between both runs, prints the logs from the execution of each use case and automatically injects random faults (i.e., connection loss, message drop, and message tinkering).
 
