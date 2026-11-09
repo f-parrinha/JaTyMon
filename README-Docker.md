@@ -131,6 +131,15 @@ The script [gen-benchmarks.sh](https://github.com/f-parrinha/JaTyMon/blob/main/S
 
 ---
 
+#### clear-benchmarks.sh
+Usage: ``bash clear-benchmarks.sh``
+
+The script [clear-benchmarks.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/clear-benchmarks.sh) removes the content inside ``/Benchmarks`` folder.
+
+<br>
+
+---
+
 #### run-failtests.sh
 Usage: ``run-failtests.sh [-v (verbose)] [rule numbers...]``
 
