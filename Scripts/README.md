@@ -5,6 +5,14 @@ In this folder we provide many scripts for interacting with the tool and perform
 
 ---
 
+#### common.sh
+This script is not meant to be used. Contains global variables and it is sourced by the remaining scripts.
+
+
+<br>
+
+---
+
 #### build-tool.sh
 Usage: ``bash build-tool.sh``
 
