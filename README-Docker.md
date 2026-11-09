@@ -44,6 +44,7 @@ However, the __best__ way to verify our benchmarks is: ``docker run --rm -i -v "
 
 This command gives the most accurate results.
 
+ADD TABLES BENCHMARKS E FAilre example
 <br>
 
 We also offer [run-failtests.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/run-failtests.sh) to empirically evaluate whether __JaTyMon__ ensures that the well-formedness rules of our typestates hold. We provide a [project](https://github.com/f-parrinha/JaTyMon/tree/main/Failure%20Examples) for each well-formedness rule with one or more ill-formed typestates breaking the corresponding rule. The script accepts a list of numbers representing the intended rules, separated by a space. If none is given, the script runs __JaTyMon__ on every project. The objective is to make sure __JaTyMon__ correctly catches each violation and presents the respective error message. Considering we are interacting with the container (e.g., via ``-it``), there are two ways to verify our results:
@@ -51,6 +52,13 @@ We also offer [run-failtests.sh](https://github.com/f-parrinha/JaTyMon/blob/main
 - ``bash run-failtests.sh`` (by default it executes every project).    
 
 ## More verifications
+HOW TO CREATE A NEW USE CASE
+
+HOW TO PERFORM TESTS CHANGING THE PARAMETERS OF OUR SCRIPTS
+
+AND HOW TO PERFORM NEW TESTS
+
+
 We also offer automatic random fault injection (i.e., connection loss, message loss, and message tinkering) in each use case to observe the generated monitors correctly reporting the respective runtime violations (i.e., illegal actions and invalid runtime ratios).  
 
 We do so by executing [run-orchestrator.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/run-orchestrator.sh) with the intended faults. The script contains an environment variable named ``FAULTS`` which accepts a list of faults, separated by a comma. We include three faults: ``ConnectionDrop``, ``MessageDrop``, and ``MessageTinker``. Therefore, to use any of these faults, the script must be executed in the following way: ``FAULTS=ConnectionDrop,MessageDrop,MessageTinker bash run-orchestrator.sh <use_case> <runs> <client_ops>``. In this case, the script executes with every fault, but it may be a subset. The list is empty by default (i.e., no faults are present).  
