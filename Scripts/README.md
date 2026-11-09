@@ -1,3 +1,6 @@
+# Scripts
+In this folder we provide many scripts for interacting with the tool and performing experiments.
+
 #### build-tool.sh
 Usage: ``bash build-tool.sh``
 
