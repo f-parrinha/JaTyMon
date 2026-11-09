@@ -14,6 +14,6 @@ The ``lib`` module contains the annotations developers may use (i.e., ``@Typesta
 We provide a ``build.sh`` (``bash build.sh -o <output_dir>``) script which runs every unit test and builds the tool into two different modules: one for ``core`` and another for ``lib``. 
 At the end, after the tool is built, it generates two scripts:
 - install-JaTyMon-maven.sh (``bash install-JaTyMon-maven.sh``)
-- run-JaTyMon-maven.sh  (``run-JaTyMon-maven.sh <project_dir> <confidence_level>``)  
+- run-JaTyMon-maven.sh  (``bash run-JaTyMon-maven.sh <project_dir> <confidence_level>``)  
 
 The former for installing the ``lib`` module in the Maven local repository, and latter for executing __JaTyMon__ on a given Babel project and synthesize monitors. These scripts were made for projects using Maven.  
