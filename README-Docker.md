@@ -17,7 +17,7 @@ We benchmark our tool in two [use cases](https://github.com/f-parrinha/JaTyMon/t
 
 
 ## Methodology
-We use a docker environment to ensure the reproducibility of our results. The image is built in the following steps. It begins by installing a pinned Debian distribution (snapshot 20261012T000000Z), Maven (version 3.9.9), and JDK 21 (OpenJDK 21.0.12.1\_1). Every dependency is pinned. Then, it copies the content in the [project](https://github.com/f-parrinha/JaTyMon) folder. Now it proceeds in three stages:
+We use a docker environment to ensure the reproducibility of our results. The image is built in the following way ``docker build -t jatymon .``, assuming the current directory is the [project](https://github.com/f-parrinha/JaTyMon) folder. It begins by installing a pinned Debian distribution (snapshot 20261012T000000Z), Maven (version 3.9.9), and JDK 21 (OpenJDK 21.0.12.1\_1). Every dependency is pinned. Then, it copies the content in the [project](https://github.com/f-parrinha/JaTyMon) folder. Now it proceeds in three stages:
 - Execute [build-tool.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/build-tool.sh)
 - Execute [gen-monitors.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/gen-monitors.sh)
 - Execute [build-usecases.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/build-usecases.sh)
@@ -53,8 +53,9 @@ We also offer [run-failtests.sh](https://github.com/f-parrinha/JaTyMon/blob/main
 ## More verifications
 We also offer automatic random fault injection (i.e., connection loss, message loss, and message tinkering) in each use case to observe the generated monitors correctly reporting the respective runtime violations (i.e., illegal actions and invalid runtime ratios).  
 
-TODO
+We do so by executing [run-orchestrator.sh](https://github.com/f-parrinha/JaTyMon/blob/main/Scripts/run-orchestrator.sh) with the intended faults. The script contains an environment variable named ``FAULTS`` which accepts a list of faults, separated by a comma. We include three faults: ``ConnectionDrop``, ``MessageDrop``, and ``MessageTinker``. Therefore, to use any of these faults, the script must be executed in the following way: ``FAULTS=ConnectionDrop,MessageDrop,MessageTinker bash run-orchestrator.sh <use_case> <runs> <client_ops>``. In this case, the script executes with every fault, but it may be a subset. The list is empty by default (i.e., no faults are present).  
 
+Note that the fault injection system repeatedly selects a random fault from the given list, waiting a random amount of seconds (i.e., between 1 to 4) between each fault. 
 
 <br>
 
@@ -64,7 +65,7 @@ In this section, we introduce how to perform autonomous experiments. We assume t
 #### build-tool.sh
 Usage: ``bash build-tool.sh``
 
-First script to be executed. Simply builds the tool, generating the two jars and scripts. The content is by default created in a folder named _JaTyMon Build Results_.  
+First script to be executed. Simply builds the tool, generating the two jars and scripts. The content is by default created in ``/JaTyMon Build Results``.  
 Created jars:
 - ``lib-1.0-jar-with-dependencies.jar``: contains the library code, to be installed in the Maven local repository;
 - ``core-1.0-jar-with-dependencies.jar``: contains the actual monitor generated.
