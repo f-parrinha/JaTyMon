@@ -18,7 +18,7 @@
 #		- CLIENTS				(default 1)
 #		- BENCHMARKS			(default ./Benchmarks)
 #		- MONITORS				(default on)
-#		- FAULTS					(default off)
+#		- FAULTS					(default "", can be ConnectionDrop, MessageDrop, or MessageTinker. For example, FAULTS=MessageDrop,MessageTinker)
 #		- PRINT					(default off)
 #		- CLIENT_OPS			(default 10000)
 #
@@ -33,7 +33,7 @@ replicas_count="${REPLICAS:-5}"
 clients_count="${CLIENTS:-1}"
 benchmarks_dir="${BENCHMARKS:-./Benchmarks}"
 monitors="${MONITORS:-on}"
-faults="${FAULTS:-off}"
+fault_list="${FAULTS:-''}"
 print="${PRINT:-off}"
 client_ops="${CLIENT_OPS:-10000}"
 
@@ -109,7 +109,8 @@ start_replica() {
                           replicas="$replicas" \
                           clients="$clients" \
                           use_monitors="$use_monitors" \
-                          fault_test_on="$fault_test_on" &
+                          fault_test_on="true" \
+                          fault_list="$fault_list" &
  else
     # Suppress replica logs.
     java -Dport="$p" -jar "$jar_path" \
@@ -117,7 +118,8 @@ start_replica() {
                           replicas="$replicas" \
                           clients="$clients" \
                           use_monitors="$use_monitors" \
-                          fault_test_on="$fault_test_on" \
+                          fault_test_on="true" \
+                          fault_list="$fault_list" \
                           > /dev/null 2>&1 &
  fi
  local pid=$!
@@ -150,7 +152,8 @@ start_client() {
           		replicas="$replicas" \
                   	clients="$clients" \
                   	use_monitors="$use_monitors" \
-                  	fault_test_on="$fault_test_on" \
+                  	fault_test_on="true" \
+                  	fault_list="$fault_list" \
                   	> >(tee >(grep --line-buffered -E "$stats_pattern" >> "$bench_file")) 2>&1 &
   else
     # Suppress console output but save benchmark statistics. Ah, and it prints the progress every second
@@ -159,7 +162,8 @@ start_client() {
     			replicas="$replicas" \
     			clients="$clients" \
     			use_monitors="$use_monitors" \
-    			fault_test_on="$fault_test_on" \
+        fault_test_on="true" \
+    			fault_list="$fault_list" \
     			client_ops_numb="$client_ops" \
     			> >(tee >(grep --line-buffered -E "$stats_pattern" >> "$bench_file") \
 					| stdbuf -oL tr '\r' '\n' \
@@ -217,8 +221,6 @@ done
 mkdir -p "$benchmarks_dir"
 
 [ "$monitors" = "on" ] && use_monitors="true" || use_monitors="false"
-[ "$faults" = "on" ] && fault_test_on="true" || fault_test_on="false"
-
 
 
 # Catch Ctrl+C (SIGINT) and SIGTERM immediately

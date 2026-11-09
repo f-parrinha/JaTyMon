@@ -42,7 +42,7 @@ public class MonitoredMultiPaxosProtocol extends MultiPaxosProtocol {
   private int prepareOkCount;
 
   public MonitoredMultiPaxosProtocol() {
-    this.confidenceLevel = 0.85;
+    this.confidenceLevel = 0.9;
     this.currentState = States.Init;
     this.actionsCounter = new ActionsCounter();
     this.logger = new JaTyMonLogger();

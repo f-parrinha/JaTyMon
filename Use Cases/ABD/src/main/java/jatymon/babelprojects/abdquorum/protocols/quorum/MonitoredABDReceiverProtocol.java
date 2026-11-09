@@ -34,7 +34,7 @@ public class MonitoredABDReceiverProtocol extends ABDReceiverProtocol {
   private int conns;
 
   public MonitoredABDReceiverProtocol() {
-    this.confidenceLevel = 0.85;
+    this.confidenceLevel = 0.9;
     this.currentState = States.Connect;
     this.actionsCounter = new ActionsCounter();
     this.logger = new JaTyMonLogger();

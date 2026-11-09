@@ -10,12 +10,12 @@
 # 		- common.sh
 #
 # Environment:
-# 			- REPLICAS    					number of replicas   	(default: 5)
-#   		- CLIENTS    					number of clients    	(default: 1)
-#   		- MONITORS    					on|off|both           	(default: on)
-#   		- FAULTS      					on|off               	(default: off)
-#   		- PAUSE_BETWEEN_RUNS  	seconds               	(default: 1)
-#   		- PRINT      					on|off               	(default: off)
+# 			- REPLICAS    					number of replicas   													(default: 5)
+#   		- CLIENTS    					number of clients    													(default: 1)
+#   		- MONITORS    					on|off|both           													(default: on)
+#   		- FAULTS      					List:ConnectionDrop|MessageDrop|MessageTinker		(default: "". For example, FAULTS=MessageDrop,MessageTinker)
+#   		- PAUSE_BETWEEN_RUNS  	seconds               													(default: 1)
+#   		- PRINT      					on|off               													(default: off)
 #
 # Author: Francisco Parrinha
 #
@@ -39,9 +39,9 @@ CLIENT_OPS="${3:-10000}"
 
 REPLICAS="${REPLICAS:-5}"
 CLIENTS="${CLIENTS:-1}"
-MONITORS="${MONITORS:-on}"
-FAULTS="${FAULTS:-off}"
-PAUSE_BETWEEN_RUNS="${PAUSE_BETWEEN_RUNS:-2}"
+MONITORS="${MONITORS:-both}"
+FAULTS="${FAULTS:-''}"
+PAUSE_BETWEEN_RUNS="${PAUSE_BETWEEN_RUNS:-1}"
 PRINT="${PRINT:-off}"
 
 # Validate arguments
@@ -54,7 +54,6 @@ case "$UC_ARG" in
     ;;
 esac
 case "$MONITORS" in on|off|both) ;; *) echo "Monitors must be 'on', 'off' or 'both'" >&2; exit 1 ;; esac
-case "$FAULTS" in on|off) ;; *) echo "Faults must be 'on' or 'off'" >&2; exit 1 ;; esac
 
 
 # ----------------- METHODS ----------------- #

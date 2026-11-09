@@ -40,7 +40,7 @@ public class MonitoredABDProtocol extends ABDProtocol {
   private int conns;
 
   public MonitoredABDProtocol() {
-    this.confidenceLevel = 0.85;
+    this.confidenceLevel = 0.9;
     this.currentState = States.Connect;
     this.actionsCounter = new ActionsCounter();
     this.logger = new JaTyMonLogger();

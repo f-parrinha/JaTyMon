@@ -44,7 +44,7 @@ public class MonitoredFaultyDispatcherProtocol extends FaultyDispatcherProtocol 
   private final JaTyMonLogger logger;
 
   public MonitoredFaultyDispatcherProtocol() {
-    this.confidenceLevel = 0.85;
+    this.confidenceLevel = 0.9;
     this.currentState = States.Init;
     this.actionsCounter = new ActionsCounter();
     this.logger = new JaTyMonLogger();

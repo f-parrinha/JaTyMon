@@ -62,17 +62,18 @@ public class FaultyDispatcherProtocol extends DispatcherProtocol {
     public void init(final Properties props) throws HandlerRegistrationException, IOException {
         super.init(props);
 
-        long faultStartDelay = Long.parseLong(props.getProperty(ConfigKeys.FAULT_START_DELAY));
         enabledFaults = FaultType.fromFaultList(props.getProperty(ConfigKeys.FAULT_LIST_CONFIG, ""));
+        if (enabledFaults.isEmpty()) {
+            return;
+        }
+
         faultProbability = Float.parseFloat(props.getProperty(ConfigKeys.FAULT_PROBABILITY_CONFIG));
         minDelay = Integer.parseInt(props.getProperty(ConfigKeys.FAULT_MIN_DELAY_CONFIG));
         maxDelay = Integer.parseInt(props.getProperty(ConfigKeys.FAULT_MAX_DELAY_CONFIG));
         connFailMinTime = Integer.parseInt(props.getProperty(ConfigKeys.FAULT_CONN_FAIL_MIN_TIME));
         connFailMaxTime = Integer.parseInt(props.getProperty(ConfigKeys.FAULT_CONN_FAIL_MAX_TIME));
-        if (enabledFaults.isEmpty()) {
-            enabledFaults = DEFAULT_ENABLED_FAULTS;
-        }
 
+        long faultStartDelay = Long.parseLong(props.getProperty(ConfigKeys.FAULT_START_DELAY));
         registerTimerHandler(FailureTimer.ID, this::uponFailureTimer);
         setupTimer(new FailureTimer(), faultStartDelay);
     }
